@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="./marked.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="qiitabarrel.css">
+  </head>
+  <body>
+    <div class="controls">
+      <form>
+        <input type="button" value="Qiitaに投稿">
+      </form>
+    </div>
+    <div class="contents">
+      <div><textarea id="editor" onInput="update();"></textarea></div>
+      <div id="content"></div>
+    </div>
+    <script>
+      function update() {
+        document.getElementById("content").innerHTML = marked(document.getElementById("editor").value);
+      }
+    </script>
+  </body>
+</html>
