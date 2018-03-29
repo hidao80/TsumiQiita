@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script src="https://cdn.rawgit.com/chjj/marked/master/marked.min.js"></script>
+<div id="mdrender"></div>
+<div id="mdraw" style="display:none;">
+## ここにMarkdownの記述で本文を書いていく  
+
+　```
+画像を使うときは<img>タグを使う
+　```
+
+1. aa
+1. bb
+
+
+</div>
+<script>
+  document.getElementById("mdrender").innerHTML = marked(document.getElementById("mdraw").innerHTML);
+</script>
