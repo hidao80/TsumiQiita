@@ -1,23 +1,29 @@
 <!DOCTYPE html>
   <head>
     <meta charset="UTF-8">
-    <script src="./marked.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="qiitabarrel.css">
+    <script src="./lib/marked.min.js"></script>
+    <script src="./lib/qiitabarrel.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/qiitabarrel.css">
   </head>
   <body>
-    <div class="controls">
-      <form>
-        <input type="button" value="Qiitaに投稿">
-      </form>
-    </div>
-    <div class="contents">
+   <div class="contents">
+      <div id="controls">
+        <div id="header">
+          <div>QiitaBarrel</div>
+          <div id="menu">
+            <input id="nav-input" type="checkbox" class="nav-unshown">
+            <label id="nav-open" for="nav-input"><span></span></label>
+            <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+            <div id="nav-content"></div>
+          </div>
+        </div>
+        <div id="files">
+          <div class="files-item">記事1</div>
+          <div class="files-item">記事2</div>
+        </div>
+      </div>
       <div><textarea id="editor" onInput="update();"></textarea></div>
       <div id="content"></div>
     </div>
-    <script>
-      function update() {
-        document.getElementById("content").innerHTML = marked(document.getElementById("editor").value);
-      }
-    </script>
-  </body>
+ </body>
 </html>
