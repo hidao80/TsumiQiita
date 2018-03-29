@@ -1,0 +1,21 @@
+html,body {
+    height: 100%;
+    margin: 0;
+    width: 100%;
+}
+.content {
+    display: flex;
+    height: 100%;
+    width: 100% - 300px;
+}
+#editor {
+   width: 30vw;
+    height: 100vh;
+}
+.contents {
+    flex: 1;
+    height: 100% - 50px;
+}
+.controls {
+    height: 50px;
+}
