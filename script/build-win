@@ -1,0 +1,4 @@
+#!/bin/sh
+npx electron-packager src QiitaBarrel --platform=win32 --arch=x64 --overwrite
+
+zip QiitaBarrel-win32-x64.zip -r QiitaBarrel-win32-x64/
