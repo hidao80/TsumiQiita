@@ -18,12 +18,17 @@
           </div>
         </div>
         <div id="files">
-          <div class="files-item">記事1</div>
-          <div class="files-item">記事2</div>
+          <form>
+            <div class="files-item-div">
+              <input type="radio" class="files-item-radio" name="filename" id="使い方.md"><label for="使い方.md" class="files-item-label">使い方.md</label>
+            </div>
+            <div class="files-item-div">
+              <input type="radio" class="files-item-radio" name="filename" id="test.md"><label for="test.md" class="files-item-label">test.md</label>
+            </div>
+          </form>
         </div>
       </div>
-      <div><textarea id="editor" onInput="update();"></textarea></div>
-      <div id="content"></div>
+     <div id="content"></div>
     </div>
  </body>
 </html>
