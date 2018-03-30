@@ -1,26 +1,48 @@
 html,body {
-    height: 100%;
-    margin: 0;
-    width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 #content {
-    height: 100vh;
-    margin: 0;
-    width: 70vw;
-}
-#editor {
-    width: 30vw;
-    height: 100vh;
+  height: 100vh;
+  margin: 0;
+  width: 65vw;
 }
 .contents {
-    display: flex;
-    height: 100%-30px;
+  display: flex;
+  height: 100%-100px;
 }
 #controls {
-   align-items: flex-start;
+  align-items: flex-start;
+  height: 10vh;
+  width: 35vw;
 }
 #header {
-    display: flex;
+  display: flex;
+  width: 35vw;
+  font-size: 3rem;
+  margin:1rem;
+}
+.menu {
+}
+.files-item-radio {
+  display: none;
+}
+.files-item-div {
+  border-bottom: 1px solid #eee;
+  font-size: 3rem;
+  margin:1rem;
+}
+.files-item-label {
+  display: block;
+  margin: 0;
+  height: 5vh;
+  width: 35vw;
+}
+input[type=radio]:checked + .files-item-label {
+  color: #fff;
+  background-color: deepskyblue;
 }
 
 
@@ -34,26 +56,29 @@ html,body {
 /*アイコンのスペース*/
 #nav-open {
   display: inline-block;
-  width: 30px;
-  height: 22px;
+  width: 60px;
+  height: 44px;
   vertical-align: middle;
 }
 /*ハンバーガーアイコンをCSSだけで表現*/
 #nav-open span, #nav-open span:before, #nav-open span:after {
   position: absolute;
-  height: 3px;/*線の太さ*/
-  width: 25px;/*長さ*/
+  height: 4px;/*線の太さ*/
+  width: 40px;/*長さ*/
   border-radius: 3px;
   background: #555;
   display: block;
   content: '';
   cursor: pointer;
 }
+#nav-open span {
+  margin-left: 3rem;
+}
 #nav-open span:before {
-  bottom: -8px;
+  bottom: -14px;
 }
 #nav-open span:after {
-  bottom: -16px;
+  bottom: -28px;
 }
 /*中身*/
 #nav-content {
