@@ -1,7 +1,3 @@
 linter:
   jshint:
-    options:
-      config: lint_yml/.jshintrc
   scss_lint:
-    options:
-      config: lint_yml/.scss-lint.yml
