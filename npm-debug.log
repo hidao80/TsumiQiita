@@ -1,0 +1,482 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\ProgramData\\Chocolatey\\lib\\npm\\tools\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'i',
+1 verbose cli   '-D',
+1 verbose cli   'electron' ]
+2 info using npm@1.4.9
+3 info using node@v8.10.0
+4 verbose readDependencies using package.json deps
+5 verbose cache add [ 'electron', null ]
+6 verbose cache add name=undefined spec="electron" args=["electron",null]
+7 verbose parsed url Url {
+7 verbose parsed url   protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'electron',
+7 verbose parsed url   path: 'electron',
+7 verbose parsed url   href: 'electron' }
+8 silly lockFile da005969-electron electron
+9 verbose lock electron C:\Users\haoi\AppData\Roaming\npm-cache\da005969-electron.lock
+10 silly lockFile da005969-electron electron
+11 silly lockFile da005969-electron electron
+12 verbose addNamed [ 'electron', '' ]
+13 verbose addNamed [ null, '*' ]
+14 silly lockFile 89f56ea2-electron electron@
+15 verbose lock electron@ C:\Users\haoi\AppData\Roaming\npm-cache\89f56ea2-electron.lock
+16 silly addNameRange { name: 'electron', range: '*', hasData: false }
+17 verbose url raw electron
+18 verbose url resolving [ 'https://registry.npmjs.org/', './electron' ]
+19 verbose url resolved https://registry.npmjs.org/electron
+20 info trying registry request attempt 1 at 12:10:37
+21 verbose etag "5abab057-2e04a"
+22 http GET https://registry.npmjs.org/electron
+23 http 304 https://registry.npmjs.org/electron
+24 silly registry.get cb [ 304,
+24 silly registry.get   { date: 'Sat, 31 Mar 2018 03:10:40 GMT',
+24 silly registry.get     via: '1.1 varnish',
+24 silly registry.get     'cache-control': 'max-age=300',
+24 silly registry.get     etag: '"5abab057-2e04a"',
+24 silly registry.get     age: '4909',
+24 silly registry.get     connection: 'close',
+24 silly registry.get     'x-served-by': 'cache-nrt6145-NRT',
+24 silly registry.get     'x-cache': 'HIT',
+24 silly registry.get     'x-cache-hits': '2',
+24 silly registry.get     'x-timer': 'S1522465840.274897,VS0,VE0',
+24 silly registry.get     vary: 'Accept-Encoding, Accept' } ]
+25 verbose etag electron from cache
+26 silly addNameRange number 2 { name: 'electron', range: '*', hasData: true }
+27 silly addNameRange versions [ 'electron',
+27 silly addNameRange   [ '0.1.0',
+27 silly addNameRange     '0.1.1',
+27 silly addNameRange     '0.1.2',
+27 silly addNameRange     '0.2.0',
+27 silly addNameRange     '0.2.1',
+27 silly addNameRange     '0.3.0',
+27 silly addNameRange     '0.4.0',
+27 silly addNameRange     '0.4.1',
+27 silly addNameRange     '1.3.1',
+27 silly addNameRange     '1.3.2',
+27 silly addNameRange     '1.3.3',
+27 silly addNameRange     '1.3.4',
+27 silly addNameRange     '1.3.5',
+27 silly addNameRange     '1.3.6',
+27 silly addNameRange     '1.4.0',
+27 silly addNameRange     '1.4.1',
+27 silly addNameRange     '1.3.7',
+27 silly addNameRange     '1.4.2',
+27 silly addNameRange     '1.4.3',
+27 silly addNameRange     '1.4.4',
+27 silly addNameRange     '1.3.8',
+27 silly addNameRange     '1.4.5',
+27 silly addNameRange     '1.4.6',
+27 silly addNameRange     '1.4.7',
+27 silly addNameRange     '1.3.9',
+27 silly addNameRange     '1.3.10',
+27 silly addNameRange     '1.4.8',
+27 silly addNameRange     '1.3.12',
+27 silly addNameRange     '1.4.10',
+27 silly addNameRange     '1.3.13',
+27 silly addNameRange     '1.4.11',
+27 silly addNameRange     '1.4.12',
+27 silly addNameRange     '1.4.13',
+27 silly addNameRange     '1.4.14',
+27 silly addNameRange     '1.4.15',
+27 silly addNameRange     '1.5.0',
+27 silly addNameRange     '1.5.1',
+27 silly addNameRange     '1.6.0',
+27 silly addNameRange     '1.6.1',
+27 silly addNameRange     '1.6.2',
+27 silly addNameRange     '1.6.3',
+27 silly addNameRange     '1.3.14',
+27 silly addNameRange     '1.6.4',
+27 silly addNameRange     '1.6.5',
+27 silly addNameRange     '1.4.16',
+27 silly addNameRange     '1.6.6',
+27 silly addNameRange     '1.6.7',
+27 silly addNameRange     '1.3.15',
+27 silly addNameRange     '1.6.8',
+27 silly addNameRange     '1.6.9',
+27 silly addNameRange     '1.7.0',
+27 silly addNameRange     '1.6.10',
+27 silly addNameRange     '1.7.1',
+27 silly addNameRange     '1.6.11',
+27 silly addNameRange     '1.7.2',
+27 silly addNameRange     '1.7.3',
+27 silly addNameRange     '1.7.4',
+27 silly addNameRange     '1.7.5',
+27 silly addNameRange     '1.6.12',
+27 silly addNameRange     '1.7.6',
+27 silly addNameRange     '1.7.7',
+27 silly addNameRange     '1.6.13',
+27 silly addNameRange     '1.7.8',
+27 silly addNameRange     '1.6.14',
+27 silly addNameRange     '1.8.1',
+27 silly addNameRange     '1.7.9',
+27 silly addNameRange     '1.6.15',
+27 silly addNameRange     '1.8.2-beta.1',
+27 silly addNameRange     '1.8.2-beta.2',
+27 silly addNameRange     '1.8.2-beta.3',
+27 silly addNameRange     '1.7.10',
+27 silly addNameRange     '1.7.11',
+27 silly addNameRange     '1.6.16',
+27 silly addNameRange     '1.8.2-beta.4',
+27 silly addNameRange     '1.8.2-beta.5',
+27 silly addNameRange     '1.7.12',
+27 silly addNameRange     '1.6.17',
+27 silly addNameRange     '1.8.2',
+27 silly addNameRange     '2.0.0-beta.1',
+27 silly addNameRange     '2.0.0-beta.2',
+27 silly addNameRange     '1.8.3',
+27 silly addNameRange     '2.0.0-beta.3',
+27 silly addNameRange     '1.7.13',
+27 silly addNameRange     '2.0.0-beta.4',
+27 silly addNameRange     '1.8.4',
+27 silly addNameRange     '2.0.0-beta.5',
+27 silly addNameRange     '2.0.0-beta.6' ] ]
+28 verbose addNamed [ 'electron', '1.8.4' ]
+29 verbose addNamed [ '1.8.4', '1.8.4' ]
+30 silly lockFile 6139228c-electron-1-8-4 electron@1.8.4
+31 verbose lock electron@1.8.4 C:\Users\haoi\AppData\Roaming\npm-cache\6139228c-electron-1-8-4.lock
+32 silly lockFile 6139228c-electron-1-8-4 electron@1.8.4
+33 silly lockFile 6139228c-electron-1-8-4 electron@1.8.4
+34 silly lockFile 89f56ea2-electron electron@
+35 silly lockFile 89f56ea2-electron electron@
+36 silly resolved [ { scripts:
+36 silly resolved      { 'cache-clean': 'rm -rf ~/.electron && rm -rf dist',
+36 silly resolved        postinstall: 'node install.js',
+36 silly resolved        pretest: 'npm run cache-clean',
+36 silly resolved        test: 'standard' },
+36 silly resolved     bin: { electron: 'cli.js' },
+36 silly resolved     main: 'index.js',
+36 silly resolved     types: 'electron.d.ts',
+36 silly resolved     dependencies:
+36 silly resolved      { '@types/node': '^8.0.24',
+36 silly resolved        'electron-download': '^3.0.1',
+36 silly resolved        'extract-zip': '^1.0.3' },
+36 silly resolved     devDependencies:
+36 silly resolved      { 'home-path': '^0.1.1',
+36 silly resolved        'path-exists': '^2.0.0',
+36 silly resolved        standard: '^5.4.1' },
+36 silly resolved     directories: { test: 'test' },
+36 silly resolved     name: 'electron',
+36 silly resolved     version: '1.8.4',
+36 silly resolved     repository: { type: 'git', url: 'https://github.com/electron/electron' },
+36 silly resolved     description: 'Build cross platform desktop apps with JavaScript, HTML, and CSS',
+36 silly resolved     license: 'MIT',
+36 silly resolved     author: { name: 'Electron Community' },
+36 silly resolved     keywords: [ 'electron' ],
+36 silly resolved     readme: '[![Electron Logo](https://electronjs.org/images/electron-logo.svg)](https://electronjs.org)\n\n[![Travis Build Status](https://travis-ci.org/electron/electron.svg?branch=master)](https://travis-ci.org/electron/electron)\n[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/bc56v83355fi3369/branch/master?svg=true)](https://ci.appveyor.com/project/electron-bot/electron/branch/master)\n[![devDependency Status](https://david-dm.org/electron/electron/dev-status.svg)](https://david-dm.org/electron/electron?type=dev)\n[![Join the Electron Community on Slack](https://atom-slack.herokuapp.com/badge.svg)](https://atom-slack.herokuapp.com/)\n\n:memo: Available Translations: 🇨🇳 🇹🇼 🇧🇷 🇪🇸 🇰🇷 🇯🇵 🇷🇺 🇫🇷 🇹🇭 🇳🇱 🇹🇷 🇮🇩 🇺🇦 🇨🇿 🇮🇹.\nView these docs in other languages at [electron/electron-i18n](https://github.com/electron/electron-i18n/tree/master/content/).\n\nThe Electron framework lets you write cross-platform desktop applications\nusing JavaScript, HTML and CSS. It is based on [Node.js](https://nodejs.org/) and\n[Chromium](https://www.chromium.org) and is used by the [Atom\neditor](https://github.com/atom/atom) and many other [apps](https://electronjs.org/apps).\n\nFollow [@ElectronJS](https://twitter.com/electronjs) on Twitter for important\nannouncements.\n\nThis project adheres to the Contributor Covenant\n[code of conduct](https://github.com/electron/electron/tree/master/CODE_OF_CONDUCT.md).\nBy participating, you are expected to uphold this code. Please report unacceptable\nbehavior to [coc@electronjs.org](mailto:coc@electronjs.org).\n\n## Installation\n\nTo install prebuilt Electron binaries, use [`npm`](https://docs.npmjs.com/).\nThe preferred method is to install Electron as a development dependency in your\napp:\n\n```sh\nnpm install electron --save-dev --save-exact\n```\n\nThe `--save-exact` flag is recommended as Electron does not follow semantic\nversioning. For info on how to manage Electron versions in your apps, see\n[Electron versioning](https://electronjs.org/docs/tutorial/electron-versioning).\n\nFor more installation options and troubleshooting tips, see\n[installation](https://electronjs.org/docs/tutorial/installation).\n\n## Quick start\n\nClone and run the\n[electron/electron-quick-start](https://github.com/electron/electron-quick-start)\nrepository to see a minimal Electron app in action:\n\n```sh\ngit clone https://github.com/electron/electron-quick-start\ncd electron-quick-start\nnpm install\nnpm start\n```\n\n## Resources for learning Electron\n\n- [electronjs.org/docs](https://electronjs.org/docs) - all of Electron\'s documentation\n- [electron/electron-quick-start](https://github.com/electron/electron-quick-start) - a very basic starter Electron app\n- [electronjs.org/community#boilerplates](https://electronjs.org/community#boilerplates) - sample starter apps created by the community\n- [electron/simple-samples](https://github.com/electron/simple-samples) - small applications with ideas for taking them further\n- [electron/electron-api-demos](https://github.com/electron/electron-api-demos) - an Electron app that teaches you how to use Electron\n- [hokein/electron-sample-apps](https://github.com/hokein/electron-sample-apps) - small demo apps for the various Electron APIs\n\n## Programmatic usage\n\nMost people use Electron from the command line, but if you require `electron` inside\nyour **Node app** (not your Electron app) it will return the file path to the\nbinary. Use this to spawn Electron from Node scripts:\n\n```javascript\nconst electron = require(\'electron\')\nconst proc = require(\'child_process\')\n\n// will print something similar to /Users/maf/.../Electron\nconsole.log(electron)\n\n// spawn Electron\nconst child = proc.spawn(electron)\n```\n\n### Mirrors\n\n- [China](https://npm.taobao.org/mirrors/electron)\n\n## Documentation Translations\n\nFind documentation translations in [electron/electron-i18n](https://github.com/electron/electron-i18n).\n\n## Community\n\nYou can ask questions and interact with the community in the following\nlocations:\n- [`electron`](https://discuss.atom.io/c/electron) category on the Atom\nforums\n- `#atom-shell` channel on Freenode\n- [`Atom`](https://atom-slack.herokuapp.com) channel on Slack\n- [`electron-ru`](https://telegram.me/electron_ru) *(Russian)*\n- [`electron-br`](https://electron-br.slack.com) *(Brazilian Portuguese)*\n- [`electron-kr`](https://electron-kr.github.io/electron-kr) *(Korean)*\n- [`electron-jp`](https://electron-jp.slack.com) *(Japanese)*\n- [`electron-tr`](https://electron-tr.herokuapp.com) *(Turkish)*\n- [`electron-id`](https://electron-id.slack.com) *(Indonesia)*\n\nCheck out [awesome-electron](https://github.com/sindresorhus/awesome-electron)\nfor a community maintained list of useful example apps, tools and resources.\n\n## License\n\n[MIT](https://github.com/electron/electron/blob/master/LICENSE)\n\nWhen using the Electron or other GitHub logos, be sure to follow the [GitHub logo guidelines](https://github.com/logos).\n',
+36 silly resolved     readmeFilename: 'README.md',
+36 silly resolved     bugs: { url: 'https://github.com/electron/electron/issues' },
+36 silly resolved     homepage: 'https://github.com/electron/electron',
+36 silly resolved     _id: 'electron@1.8.4',
+36 silly resolved     _shasum: 'cca8d0e6889f238f55b414ad224f03e03b226a38',
+36 silly resolved     _from: 'electron@',
+36 silly resolved     _resolved: 'https://registry.npmjs.org/electron/-/electron-1.8.4.tgz' } ]
+37 info install electron@1.8.4 into D:\git\QiitaBarrel
+38 info installOne electron@1.8.4
+39 info D:\git\QiitaBarrel\node_modules\electron unbuild
+40 verbose tar unpack C:\Users\haoi\AppData\Roaming\npm-cache\electron\1.8.4\package.tgz
+41 silly lockFile 336f501b-iitaBarrel-node-modules-electron tar://D:\git\QiitaBarrel\node_modules\electron
+42 verbose lock tar://D:\git\QiitaBarrel\node_modules\electron C:\Users\haoi\AppData\Roaming\npm-cache\336f501b-iitaBarrel-node-modules-electron.lock
+43 silly lockFile fcc00103-cache-electron-1-8-4-package-tgz tar://C:\Users\haoi\AppData\Roaming\npm-cache\electron\1.8.4\package.tgz
+44 verbose lock tar://C:\Users\haoi\AppData\Roaming\npm-cache\electron\1.8.4\package.tgz C:\Users\haoi\AppData\Roaming\npm-cache\fcc00103-cache-electron-1-8-4-package-tgz.lock
+45 silly gunzTarPerm modes [ '755', '644' ]
+46 silly gunzTarPerm extractEntry package.json
+47 silly gunzTarPerm extractEntry cli.js
+48 silly gunzTarPerm extractEntry electron.d.ts
+49 silly gunzTarPerm extractEntry index.js
+50 silly gunzTarPerm extractEntry install.js
+51 silly gunzTarPerm extractEntry LICENSE
+52 silly gunzTarPerm extractEntry README.md
+53 silly lockFile 336f501b-iitaBarrel-node-modules-electron tar://D:\git\QiitaBarrel\node_modules\electron
+54 silly lockFile 336f501b-iitaBarrel-node-modules-electron tar://D:\git\QiitaBarrel\node_modules\electron
+55 silly lockFile fcc00103-cache-electron-1-8-4-package-tgz tar://C:\Users\haoi\AppData\Roaming\npm-cache\electron\1.8.4\package.tgz
+56 silly lockFile fcc00103-cache-electron-1-8-4-package-tgz tar://C:\Users\haoi\AppData\Roaming\npm-cache\electron\1.8.4\package.tgz
+57 info preinstall electron@1.8.4
+58 verbose readDependencies using package.json deps
+59 verbose readDependencies using package.json deps
+60 verbose cache add [ '@types/node@^8.0.24', null ]
+61 verbose cache add name=undefined spec="@types/node@^8.0.24" args=["@types/node@^8.0.24",null]
+62 verbose parsed url Url {
+62 verbose parsed url   protocol: null,
+62 verbose parsed url   slashes: null,
+62 verbose parsed url   auth: null,
+62 verbose parsed url   host: null,
+62 verbose parsed url   port: null,
+62 verbose parsed url   hostname: null,
+62 verbose parsed url   hash: null,
+62 verbose parsed url   search: null,
+62 verbose parsed url   query: null,
+62 verbose parsed url   pathname: '@types/node@%5E8.0.24',
+62 verbose parsed url   path: '@types/node@%5E8.0.24',
+62 verbose parsed url   href: '@types/node@%5E8.0.24' }
+63 verbose cache add [ 'electron-download@^3.0.1', null ]
+64 verbose cache add name=undefined spec="electron-download@^3.0.1" args=["electron-download@^3.0.1",null]
+65 verbose parsed url Url {
+65 verbose parsed url   protocol: null,
+65 verbose parsed url   slashes: null,
+65 verbose parsed url   auth: null,
+65 verbose parsed url   host: null,
+65 verbose parsed url   port: null,
+65 verbose parsed url   hostname: null,
+65 verbose parsed url   hash: null,
+65 verbose parsed url   search: null,
+65 verbose parsed url   query: null,
+65 verbose parsed url   pathname: 'electron-download@%5E3.0.1',
+65 verbose parsed url   path: 'electron-download@%5E3.0.1',
+65 verbose parsed url   href: 'electron-download@%5E3.0.1' }
+66 verbose cache add name="electron-download" spec="^3.0.1" args=["electron-download","^3.0.1"]
+67 verbose parsed url Url {
+67 verbose parsed url   protocol: null,
+67 verbose parsed url   slashes: null,
+67 verbose parsed url   auth: null,
+67 verbose parsed url   host: null,
+67 verbose parsed url   port: null,
+67 verbose parsed url   hostname: null,
+67 verbose parsed url   hash: null,
+67 verbose parsed url   search: null,
+67 verbose parsed url   query: null,
+67 verbose parsed url   pathname: '%5E3.0.1',
+67 verbose parsed url   path: '%5E3.0.1',
+67 verbose parsed url   href: '%5E3.0.1' }
+68 verbose addNamed [ 'electron-download', '^3.0.1' ]
+69 verbose addNamed [ null, '>=3.0.1-0 <4.0.0-0' ]
+70 silly lockFile 8d1cab67-electron-download-3-0-1 electron-download@^3.0.1
+71 verbose lock electron-download@^3.0.1 C:\Users\haoi\AppData\Roaming\npm-cache\8d1cab67-electron-download-3-0-1.lock
+72 verbose cache add [ 'extract-zip@^1.0.3', null ]
+73 verbose cache add name=undefined spec="extract-zip@^1.0.3" args=["extract-zip@^1.0.3",null]
+74 verbose parsed url Url {
+74 verbose parsed url   protocol: null,
+74 verbose parsed url   slashes: null,
+74 verbose parsed url   auth: null,
+74 verbose parsed url   host: null,
+74 verbose parsed url   port: null,
+74 verbose parsed url   hostname: null,
+74 verbose parsed url   hash: null,
+74 verbose parsed url   search: null,
+74 verbose parsed url   query: null,
+74 verbose parsed url   pathname: 'extract-zip@%5E1.0.3',
+74 verbose parsed url   path: 'extract-zip@%5E1.0.3',
+74 verbose parsed url   href: 'extract-zip@%5E1.0.3' }
+75 verbose cache add name="extract-zip" spec="^1.0.3" args=["extract-zip","^1.0.3"]
+76 verbose parsed url Url {
+76 verbose parsed url   protocol: null,
+76 verbose parsed url   slashes: null,
+76 verbose parsed url   auth: null,
+76 verbose parsed url   host: null,
+76 verbose parsed url   port: null,
+76 verbose parsed url   hostname: null,
+76 verbose parsed url   hash: null,
+76 verbose parsed url   search: null,
+76 verbose parsed url   query: null,
+76 verbose parsed url   pathname: '%5E1.0.3',
+76 verbose parsed url   path: '%5E1.0.3',
+76 verbose parsed url   href: '%5E1.0.3' }
+77 verbose addNamed [ 'extract-zip', '^1.0.3' ]
+78 verbose addNamed [ null, '>=1.0.3-0 <2.0.0-0' ]
+79 silly lockFile 9879f4ae-extract-zip-1-0-3 extract-zip@^1.0.3
+80 verbose lock extract-zip@^1.0.3 C:\Users\haoi\AppData\Roaming\npm-cache\9879f4ae-extract-zip-1-0-3.lock
+81 verbose cache add name="" spec="types/node@^8.0.24" args=["","types/node@^8.0.24"]
+82 verbose parsed url Url {
+82 verbose parsed url   protocol: null,
+82 verbose parsed url   slashes: null,
+82 verbose parsed url   auth: null,
+82 verbose parsed url   host: null,
+82 verbose parsed url   port: null,
+82 verbose parsed url   hostname: null,
+82 verbose parsed url   hash: null,
+82 verbose parsed url   search: null,
+82 verbose parsed url   query: null,
+82 verbose parsed url   pathname: 'types/node@%5E8.0.24',
+82 verbose parsed url   path: 'types/node@%5E8.0.24',
+82 verbose parsed url   href: 'types/node@%5E8.0.24' }
+83 verbose cache add name="types/node" spec="^8.0.24" args=["types/node","^8.0.24"]
+84 verbose parsed url Url {
+84 verbose parsed url   protocol: null,
+84 verbose parsed url   slashes: null,
+84 verbose parsed url   auth: null,
+84 verbose parsed url   host: null,
+84 verbose parsed url   port: null,
+84 verbose parsed url   hostname: null,
+84 verbose parsed url   hash: null,
+84 verbose parsed url   search: null,
+84 verbose parsed url   query: null,
+84 verbose parsed url   pathname: '%5E8.0.24',
+84 verbose parsed url   path: '%5E8.0.24',
+84 verbose parsed url   href: '%5E8.0.24' }
+85 verbose addNamed [ 'types/node', '^8.0.24' ]
+86 verbose addNamed [ null, '>=8.0.24-0 <9.0.0-0' ]
+87 silly lockFile f348eb0d-types-node-8-0-24 types/node@^8.0.24
+88 verbose lock types/node@^8.0.24 C:\Users\haoi\AppData\Roaming\npm-cache\f348eb0d-types-node-8-0-24.lock
+89 silly addNameRange { name: 'electron-download',
+89 silly addNameRange   range: '>=3.0.1-0 <4.0.0-0',
+89 silly addNameRange   hasData: false }
+90 silly addNameRange { name: 'extract-zip',
+90 silly addNameRange   range: '>=1.0.3-0 <2.0.0-0',
+90 silly addNameRange   hasData: false }
+91 silly addNameRange { name: 'types/node',
+91 silly addNameRange   range: '>=8.0.24-0 <9.0.0-0',
+91 silly addNameRange   hasData: false }
+92 verbose url raw extract-zip
+93 verbose url resolving [ 'https://registry.npmjs.org/', './extract-zip' ]
+94 verbose url resolved https://registry.npmjs.org/extract-zip
+95 info trying registry request attempt 1 at 12:10:38
+96 verbose etag "5aaf61d8-6948"
+97 http GET https://registry.npmjs.org/extract-zip
+98 verbose url raw electron-download
+99 verbose url resolving [ 'https://registry.npmjs.org/', './electron-download' ]
+100 verbose url resolved https://registry.npmjs.org/electron-download
+101 info trying registry request attempt 1 at 12:10:38
+102 verbose etag "5a95e5f8-c0fb"
+103 http GET https://registry.npmjs.org/electron-download
+104 verbose url raw types/node
+105 verbose url resolving [ 'https://registry.npmjs.org/', './types/node' ]
+106 verbose url resolved https://registry.npmjs.org/types/node
+107 info trying registry request attempt 1 at 12:10:38
+108 http GET https://registry.npmjs.org/types/node
+109 http 304 https://registry.npmjs.org/extract-zip
+110 silly registry.get cb [ 304,
+110 silly registry.get   { date: 'Sat, 31 Mar 2018 03:10:40 GMT',
+110 silly registry.get     via: '1.1 varnish',
+110 silly registry.get     'cache-control': 'max-age=300',
+110 silly registry.get     etag: '"5aaf61d8-6948"',
+110 silly registry.get     age: '5290',
+110 silly registry.get     connection: 'close',
+110 silly registry.get     'x-served-by': 'cache-nrt6142-NRT',
+110 silly registry.get     'x-cache': 'HIT',
+110 silly registry.get     'x-cache-hits': '7',
+110 silly registry.get     'x-timer': 'S1522465841.785776,VS0,VE0',
+110 silly registry.get     vary: 'Accept-Encoding, Accept' } ]
+111 verbose etag extract-zip from cache
+112 http 304 https://registry.npmjs.org/electron-download
+113 silly registry.get cb [ 304,
+113 silly registry.get   { date: 'Sat, 31 Mar 2018 03:10:40 GMT',
+113 silly registry.get     via: '1.1 varnish',
+113 silly registry.get     'cache-control': 'max-age=300',
+113 silly registry.get     etag: '"5a95e5f8-c0fb"',
+113 silly registry.get     age: '6627',
+113 silly registry.get     connection: 'close',
+113 silly registry.get     'x-served-by': 'cache-nrt6150-NRT',
+113 silly registry.get     'x-cache': 'HIT',
+113 silly registry.get     'x-cache-hits': '2',
+113 silly registry.get     'x-timer': 'S1522465841.787621,VS0,VE0',
+113 silly registry.get     vary: 'Accept-Encoding, Accept' } ]
+114 verbose etag electron-download from cache
+115 silly addNameRange number 2 { name: 'extract-zip',
+115 silly addNameRange   range: '>=1.0.3-0 <2.0.0-0',
+115 silly addNameRange   hasData: true }
+116 silly addNameRange versions [ 'extract-zip',
+116 silly addNameRange   [ '1.0.0',
+116 silly addNameRange     '1.0.1',
+116 silly addNameRange     '1.0.2',
+116 silly addNameRange     '1.0.3',
+116 silly addNameRange     '1.1.0',
+116 silly addNameRange     '1.1.1',
+116 silly addNameRange     '1.1.2',
+116 silly addNameRange     '1.2.0',
+116 silly addNameRange     '1.3.0',
+116 silly addNameRange     '1.4.0',
+116 silly addNameRange     '1.4.1',
+116 silly addNameRange     '1.5.0',
+116 silly addNameRange     '1.6.0',
+116 silly addNameRange     '1.6.1',
+116 silly addNameRange     '1.6.2',
+116 silly addNameRange     '1.6.3',
+116 silly addNameRange     '1.6.4',
+116 silly addNameRange     '1.6.5',
+116 silly addNameRange     '1.6.6' ] ]
+117 verbose addNamed [ 'extract-zip', '1.6.6' ]
+118 verbose addNamed [ '1.6.6', '1.6.6' ]
+119 silly lockFile 93baf6d1-extract-zip-1-6-6 extract-zip@1.6.6
+120 verbose lock extract-zip@1.6.6 C:\Users\haoi\AppData\Roaming\npm-cache\93baf6d1-extract-zip-1-6-6.lock
+121 silly addNameRange number 2 { name: 'electron-download',
+121 silly addNameRange   range: '>=3.0.1-0 <4.0.0-0',
+121 silly addNameRange   hasData: true }
+122 silly addNameRange versions [ 'electron-download',
+122 silly addNameRange   [ '1.0.0',
+122 silly addNameRange     '1.0.1',
+122 silly addNameRange     '1.0.2',
+122 silly addNameRange     '1.0.3',
+122 silly addNameRange     '1.0.4',
+122 silly addNameRange     '1.0.5',
+122 silly addNameRange     '1.0.6',
+122 silly addNameRange     '1.0.7',
+122 silly addNameRange     '1.0.8',
+122 silly addNameRange     '1.1.0',
+122 silly addNameRange     '1.2.0',
+122 silly addNameRange     '1.3.0',
+122 silly addNameRange     '1.4.0',
+122 silly addNameRange     '1.4.1',
+122 silly addNameRange     '2.0.0',
+122 silly addNameRange     '2.1.0',
+122 silly addNameRange     '2.1.1',
+122 silly addNameRange     '2.1.2',
+122 silly addNameRange     '2.2.0',
+122 silly addNameRange     '2.2.1',
+122 silly addNameRange     '3.0.0',
+122 silly addNameRange     '3.0.1',
+122 silly addNameRange     '3.0.2',
+122 silly addNameRange     '3.1.0',
+122 silly addNameRange     '3.2.0',
+122 silly addNameRange     '3.3.0',
+122 silly addNameRange     '4.0.0',
+122 silly addNameRange     '4.1.0' ] ]
+123 verbose addNamed [ 'electron-download', '3.3.0' ]
+124 verbose addNamed [ '3.3.0', '3.3.0' ]
+125 silly lockFile 176a5c80-electron-download-3-3-0 electron-download@3.3.0
+126 verbose lock electron-download@3.3.0 C:\Users\haoi\AppData\Roaming\npm-cache\176a5c80-electron-download-3-3-0.lock
+127 silly lockFile 93baf6d1-extract-zip-1-6-6 extract-zip@1.6.6
+128 silly lockFile 93baf6d1-extract-zip-1-6-6 extract-zip@1.6.6
+129 silly lockFile 9879f4ae-extract-zip-1-0-3 extract-zip@^1.0.3
+130 silly lockFile 9879f4ae-extract-zip-1-0-3 extract-zip@^1.0.3
+131 silly lockFile 176a5c80-electron-download-3-3-0 electron-download@3.3.0
+132 silly lockFile 176a5c80-electron-download-3-3-0 electron-download@3.3.0
+133 silly lockFile 8d1cab67-electron-download-3-0-1 electron-download@^3.0.1
+134 silly lockFile 8d1cab67-electron-download-3-0-1 electron-download@^3.0.1
+135 http 404 https://registry.npmjs.org/types/node
+136 silly registry.get cb [ 404,
+136 silly registry.get   { 'content-type': 'application/json',
+136 silly registry.get     'cache-control': 'max-age=0',
+136 silly registry.get     'content-length': '2',
+136 silly registry.get     'accept-ranges': 'bytes',
+136 silly registry.get     date: 'Sat, 31 Mar 2018 03:10:41 GMT',
+136 silly registry.get     via: '1.1 varnish',
+136 silly registry.get     age: '0',
+136 silly registry.get     connection: 'close',
+136 silly registry.get     'x-served-by': 'cache-nrt6137-NRT',
+136 silly registry.get     'x-cache': 'MISS',
+136 silly registry.get     'x-cache-hits': '0',
+136 silly registry.get     'x-timer': 'S1522465841.805429,VS0,VE605',
+136 silly registry.get     vary: 'Accept-Encoding' } ]
+137 silly lockFile f348eb0d-types-node-8-0-24 types/node@^8.0.24
+138 silly lockFile f348eb0d-types-node-8-0-24 types/node@^8.0.24
+139 verbose about to build D:\git\QiitaBarrel\node_modules\electron
+140 info D:\git\QiitaBarrel\node_modules\electron unbuild
+141 info preuninstall electron@1.8.4
+142 info uninstall electron@1.8.4
+143 verbose true,D:\git\QiitaBarrel\node_modules,D:\git\QiitaBarrel\node_modules unbuild electron@1.8.4
+144 verbose D:\git\QiitaBarrel\node_modules\.bin,[object Object] binRoot
+145 info postuninstall electron@1.8.4
+146 error 404 Not Found
+146 error 404
+146 error 404 'types/node' is not in the npm registry.
+146 error 404 You should bug the author to publish it
+146 error 404 It was specified as a dependency of 'electron'
+146 error 404
+146 error 404 Note that you can also install from a
+146 error 404 tarball, folder, or http url, or git url.
+147 error System Windows_NT 10.0.16299
+148 error command "C:\\Program Files\\nodejs\\node.exe" "C:\\ProgramData\\Chocolatey\\lib\\npm\\tools\\node_modules\\npm\\bin\\npm-cli.js" "i" "-D" "electron"
+149 error cwd D:\git\QiitaBarrel
+150 error node -v v8.10.0
+151 error npm -v 1.4.9
+152 error code E404
+153 verbose exit [ 1, true ]
