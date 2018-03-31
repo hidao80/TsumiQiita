@@ -1,5 +1,5 @@
 {
-  "name": "QiitaBarrel",
+  "name": "TsumiQiita",
   "version": "1.0.0",
   "description": "MarkdownファイルをQiitaに投稿するelectron製デスクトップアプリです。",
   "main": "index.js",
@@ -7,19 +7,20 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build-win": "npx electron-packager src QiitaBarrel --pratform=win32 --arch=ia32 --overwrite"
+   "build-win": "npx electron-packager src TsumiQiita --pratform=win32 --arch=ia32 --overwrite"
+    "build-mac": "npx electron-packager src TsumiQiita --pratform=darwin --arch=x64 --overwrite"
+    "build-linux": "npx electron-packager src TsumiQiita --pratform=linux --arch=ia32 --overwrite"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hidao80/QiitaBarrel.git"
+    "url": "git+https://github.com/hidao80/TsumiQiita.git"
   },
   "author": "hidao80",
-  "license": "MIT",
+  "license": "(MIT AND CC-BY-SA-4.0)",
   "bugs": {
-    "url": "https://github.com/hidao80/QiitaBarrel/issues"
+    "url": "https://github.com/hidao80/TsumiQiita/issues"
   },
-  "homepage": "https://github.com/hidao80/QiitaBarrel#readme",
+  "homepage": "https://github.com/hidao80/TsumiQiita#readme",
   "devDependencies": {
     "electron": "^1.8.4",
     "electron-packager": "^11.2.0",
