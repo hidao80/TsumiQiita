@@ -1,6 +1,6 @@
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE.md) 
 [![npm v5.8.0](https://img.shields.io/npm/v/npm.svg?style=flat)](https://nodejs.org/ja/) 
-[![CC-BY-SA-4.0](https://i.creativecommons.org/l/by-sa/4.0/80x15.png")](http://creativecommons.org/licenses/by-sa/4.0/)
+[![CC-BY-SA-4.0](https://i.creativecommons.org/l/by-sa/4.0/80x15.png)](http://creativecommons.org/licenses/by-sa/4.0/)
 
 # TsumiQiitaとは
 
