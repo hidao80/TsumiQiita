@@ -1,7 +1,7 @@
 function Rendering(path) {
   const fs = require('fs');
 
-  fs.readFile(path, (error, text) => {
+	fs.readFile(path, (error, text) => {
     if (error != null) {
       alert('error : ' + error);
       return;
@@ -13,12 +13,12 @@ function Rendering(path) {
 // ファイルリストを取得。mdファイルのみ。
 function UpdateFileListPain(dir) {
 	let fs = require('fs');
-  if (dir === null) dir = "./md/";
+  if (dir.length == 0) retrun;
 	fs.readdir(dir, function(err, files){
 		if (err) throw err;
 		var fileList = [];
 		files.filter(function(file){
-      let regexp = new RegExp(dir + '.*\.md$');
+      let regexp = new RegExp(dir + '/.*\.md$');
       let target = dir +"/"+ file;
 			return fs.statSync(target).isFile() && regexp.test(target); //絞り込み
 		}).forEach(function (file) {
