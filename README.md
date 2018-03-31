@@ -1,6 +1,7 @@
-# QiitaBarrelとは
+# TsumiQiitaとは
 
-MarkdownファイルをQiitaに投稿するelectron製デスクトップアプリです。
+MarkdownファイルをQiitaに投稿するelectron製デスクトップアプリです。  
+下書きに入りきらない**積みQiita**をするためにご利用ください。
 
 ## 主な機能
 
