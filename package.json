@@ -1,5 +1,5 @@
 {
-  "name": "qiitabarrel",
+  "name": "QiitaBarrel",
   "version": "1.0.0",
   "description": "MarkdownファイルをQiitaに投稿するelectron製デスクトップアプリです。",
   "main": "index.js",
@@ -7,14 +7,15 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-win": "npx electron-packager src QiitaBarrel --pratform=win32 --arch=ia32 --overwrite"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hidao80/QiitaBarrel.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "hidao80",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/hidao80/QiitaBarrel/issues"
   },
@@ -23,5 +24,6 @@
     "electron": "^1.8.4",
     "electron-packager": "^11.2.0",
     "electron-packager-dummy-wine": "^1.0.2"
-  }
+  },
+  "dependencies": {}
 }

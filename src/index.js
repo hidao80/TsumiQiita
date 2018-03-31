@@ -11,8 +11,10 @@ app.on('ready', () => {
 
   // ChromiumのDevツールを開く
   mainWindow.webContents.openDevTools();
+});
 
-  mainWindow.on('closed', function() {
-    mainWindow = null;
-  });
+app.on("window-all-closed", function () {
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
 });
