@@ -21,7 +21,7 @@ html,body {
 #header {
   display: flex;
   width: 35vw;
-  font-size: 3rem;
+  font-size: 2rem;
   margin:1rem;
 }
 .menu {
@@ -31,7 +31,7 @@ html,body {
 }
 .files-item-div {
   border-bottom: 1px solid #eee;
-  font-size: 3rem;
+  font-size: 2rem;
   margin:1rem;
 }
 .files-item-label {
