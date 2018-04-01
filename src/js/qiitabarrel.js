@@ -4,7 +4,7 @@ function rendering(path) {
 
 	fs.readFile(path, (error, text) => {
     if (error != null) {
-      alert('error : ' + error);
+//      alert('error : ' + error);
       return;
     }
     document.getElementById("content").innerHTML = marked(text.toString());
@@ -23,7 +23,7 @@ function updateFileListPain(dir) {
 
 	if (dir.length == 0) return;
 	fs.readdir(dir, function(err, files){
-		if (err) throw err;
+		if (err) {throw err;}
 		let fileList = [];
 		files.filter( (file) => {
 			let target = dir + path.sep + file;
@@ -68,12 +68,12 @@ function init() {
   let config = new Config();
 
 	let targetDir = config.get('TARGET_DIR');
-  if (targetDir === "undefined") targetDir = "";
+  if (targetDir === "undefined") {targetDir = "";}
 
 	if (targetDir.length > 0) {
 		targetDir = "フォルダを選択してください";
 	} else {
-		updateFileListPain(tergetDir);	
+		updateFileListPain(targetDir);	
 	}
 	document.getElementById('target-dir').innerHTML = targetDir;
 
