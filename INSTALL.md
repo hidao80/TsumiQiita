@@ -5,7 +5,7 @@
 1. npmをインストール（https://nodejs.org/ja/）
 2. Node.js用のコマンドプロンプトを開く
 3. `$ git clone https://github.com/hidao80/TsumiQiita.git`
-4. `$ cd TsumiQiita`
+4. `$ cd TsumiQiita\src`
 5. `npm run install`
 6. `npm run build-win`
 
@@ -13,7 +13,7 @@
 
 1. npmをインストール（https://nodejs.org/ja/）
 3. `$ git clone https://github.com/hidao80/TsumiQiita.git`
-4. `$ cd TsumiQiita`
+4. `$ cd TsumiQiita\src`
 5. `npm run install`
 6. `npm run build-mac`
 
@@ -21,6 +21,6 @@
 
 1. npmをインストール（https://nodejs.org/ja/）
 3. `$ git clone https://github.com/hidao80/TsumiQiita.git`
-4. `$ cd TsumiQiita`
+4. `$ cd TsumiQiita\src`
 5. `npm run install`
 6. `npm run build-linux`

@@ -1,6 +1,7 @@
+/*jshint esversion:6*/
 const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+let app = electron.app;
+let BrowserWindow = electron.BrowserWindow;
 
 let mainWindow = null;
 app.on('ready', () => {

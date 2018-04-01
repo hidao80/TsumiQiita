@@ -1,11 +1,11 @@
 <!DOCTYPE html>
   <head>
     <meta charset="UTF-8">
-    <script src="./lib/marked.min.js"></script>
-    <script src="./lib/qiitabarrel.js"></script>
+    <script src="./js/marked.min.js"></script>
+    <script src="./js/qiitabarrel.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/qiitabarrel.css">
   </head>
-  <body>
+  <body onload="init();">
    <div class="contents">
       <div id="controls">
         <div id="header">
@@ -14,7 +14,10 @@
             <input id="nav-input" type="checkbox" class="nav-unshown">
             <label id="nav-open" for="nav-input"><span></span></label>
             <label class="nav-unshown" id="nav-close" for="nav-input"></label>
-            <div id="nav-content"></div>
+            <div id="nav-content">
+              <div class='target-dir' id='target-dir' onclick='selectTargetDir();'>
+              </div>
+            </div>
           </div>
         </div>
         <div id="files">
@@ -22,8 +25,6 @@
       </div>
      <div id="content"></div>
     </div>
-    <script>
-      UpdateFileListPain('./md');
-    </script>
+  </div>
  </body>
 </html>
