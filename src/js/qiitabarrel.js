@@ -22,13 +22,13 @@ function updateFileListPain(dir) {
 	const path = require('path');
 
 	if (dir.length === 0) {return;}
-	fs.readdir(dir, function(err, files){
+	fs.readdir(dir, (err, files) => {
 		if (err) {throw err;}
 		let fileList = [];
 		files.filter( (file) => {
 			let target = dir + path.sep + file;
 			return fs.statSync(target).isFile() && /.*\.md$/.test(target); //絞り込み
-		}).forEach(function (file) {
+		}).forEach( (file) => {
 				fileList.push(file);
 		});
 
@@ -68,9 +68,9 @@ function init() {
   let config = new Config();
 
 	let targetDir = config.get('TARGET_DIR');
+	if (targetDir === undefined) {targetDir = "";}
   if (targetDir === "undefined") {targetDir = "";}
-
-	if (targetDir.length > 0) {
+	if (targetDir.length === 0) {
 		targetDir = "フォルダを選択してください";
 	} else {
 		updateFileListPain(targetDir);	
@@ -78,9 +78,11 @@ function init() {
 	document.getElementById('target-dir').innerHTML = targetDir;
 
 	let currentFile = config.get('CURRENT_FILE');
-	if (currentFile !== undefined) {
-		if (currentFile.trim.length > 0) {
-			rendering(currentFile);
+	if (currentFile !== undefined ) {
+		if (currentFile.length > 0) {
+			const path = require('path');
+			let filePath = currentFile.replace(/\\/g, "\\\\");
+			rendering(filePath);
 		}
 	}
 }
