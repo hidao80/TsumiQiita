@@ -3,11 +3,11 @@ function rendering(path) {
   const fs = require('fs');
 
 	fs.readFile(path, (error, text) => {
-    if (error != null) {
+    if (error !== null) {
 //      alert('error : ' + error);
       return;
     }
-    document.getElementById("content").innerHTML = marked(text.toString());
+    document.getElementById("content").innerHTML = marked(text.toString()); // jshint ignore:line
 
 		const Config = require('electron-config');
 		let config = new Config();
@@ -21,7 +21,7 @@ function updateFileListPain(dir) {
 	const fs = require('fs');
 	const path = require('path');
 
-	if (dir.length == 0) return;
+	if (dir.length === 0) return;
 	fs.readdir(dir, function(err, files){
 		if (err) {throw err;}
 		let fileList = [];
