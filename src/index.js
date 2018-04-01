@@ -1,8 +1,9 @@
-var electron = require('electron');
-app = electron.app;
-BrowserWindow = electron.BrowserWindow;
+/*jshint esversion:6*/
+const electron = require('electron');
+let app = electron.app;
+let BrowserWindow = electron.BrowserWindow;
 
-mainWindow = null;
+let mainWindow = null;
 app.on('ready', () => {
   // mainWindowを作成（windowの大きさや、Kioskモードにするかどうかなどもここで定義できる）
   mainWindow = new BrowserWindow({width: 1000, height: 800});
