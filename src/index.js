@@ -1,4 +1,4 @@
-electron = require('electron');
+var electron = require('electron');
 app = electron.app;
 BrowserWindow = electron.BrowserWindow;
 

@@ -8,7 +8,7 @@ function rendering(path) {
     }
     document.getElementById("content").innerHTML = marked(text.toString());
 
-		Config = require('electron-config');
+		var Config = require('electron-config');
 		config = new Config();
 		
 		config.set('CURRENT_FILE', path);
@@ -17,8 +17,8 @@ function rendering(path) {
 
 // ファイルリストを取得。mdファイルのみ。
 function updateFileListPain(dir) {
-	fs = require('fs');
-	path = require('path');
+	var fs = require('fs');
+	var path = require('path');
 
 	if (dir.length == 0) retrun;
 	fs.readdir(dir, function(err, files){
@@ -26,7 +26,6 @@ function updateFileListPain(dir) {
 		var fileList = [];
 		files.filter(function(file){
 			target = dir + path.sep + file;
-			console.log(target);
 			return fs.statSync(target).isFile() && /.*\.md$/.test(target); //絞り込み
 		}).forEach(function (file) {
 				fileList.push(file);
@@ -34,7 +33,7 @@ function updateFileListPain(dir) {
 
     // 画面に反映
 		fileListHtml = "";
-		for(fileName of fileList) {
+		for(var fileName of fileList) {
 			filePath = dir + path.sep + fileName;
 			filePath = filePath.replace(/\\/g, "\\\\");
 			console.log(filePath);
@@ -48,15 +47,14 @@ function updateFileListPain(dir) {
 }
 
 function selectTargetDir() {
-//	remote = require('electron').remote;
-	Dialog = require('electron').remote.dialog;
+	var Dialog = require('electron').remote.dialog;
 	
 	Dialog.showOpenDialog(null, {
 		properties: ['openDirectory'],
 		title: 'フォルダの選択',
 		defaultPath: '.'
 	}, function (folderNames) {
-		Config = require('electron-config');
+		var Config = require('electron-config');
 		config = new Config();
 		console.log(folderNames);
 		config.set('TARGET_DIR', folderNames[0]);
@@ -67,7 +65,7 @@ function selectTargetDir() {
 }
 
 function init() {
-	Config = require('electron-config');
+	var Config = require('electron-config');
   config = new Config();
 
 	targetDir = new String(config.get('TARGET_DIR'));
