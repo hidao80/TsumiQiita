@@ -7,8 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-   "build-win": "npx electron-packager src TsumiQiita --pratform=win32 --arch=ia32 --overwrite"
-    "build-mac": "npx electron-packager src TsumiQiita --pratform=darwin --arch=x64 --overwrite"
+    "build-win": "npx electron-packager src TsumiQiita --pratform=win32 --arch=ia32 --overwrite",
+    "build-mac": "npx electron-packager src TsumiQiita --pratform=darwin --arch=x64 --overwrite",
     "build-linux": "npx electron-packager src TsumiQiita --pratform=linux --arch=ia32 --overwrite"
   },
   "repository": {
