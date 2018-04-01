@@ -21,7 +21,7 @@ function updateFileListPain(dir) {
 	const fs = require('fs');
 	const path = require('path');
 
-	if (dir.length === 0) return;
+	if (dir.length === 0) {return;}
 	fs.readdir(dir, function(err, files){
 		if (err) {throw err;}
 		let fileList = [];
