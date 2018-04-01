@@ -1,24 +1,24 @@
-function Rendering(path) {
-  const fs = require('fs');
+function rendering(path) {
+  let fs = require('fs');
 
-	fs.readFile(path, (error, text) => {
+	fs.readFile(path, function (error, text) {
     if (error != null) {
       alert('error : ' + error);
       return;
     }
     document.getElementById("content").innerHTML = marked(text.toString());
 
-		const Config = require('electron-config');
-		const config = new Config();
+		let Config = require('electron-config');
+		let config = new Config();
 		
 		config.set('CURRENT_FILE', path);
   });
 }
 
 // ファイルリストを取得。mdファイルのみ。
-function UpdateFileListPain(dir) {
-	const fs = require('fs');
-	const path = require('path');
+function updateFileListPain(dir) {
+	let fs = require('fs');
+	let path = require('path');
 
 	if (dir.length == 0) retrun;
 	fs.readdir(dir, function(err, files){
@@ -39,7 +39,7 @@ function UpdateFileListPain(dir) {
 			filePath = filePath.replace(/\\/g, "\\\\");
 			console.log(filePath);
 			fileListHtml += "<div class='files-item-div'>\n"
-				+ "  <input type='radio' class='files-item-radio' name='filename' id='"+fileName+"' onclick='Rendering(\""+filePath+"\")'><label for='"+fileName+"' class='files-item-label'>"+fileName+"</label>\n"
+				+ "  <input type='radio' class='files-item-radio' name='filename' id='"+fileName+"' onclick='rendering(\""+filePath+"\")'><label for='"+fileName+"' class='files-item-label'>"+fileName+"</label>\n"
 				+ "</div>\n";
 		}
 
@@ -47,28 +47,28 @@ function UpdateFileListPain(dir) {
   });
 }
 
-function SelectTargetDir() {
-//	const remote = require('electron').remote;
-	const Dialog = require('electron').remote.dialog;
+function selectTargetDir() {
+//	let remote = require('electron').remote;
+	let Dialog = require('electron').remote.dialog;
 	
 	Dialog.showOpenDialog(null, {
 		properties: ['openDirectory'],
 		title: 'フォルダの選択',
 		defaultPath: '.'
-	}, (folderNames) => {
-		const Config = require('electron-config');
-		const config = new Config();
+	}, function (folderNames) {
+		let Config = require('electron-config');
+		let config = new Config();
 		console.log(folderNames);
 		config.set('TARGET_DIR', folderNames[0]);
 		document.getElementById('target-dir').innerHTML = folderNames[0];
 
-		UpdateFileListPain(folderNames[0]);
+		updateFileListPain(folderNames[0]);
 	});
 }
 
-function Init() {
-	const Config = require('electron-config');
-  const config = new Config();
+function init() {
+	let Config = require('electron-config');
+  let config = new Config();
 
 	let targetDir = new String(config.get('TARGET_DIR'));
   if (targetDir === "undefined") targetDir = "";
@@ -76,12 +76,14 @@ function Init() {
 	if (targetDir.length > 0) {
 		targetDir = "フォルダを選択してください";
 	} else {
-		UpdateFileListPain(tergetDir);	
+		updateFileListPain(tergetDir);	
 	}
 	document.getElementById('target-dir').innerHTML = targetDir;
 
 	let currentFile = config.get('CURRENT_FILE');
-	if (currentFile !== undefined)
-		if (currentFile.trim.length > 0)
-			Rendering(currentFile);
+	if (currentFile !== undefined) {
+		if (currentFile.trim.length > 0) {
+			rendering(currentFile);
+		}
+	}
 }
