@@ -23,8 +23,11 @@
               <div>
                 <dialog id="token-input-dialog">
                     <input id="input" placeholder="トークンを入力してください"/>
-                    <button onclick="setToken();document.querySelector('#token-input-dialog').close()">閉じる</button>
+                    <button onclick="setToken();document.querySelector('#token-input-dialog').close()">保存</button>
                 </dialog>
+              </div>
+              <div onclick="post()">
+                Qiitaに送信
               </div>
             </div>
           </div>

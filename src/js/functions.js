@@ -33,7 +33,6 @@ function init() {
 	let currentFile = config.get('CURRENT_FILE');
 	if (currentFile !== undefined ) {
 		if (currentFile.length > 0) {
-			const path = require('path');
 			let filePath = currentFile.replace(/\\/g, "\\\\");
 			rendering(filePath);
 		}
@@ -94,4 +93,44 @@ function setToken() {
   const config = new Config();
 
 	config.set("TOKEN", document.querySelector('#input').value);
+}
+
+function post() {
+	const Config = require('electron-config');
+	const config = new Config();
+	
+	require('isomorphic-fetch');
+	const Qiita = require('qiita-js');
+	Qiita.setToken(config.get("TOKEN"));
+	Qiita.setEndpoint('https://qiita.com');
+		
+	const path = require('path');
+  const fs = require('fs');
+
+	let p = config.get("CURRENT_FILE");
+	let file = p.split(path.sep);
+	let filename = file[file.length-1];
+	let markdown = fs.readFileSync(p, 'utf-8');
+
+	let title = filename.replace(/\.md$/,"");
+	
+	//setting post options
+	var options = {
+		"body": markdown,
+		"private": true,
+		"tags": [
+			{
+				"name": "限定公開",
+				"versions": [
+					"0.0.1"
+				]
+			}
+		],
+		"title": title
+	};
+/*	
+	//execution　api
+	Qiita.Resources.Item.create_item(options).then(function(res){
+			console.log(res);
+	});*/
 }
