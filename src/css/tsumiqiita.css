@@ -24,8 +24,6 @@ html,body {
   font-size: 2rem;
   margin:1rem;
 }
-.menu {
-}
 .files-item-radio {
   display: none;
 }
@@ -74,8 +72,6 @@ div.target-dir {
 }
 
 
-#nav-drawer {  
-}
 /*チェックボックス等は非表示に*/
 .nav-unshown {
   display:none;
