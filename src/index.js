@@ -19,3 +19,7 @@ app.on("window-all-closed", function () {
     app.quit();
   }
 });
+
+const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
+});
+if (shouldQuit) app.quit();
