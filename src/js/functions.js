@@ -112,15 +112,14 @@ function post() {
 	let filename = file[file.length-1];
 	let markdown = fs.readFileSync(p, 'utf-8');
 
-	let title = filename.replace(/\.md$/,"");
+	let title = filename.replace(/(\.md)+$/,"");
 	
-	//setting post options
 	var options = {
 		"body": markdown,
 		"private": true,
 		"tags": [
 			{
-				"name": "限定公開",
+				"name": "TsumiQiita",
 				"versions": [
 					"0.0.1"
 				]
@@ -128,9 +127,10 @@ function post() {
 		],
 		"title": title
 	};
-/*	
+
 	//execution　api
 	Qiita.Resources.Item.create_item(options).then(function(res){
-			console.log(res);
-	});*/
+		console.log(res);
+		document.querySelector('#ok-dialog').showModal();
+	});
 }

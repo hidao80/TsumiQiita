@@ -11,7 +11,7 @@ app.on('ready', () => {
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   // ChromiumのDevツールを開く
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 });
 
 app.on("window-all-closed", function () {
