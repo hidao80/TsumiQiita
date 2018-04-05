@@ -16,6 +16,48 @@ function rendering(path) {
   });
 }
 
+function init() {
+	const Config = require('electron-config');
+  let config = new Config();
+	
+	let targetDir = config.get('TARGET_DIR');
+	if (targetDir === undefined) {targetDir = "";}
+  if (targetDir === "undefined") {targetDir = "";}
+	if (targetDir.length === 0) {
+		targetDir = "フォルダを選択してください";
+	} else {
+		updateFileListPain(targetDir);	
+	}
+	document.getElementById('target-dir').innerHTML = targetDir;
+
+	let currentFile = config.get('CURRENT_FILE');
+	if (currentFile !== undefined ) {
+		if (currentFile.length > 0) {
+			let filePath = currentFile.replace(/\\/g, "\\\\");
+			rendering(filePath);
+		}
+	}
+
+	document.querySelector('#input').value = config.get("TOKEN");
+}
+
+function selectTargetDir() {
+	const Dialog = require('electron').remote.dialog;
+	
+	Dialog.showOpenDialog(null, {
+		properties: ['openDirectory'],
+		title: 'フォルダの選択',
+		defaultPath: '.'
+	}, (folderNames) => {
+		const Config = require('electron-config');
+		let config = new Config();
+		config.set('TARGET_DIR', folderNames[0]);
+		document.getElementById('target-dir').innerHTML = folderNames[0];
+
+		updateFileListPain(folderNames[0]);
+	});
+}
+
 // ファイルリストを取得。mdファイルのみ。
 function updateFileListPain(dir) {
 	const fs = require('fs');
@@ -46,43 +88,49 @@ function updateFileListPain(dir) {
   });
 }
 
-function selectTargetDir() {
-	const Dialog = require('electron').remote.dialog;
-	
-	Dialog.showOpenDialog(null, {
-		properties: ['openDirectory'],
-		title: 'フォルダの選択',
-		defaultPath: '.'
-	}, (folderNames) => {
-		const Config = require('electron-config');
-		let config = new Config();
-		config.set('TARGET_DIR', folderNames[0]);
-		document.getElementById('target-dir').innerHTML = folderNames[0];
+function setToken() {
+	const Config = require('electron-config');
+  const config = new Config();
 
-		updateFileListPain(folderNames[0]);
-	});
+	config.set("TOKEN", document.querySelector('#input').value);
 }
 
-function init() {
+function post() {
 	const Config = require('electron-config');
-  let config = new Config();
+	const config = new Config();
+	
+	require('isomorphic-fetch');
+	const Qiita = require('qiita-js');
+	Qiita.setToken(config.get("TOKEN"));
+	Qiita.setEndpoint('https://qiita.com');
+		
+	const path = require('path');
+  const fs = require('fs');
 
-	let targetDir = config.get('TARGET_DIR');
-	if (targetDir === undefined) {targetDir = "";}
-  if (targetDir === "undefined") {targetDir = "";}
-	if (targetDir.length === 0) {
-		targetDir = "フォルダを選択してください";
-	} else {
-		updateFileListPain(targetDir);	
-	}
-	document.getElementById('target-dir').innerHTML = targetDir;
+	let p = config.get("CURRENT_FILE");
+	let file = p.split(path.sep);
+	let filename = file[file.length-1];
+	let markdown = fs.readFileSync(p, 'utf-8');
 
-	let currentFile = config.get('CURRENT_FILE');
-	if (currentFile !== undefined ) {
-		if (currentFile.length > 0) {
-			const path = require('path');
-			let filePath = currentFile.replace(/\\/g, "\\\\");
-			rendering(filePath);
-		}
-	}
+	let title = filename.replace(/(\.md)+$/,"");
+	
+	var options = {
+		"body": markdown,
+		"private": true,
+		"tags": [
+			{
+				"name": "TsumiQiita",
+				"versions": [
+					"0.0.1"
+				]
+			}
+		],
+		"title": title
+	};
+
+	//execution　api
+	Qiita.Resources.Item.create_item(options).then(function(res){
+		console.log(res);
+		document.querySelector('#ok-dialog').showModal();
+	});
 }
