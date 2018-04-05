@@ -2,11 +2,10 @@
   <head>
     <meta charset="UTF-8">
     <script src="./js/marked.min.js"></script>
-    <script src="./js/functions.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/tsumiqiita.css">
     <link rel="stylesheet" type="text/css" href="./css/style.css">
   </head>
-  <body onload="init();">
+  <body onload="init()">
    <div class="contents">
       <div id="controls">
         <div id="header">
@@ -16,7 +15,16 @@
             <label id="nav-open" for="nav-input"><span></span></label>
             <label class="nav-unshown" id="nav-close" for="nav-input"></label>
             <div id="nav-content">
-              <div class='target-dir' id='target-dir' onclick='selectTargetDir();'>
+              <div class='target-dir' id='target-dir' onclick='selectTargetDir()'>
+              </div>
+              <div onclick="document.querySelector('#token-input-dialog').showModal()">
+                トークンをセット
+              </div>
+              <div>
+                <dialog id="token-input-dialog">
+                    <input id="input" placeholder="トークンを入力してください"/>
+                    <button onclick="setToken();document.querySelector('#token-input-dialog').close()">閉じる</button>
+                </dialog>
               </div>
             </div>
           </div>
@@ -27,5 +35,6 @@
      <div id="content"></div>
     </div>
   </div>
- </body>
+  <script src="./js/functions.js"></script>
+</body>
 </html>
