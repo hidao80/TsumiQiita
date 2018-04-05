@@ -22,4 +22,4 @@ app.on("window-all-closed", function () {
 
 const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
 });
-if (shouldQuit) app.quit();
+if (shouldQuit) {app.quit();}
