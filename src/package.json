@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "build-css": "node-sass styles/default-theme.scss css/style.css",
+    "build-css": "node-sass scss/default-theme.scss css/style.css",
     "build-win": "electron-packager . TsumiQiita --out=../build --pratform=win32 --arch=ia32 --overwrite --asar",
     "build-mac": "electron-packager . TsumiQiita --out=../build --pratform=darwin --arch=x64 --overwrite --asar",
     "build-linux": "electron-packager . TsumiQiita --out=../build --pratform=linux --arch=ia32 --overwrite --asar"

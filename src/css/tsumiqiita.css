@@ -33,17 +33,36 @@ html,body {
   border-bottom: 1px solid #eee;
   margin:1rem;
 }
+input[type="radio"]:checked + .files-item-label {
+  color: #fff;
+  background-color: deepskyblue;
+}
 .files-item-label {
   display: block;
   font-size: 1.3rem;
   margin: 0;
-  height: 5vh;
-  width: 35vw;
+  height: 100%;
+  width: 100%;
   white-space: nowrap;
 }
-input[type=radio]:checked + .files-item-label {
+.menu-item-radio {
+  display: none;
+}
+.menu-item-div {
+  border-bottom: 1px solid #eee;
+  margin:1rem;
+}
+input[type="radio"]:checked + .menu-item-label {
   color: #fff;
   background-color: deepskyblue;
+}
+.menu-item-label {
+  display: block;
+  font-size: 1.3rem;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  white-space: nowrap;
 }
 div.target-dir {
   border-bottom: 1px solid #eee;

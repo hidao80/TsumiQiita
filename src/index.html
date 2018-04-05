@@ -15,10 +15,11 @@
             <label id="nav-open" for="nav-input"><span></span></label>
             <label class="nav-unshown" id="nav-close" for="nav-input"></label>
             <div id="nav-content">
-              <div class='target-dir' id='target-dir' onclick='selectTargetDir()'>
+              <div class='menu-item-div'>
+                  <input type='radio' class='target-dir menu-item-radio' name='menu' id='target-dir' onclick='selectTargetDir()'><label for='target-dir' class='menu-item-label'>対象フォルダを選択</label>
               </div>
-              <div onclick="document.querySelector('#token-input-dialog').showModal()">
-                トークンをセット
+              <div class='menu-item-div'>
+                    <input type='radio' class='menu-item-radio' name='menu' id='path' onclick='document.querySelector("#token-input-dialog").showModal()'><label for='path' class='menu-item-label'>トークンをセット</label>
               </div>
               <div>
                 <dialog id="token-input-dialog">
@@ -26,8 +27,8 @@
                     <button onclick="setToken();document.querySelector('#token-input-dialog').close()">保存</button>
                 </dialog>
               </div>
-              <div onclick="post()">
-                Qiitaに限定公開
+              <div class='menu-item-div'>
+                  <input type='radio' class='menu-item-radio' name='menu' id='post' onclick='post()'><label for='post' class='menu-item-label'>Qiitaに限定公開</label>
               </div>
               <div>
                 <dialog id="ok-dialog">
