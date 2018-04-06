@@ -2,7 +2,7 @@
 
 ## Windows7^
 
-1. npmをインストール（https://nodejs.org/ja/）
+1. npmをインストール ( https://nodejs.org/ja/ )
 2. Node.js用のコマンドプロンプトを開く
 3. `$ git clone https://github.com/hidao80/TsumiQiita.git`
 4. `$ cd TsumiQiita\src`
@@ -11,7 +11,7 @@
 
 ## macOS 10.13^
 
-1. npmをインストール（https://nodejs.org/ja/）
+1. npmをインストール ( https://nodejs.org/ja/ )
 3. `$ git clone https://github.com/hidao80/TsumiQiita.git`
 4. `$ cd TsumiQiita\src`
 5. `npm install`
@@ -19,7 +19,7 @@
 
 ## Linux
 
-1. npmをインストール（https://nodejs.org/ja/）
+1. npmをインストール ( https://nodejs.org/ja/ )
 3. `$ git clone https://github.com/hidao80/TsumiQiita.git`
 4. `$ cd TsumiQiita\src`
 5. `npm install`
