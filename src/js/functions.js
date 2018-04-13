@@ -116,7 +116,7 @@ function post() {
 	
 	var options = {
 		"body": markdown,
-		"private": "true",
+		"private": true,
 		"tags": [
 			{
 				"name": "TsumiQiita",
