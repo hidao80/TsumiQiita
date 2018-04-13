@@ -116,7 +116,7 @@ function post() {
 	
 	var options = {
 		"body": markdown,
-		"private": true,
+		"private": "true",
 		"tags": [
 			{
 				"name": "TsumiQiita",
@@ -131,6 +131,10 @@ function post() {
 	//execution　api
 	Qiita.Resources.Item.create_item(options).then(function(res){
 		console.log(res);
-		document.querySelector('#ok-dialog').showModal();
+		if (parseInt(res.statusCode, 10) >= 400) {
+			document.querySelector('#ok-dialog').showModal();
+		} else {
+			document.querySelector('#ng-dialog').showModal();
+		}
 	});
 }
