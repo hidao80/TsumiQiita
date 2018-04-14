@@ -4,10 +4,17 @@ html,body {
   padding: 0;
   width: 100%;
 }
-#content {
+#prevew {
   height: 100vh;
   margin: 0;
-  width: 65vw;
+  width: 33vw;
+}
+#tsumiqiita-editor {
+  outline: none;
+  border: none;
+  height: 99vh;
+  margin: 0;
+  width: 32vw;
 }
 .contents {
   display: flex;

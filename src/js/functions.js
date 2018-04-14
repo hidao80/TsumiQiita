@@ -1,4 +1,26 @@
 /*jshint esversion:6*/
+/*jslint devel: true */
+function rerendaring() {
+	const fs = require('fs');
+	const Config = require('electron-config');
+  let config = new Config();
+	
+	let md = document.querySelector("#tsumiqiita-editor").value;
+	document.querySelector("#preview").innerHTML = marked(md); // jshint ignore:line
+	try {
+		let currentFile = config.get('CURRENT_FILE');
+		if (currentFile !== undefined ) {
+			if (currentFile.length > 0) {
+				let filePath = currentFile.replace(/\\/g, "\\\\");
+				fs.writeFileSync(filePath, md);
+			}
+		}
+	} catch(err) {
+		alert("exception!\n\n"+err);
+		return false;
+	}
+}
+
 function rendering(path) {
   const fs = require('fs');
 
@@ -7,7 +29,8 @@ function rendering(path) {
 //      alert('error : ' + error);
       return;
     }
-    document.getElementById("content").innerHTML = marked(text.toString()); // jshint ignore:line
+    document.querySelector("#preview").innerHTML = marked(text.toString()); // jshint ignore:line
+    document.querySelector("#tsumiqiita-editor").value = text.toString();
 
 		const Config = require('electron-config');
 		let config = new Config();
@@ -131,6 +154,37 @@ function post() {
 	//execution　api
 	Qiita.Resources.Item.create_item(options).then(function(res){
 		console.log(res);
-		document.querySelector('#ok-dialog').showModal();
+		if (parseInt(res.statusCode, 10) >= 400) {
+			document.querySelector('#ok-dialog').showModal();
+		} else {
+			document.querySelector('#ng-dialog').showModal();
+		}
+	});
+}
+
+function createArticle() {
+	const Dialog = require('electron').remote.dialog;
+	const fs = require('fs');
+	
+	Dialog.showSaveDialog(null, {
+		title: '新規作成',
+		defaultPath: '.',
+		filters: [
+				{name: 'Markdownファイル', extensions: ['md']},
+		]
+	}, (savedFiles) => {
+		const Config = require('electron-config');
+		let config = new Config();
+
+		try {
+			fs.writeFileSync(savedFiles, "");
+			config.set('CURRENT_FILE', savedFiles);
+			updateFileListPain(config.get('TARGET_DIR'));
+			rendering(savedFiles);
+			document.querySelector("#nav-input").checked = false;
+		} catch(err) {
+			alert("exception!\n\n"+err);
+			return false;	
+		}
 	});
 }

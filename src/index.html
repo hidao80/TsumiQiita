@@ -1,50 +1,59 @@
 <!DOCTYPE html>
-  <head>
-    <meta charset="UTF-8">
-    <script src="./js/marked.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/tsumiqiita.css">
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
-  </head>
-  <body onload="init()">
-   <div class="contents">
-      <div id="controls">
-        <div id="header">
-          <div>TsumiQiita</div>
-          <div id="menu">
-            <input id="nav-input" type="checkbox" class="nav-unshown">
-            <label id="nav-open" for="nav-input"><span></span></label>
-            <label class="nav-unshown" id="nav-close" for="nav-input"></label>
-            <div id="nav-content">
-              <div class='menu-item-div'>
-                  <input type='radio' class='target-dir menu-item-radio' name='menu' id='target-dir' onclick='selectTargetDir()'><label for='target-dir' class='menu-item-label'>対象フォルダを選択</label>
-              </div>
-              <div class='menu-item-div'>
-                    <input type='radio' class='menu-item-radio' name='menu' id='path' onclick='document.querySelector("#token-input-dialog").showModal()'><label for='path' class='menu-item-label'>トークンをセット</label>
-              </div>
-              <div>
-                <dialog id="token-input-dialog">
-                    <input id="input" placeholder="トークンを入力してください"/>
-                    <button onclick="setToken();document.querySelector('#token-input-dialog').close()">保存</button>
-                </dialog>
-              </div>
-              <div class='menu-item-div'>
-                  <input type='radio' class='menu-item-radio' name='menu' id='post' onclick='post()'><label for='post' class='menu-item-label'>Qiitaに限定公開</label>
-              </div>
-              <div>
-                <dialog id="ok-dialog">
-                  限定公開されました！<br>
-                  <button onclick="document.querySelector('#ok-dialog').close()">閉じる</button>
-                </dialog>
-              </div>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="./js/marked.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./css/tsumiqiita.css">
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+<body onload="init()">
+  <div class="contents">
+    <div id="controls">
+      <div id="header">
+        <div>TsumiQiita</div>
+        <div id="menu">
+          <input id="nav-input" type="checkbox" class="nav-unshown">
+          <label id="nav-open" for="nav-input"><span></span></label>
+          <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+          <div id="nav-content">
+            <div class='menu-item-div'>
+              <input type='radio' class='target-dir menu-item-radio' name='menu' id='article-name' onclick='createArticle()'><label for='article-name' class='menu-item-label'>新規作成</label>
             </div>
-          </div>
-        </div>
-        <div id="files">
-        </div>
-      </div>
-     <div id="content"></div>
-    </div>
-  </div>
+            <div class='menu-item-div'>
+                <input type='radio' class='target-dir menu-item-radio' name='menu' id='target-dir' onclick='selectTargetDir()'><label for='target-dir' class='menu-item-label'>対象フォルダを選択</label>
+            </div>
+            <div class='menu-item-div'>
+                  <input type='radio' class='menu-item-radio' name='menu' id='path' onclick='document.querySelector("#token-input-dialog").showModal()'><label for='path' class='menu-item-label'>トークンをセット</label>
+            </div>
+            <div>
+              <dialog id="token-input-dialog">
+                  <input id="input" placeholder="トークンを入力してください"/>
+                  <button onclick="setToken();document.querySelector('#token-input-dialog').close()">保存</button>
+              </dialog>
+            </div>
+            <div class='menu-item-div'>
+                <input type='radio' class='menu-item-radio' name='menu' id='post' onclick='post()'><label for='post' class='menu-item-label'>Qiitaに限定公開</label>
+            </div>
+            <div>
+              <dialog id="ok-dialog">
+                限定公開されました！<br>
+                <button onclick="document.querySelector('#ok-dialog').close()">閉じる</button>
+              </dialog>
+            </div>
+            <div>
+              <dialog id="ng-dialog">
+                限定公開に失敗しました…<br>
+                <button onclick="document.querySelector('#ng-dialog').close()">閉じる</button>
+              </dialog>
+            </div>
+          </div data-comment="end nav-content">
+        </div data-comment="end item">
+      </div data-comment="end header">
+      <div id="files"></div>
+    </div data-comment="end controls">
+    <textarea id="tsumiqiita-editor" oninput="rerendaring()"></textarea>
+    <div id="preview"></div>
+  </div data-comment="end contents">
   <script src="./js/functions.js"></script>
 </body>
 </html>
