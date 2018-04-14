@@ -162,5 +162,28 @@ function post() {
 }
 
 function createArticle() {
+	const Dialog = require('electron').remote.dialog;
+	const fs = require('fs');
+	
+	Dialog.showSaveDialog(null, {
+		title: '新規作成',
+		defaultPath: '.',
+		filters: [
+				{name: 'Markdownファイル', extensions: ['md']},
+		]
+	}, (savedFiles) => {
+		const Config = require('electron-config');
+		let config = new Config();
 
+		try {
+			fs.writeFileSync(savedFiles, "");
+			config.set('CURRENT_FILE', savedFiles);
+			updateFileListPain(config.get('TARGET_DIR'));
+			rendering(savedFiles);
+			document.querySelector("#nav-input").checked = false;
+		} catch(err) {
+			alert("exception!\n\n"+err);
+			return false;	
+		}
+	});
 }
