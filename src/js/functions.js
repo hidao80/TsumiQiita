@@ -1,4 +1,5 @@
 /*jshint esversion:6*/
+/*jslint devel: true */
 function rerendaring() {
 	const fs = require('fs');
 	const Config = require('electron-config');
