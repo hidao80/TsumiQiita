@@ -1,7 +1,23 @@
 /*jshint esversion:6*/
 function rerendaring() {
-	document.querySelector("#preview").innerHTML
-		= marked(document.querySelector("#tsumiqiita-editor").value); // jshint ignore:line
+	const fs = require('fs');
+	const Config = require('electron-config');
+  let config = new Config();
+	
+	let md = document.querySelector("#tsumiqiita-editor").value;
+	document.querySelector("#preview").innerHTML = marked(md); // jshint ignore:line
+	try {
+		let currentFile = config.get('CURRENT_FILE');
+		if (currentFile !== undefined ) {
+			if (currentFile.length > 0) {
+				let filePath = currentFile.replace(/\\/g, "\\\\");
+				fs.writeFileSync(filePath, md);
+			}
+		}
+	} catch(err) {
+		alert("exception!\n\n"+err);
+		return false;
+	}
 }
 
 function rendering(path) {
