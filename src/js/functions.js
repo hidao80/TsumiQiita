@@ -1,4 +1,9 @@
 /*jshint esversion:6*/
+function rerendaring() {
+	document.querySelector("#preview").innerHTML
+		= marked(document.querySelector("#tsumiqiita-editor").value); // jshint ignore:line
+}
+
 function rendering(path) {
   const fs = require('fs');
 
@@ -7,7 +12,8 @@ function rendering(path) {
 //      alert('error : ' + error);
       return;
     }
-    document.getElementById("content").innerHTML = marked(text.toString()); // jshint ignore:line
+    document.querySelector("#preview").innerHTML = marked(text.toString()); // jshint ignore:line
+    document.querySelector("#tsumiqiita-editor").value = text.toString();
 
 		const Config = require('electron-config');
 		let config = new Config();
@@ -137,4 +143,8 @@ function post() {
 			document.querySelector('#ng-dialog').showModal();
 		}
 	});
+}
+
+function createArticle() {
+
 }
