@@ -144,7 +144,7 @@ function post() {
 			{
 				"name": "TsumiQiita",
 				"versions": [
-					"0.0.1"
+					"0.2.0"
 				]
 			}
 		],
