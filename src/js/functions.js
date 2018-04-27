@@ -3,19 +3,6 @@
 var timer;
 const WRITE_INTERVAL = 10000; 
 
-function rerendaring() {
-	let md = document.querySelector("#tsumiqiita-editor").value;
-	document.querySelector("#preview").innerHTML = marked(md); // jshint ignore:line
-	try {
-		document.querySelector("#title").style.fontStyle = "italic";
-		clearTimeout(timer);
-		timer = setInterval(writeMarkdownFile, WRITE_INTERVAL);
-	} catch(err) {
-		alert("exception!\n\n"+err);
-		return false;
-	}
-}
-
 function writeMarkdownFile () {
 	const fs = require('fs');
 	const Config = require('electron-config');
@@ -31,6 +18,19 @@ function writeMarkdownFile () {
 			clearInterval(timer);
 			document.querySelector("#title").style.fontStyle = "normal";
 		}
+	}
+}
+
+function rerendaring() {
+	let md = document.querySelector("#tsumiqiita-editor").value;
+	document.querySelector("#preview").innerHTML = marked(md); // jshint ignore:line
+	try {
+		document.querySelector("#title").style.fontStyle = "italic";
+		clearTimeout(timer);
+		timer = setInterval(writeMarkdownFile, WRITE_INTERVAL);
+	} catch(err) {
+		alert("exception!\n\n"+err);
+		return false;
 	}
 }
 
