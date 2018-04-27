@@ -4,4 +4,4 @@ TsumiQiita-*
 npm-debug.log
 build/
 token.txt
-package-lock.json
+src/package-lock.json
