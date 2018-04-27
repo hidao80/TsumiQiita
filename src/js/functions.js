@@ -1,20 +1,33 @@
 /*jshint esversion:6*/
 /*jslint devel: true */
-function rerendaring() {
+var timer;
+const WRITE_INTERVAL = 10000; 
+
+function writeMarkdownFile () {
 	const fs = require('fs');
 	const Config = require('electron-config');
   let config = new Config();
 	
+	let currentFile = config.get('CURRENT_FILE');
+	let md = document.querySelector("#tsumiqiita-editor").value;
+
+	if (currentFile !== undefined ) {
+		if (currentFile.length > 0) {
+			let filePath = currentFile.replace(/\\/g, "\\\\");
+			fs.writeFileSync(filePath, md);
+			clearInterval(timer);
+			document.querySelector("#title").style.fontStyle = "normal";
+		}
+	}
+}
+
+function rerendaring() {
 	let md = document.querySelector("#tsumiqiita-editor").value;
 	document.querySelector("#preview").innerHTML = marked(md); // jshint ignore:line
 	try {
-		let currentFile = config.get('CURRENT_FILE');
-		if (currentFile !== undefined ) {
-			if (currentFile.length > 0) {
-				let filePath = currentFile.replace(/\\/g, "\\\\");
-				fs.writeFileSync(filePath, md);
-			}
-		}
+		document.querySelector("#title").style.fontStyle = "italic";
+		clearTimeout(timer);
+		timer = setInterval(writeMarkdownFile, WRITE_INTERVAL);
 	} catch(err) {
 		alert("exception!\n\n"+err);
 		return false;
@@ -144,7 +157,7 @@ function post() {
 			{
 				"name": "TsumiQiita",
 				"versions": [
-					"1.0.0"
+					"1.1.0"
 				]
 			}
 		],
@@ -155,9 +168,9 @@ function post() {
 	Qiita.Resources.Item.create_item(options).then(function(res){
 		console.log(res);
 		if (parseInt(res.statusCode, 10) >= 400) {
-			document.querySelector('#ok-dialog').showModal();
-		} else {
 			document.querySelector('#ng-dialog').showModal();
+		} else {
+			document.querySelector('#ok-dialog').showModal();
 		}
 	});
 }
