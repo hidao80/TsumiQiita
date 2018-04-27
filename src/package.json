@@ -1,6 +1,6 @@
 {
   "name": "TsumiQiita",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "MarkdownファイルをQiitaに投稿するelectron製デスクトップアプリです。",
   "main": "index.js",
   "directories": {

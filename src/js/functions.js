@@ -157,7 +157,7 @@ function post() {
 			{
 				"name": "TsumiQiita",
 				"versions": [
-					"1.0.0"
+					"1.1.0"
 				]
 			}
 		],
@@ -168,9 +168,9 @@ function post() {
 	Qiita.Resources.Item.create_item(options).then(function(res){
 		console.log(res);
 		if (parseInt(res.statusCode, 10) >= 400) {
-			document.querySelector('#ok-dialog').showModal();
-		} else {
 			document.querySelector('#ng-dialog').showModal();
+		} else {
+			document.querySelector('#ok-dialog').showModal();
 		}
 	});
 }
