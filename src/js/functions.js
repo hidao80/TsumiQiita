@@ -10,7 +10,8 @@ function rerendaring() {
 	
 	let md = document.querySelector("#tsumiqiita-editor").value;
 	document.querySelector("#preview").innerHTML = marked(md); // jshint ignore:line
-	try {		
+	try {
+		documnet.querySelector("#title").style.fontStyle = "italic";
 		clearTimeout(timer);
 		timer = setInterval(writeMarkdownFile, WRITE_INTERVAL);
 	} catch(err) {
@@ -26,6 +27,7 @@ function writeMarkdownFile () {
 			let filePath = currentFile.replace(/\\/g, "\\\\");
 			fs.writeFileSync(filePath, md);
 			clearInterval(timer);
+			documnet.querySelector("#title").style.fontStyle = "normal";
 		}
 	}
 }
