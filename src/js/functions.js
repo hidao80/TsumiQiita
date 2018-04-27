@@ -138,7 +138,7 @@ function post() {
 	require('isomorphic-fetch');
 	const Qiita = require('qiita-js');
 	Qiita.setToken(config.get("TOKEN"));
-	Qiita.setEndpoint('https://qiita.com/api/v2/items');
+	Qiita.setEndpoint('https://qiita.com');
 		
 	const path = require('path');
   const fs = require('fs');
