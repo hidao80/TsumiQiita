@@ -4,14 +4,10 @@ var timer;
 const WRITE_INTERVAL = 10000; 
 
 function rerendaring() {
-	const fs = require('fs');
-	const Config = require('electron-config');
-  let config = new Config();
-	
 	let md = document.querySelector("#tsumiqiita-editor").value;
 	document.querySelector("#preview").innerHTML = marked(md); // jshint ignore:line
 	try {
-		documnet.querySelector("#title").style.fontStyle = "italic";
+		document.querySelector("#title").style.fontStyle = "italic";
 		clearTimeout(timer);
 		timer = setInterval(writeMarkdownFile, WRITE_INTERVAL);
 	} catch(err) {
@@ -21,13 +17,19 @@ function rerendaring() {
 }
 
 function writeMarkdownFile () {
+	const fs = require('fs');
+	const Config = require('electron-config');
+  let config = new Config();
+	
 	let currentFile = config.get('CURRENT_FILE');
+	let md = document.querySelector("#tsumiqiita-editor").value;
+
 	if (currentFile !== undefined ) {
 		if (currentFile.length > 0) {
 			let filePath = currentFile.replace(/\\/g, "\\\\");
 			fs.writeFileSync(filePath, md);
 			clearInterval(timer);
-			documnet.querySelector("#title").style.fontStyle = "normal";
+			document.querySelector("#title").style.fontStyle = "normal";
 		}
 	}
 }
