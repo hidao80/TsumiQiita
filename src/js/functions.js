@@ -1,5 +1,8 @@
 /*jshint esversion:6*/
 /*jslint devel: true */
+var timer;
+const WRITE_INTERVAL = 10000; 
+
 function rerendaring() {
 	const fs = require('fs');
 	const Config = require('electron-config');
@@ -7,17 +10,23 @@ function rerendaring() {
 	
 	let md = document.querySelector("#tsumiqiita-editor").value;
 	document.querySelector("#preview").innerHTML = marked(md); // jshint ignore:line
-	try {
-		let currentFile = config.get('CURRENT_FILE');
-		if (currentFile !== undefined ) {
-			if (currentFile.length > 0) {
-				let filePath = currentFile.replace(/\\/g, "\\\\");
-				fs.writeFileSync(filePath, md);
-			}
-		}
+	try {		
+		clearTimeout(timer);
+		timer = setInterval(writeMarkdownFile, WRITE_INTERVAL);
 	} catch(err) {
 		alert("exception!\n\n"+err);
 		return false;
+	}
+}
+
+function writeMarkdownFile () {
+	let currentFile = config.get('CURRENT_FILE');
+	if (currentFile !== undefined ) {
+		if (currentFile.length > 0) {
+			let filePath = currentFile.replace(/\\/g, "\\\\");
+			fs.writeFileSync(filePath, md);
+			clearInterval(timer);
+		}
 	}
 }
 
