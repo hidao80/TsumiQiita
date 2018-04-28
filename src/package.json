@@ -1,6 +1,6 @@
 {
   "name": "TsumiQiita",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "MarkdownファイルをQiitaに投稿するelectron製デスクトップアプリです。",
   "main": "index.js",
   "directories": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build-css": "node-sass scss/default-theme.scss css/style.css",
-    "build-win": "electron-packager . TsumiQiita --out=../build --pratform=win32 --arch=ia32 --overwrite --asar",
+    "build-win": "electron-packager . TsumiQiita --out=../build --pratform=win32 --arch=ia32 --overwrite --asar=true",
     "build-mac": "electron-packager . TsumiQiita --out=../build --pratform=darwin --arch=x64 --overwrite --asar",
     "build-linux": "electron-packager . TsumiQiita --out=../build --pratform=linux --arch=ia32 --overwrite --asar"
   },
@@ -17,7 +17,7 @@
     "url": "git+https://github.com/hidao80/TsumiQiita.git"
   },
   "author": "hidao80",
-  "license": "(MIT AND CC-BY-SA-4.0)",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/hidao80/TsumiQiita/issues"
   },
