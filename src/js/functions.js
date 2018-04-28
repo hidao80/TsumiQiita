@@ -1,7 +1,7 @@
 /*jshint esversion:6*/
 /*jslint devel: true */
 var timer;
-const WRITE_INTERVAL = 10000; 
+const WRITE_INTERVAL = 3000; 
 
 function writeMarkdownFile () {
 	const fs = require('fs');
@@ -157,7 +157,7 @@ function post() {
 			{
 				"name": "TsumiQiita",
 				"versions": [
-					"1.1.0"
+					"1.1.1"
 				]
 			}
 		],
