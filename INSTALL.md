@@ -1,29 +1,39 @@
 # インストール方法
 
-## Windows7^
-
-1. gitをインストール (<https://git-scm.com/downloads>)
-1. npmをインストール (<https://nodejs.org/ja/>)
-1. Node.js用のコマンドプロンプトを開く
-1. `$ git clone https://github.com/hidao80/TsumiQiita.git`
-1. `$ cd TsumiQiita\src`
-1. `npm install`
-1. `npm run build-win`
-
-## macOS 10.13^
+## ソースの取得
 
 1. gitをインストール (<https://git-scm.com/downloads>)
 1. npmをインストール (<https://nodejs.org/ja/>)
 1. `$ git clone https://github.com/hidao80/TsumiQiita.git`
-1. `$ cd TsumiQiita/src`
-1. `npm install`
-1. `npm run build-mac`
 
-## Linux
+## ビルド環境で動くようにビルド
 
-1. gitをインストール (<https://git-scm.com/downloads>)
-1. npmをインストール (<https://nodejs.org/ja/>)
-1. `$ git clone https://github.com/hidao80/TsumiQiita.git`
-1. `$ cd TsumiQiita/src`
-1. `npm install`
-1. `npm run build-linux`
+```sh
+cd TsumiQiita/src
+npm install
+npm run build
+```
+
+## Windows7^ 向けにビルド
+
+```sh
+cd TsumiQiita\src
+npm install
+npm run build-win
+```
+
+## macOS 10.13^ 向けにビルド
+
+```sh
+$ cd TsumiQiita/src
+npm install
+npm run build-mac
+```
+
+## Linux 向けにビルド
+
+```sh
+$ cd TsumiQiita/src
+npm install
+npm run build-linux
+```
