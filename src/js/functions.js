@@ -52,6 +52,14 @@ function rendering(path) {
   });
 }
 
+function setScrollSync() {
+	var p = document.querySelector('#preview');
+	var e = document.querySelector('#tsumiqiita-editor');
+	
+	p.onscroll = () => {e.scrollTop = p.scrollTop;};
+	e.onscroll = () => {p.scrollTop = e.scrollTop;};
+}
+
 function init() {
 	const Config = require('electron-config');
   let config = new Config();
@@ -75,6 +83,8 @@ function init() {
 	}
 
 	document.querySelector('#input').value = config.get("TOKEN");
+
+	setScrollSync();
 }
 
 function selectTargetDir() {
@@ -157,7 +167,7 @@ function post() {
 			{
 				"name": "TsumiQiita",
 				"versions": [
-					"1.1.1"
+					"1.2.0"
 				]
 			}
 		],
