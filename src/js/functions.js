@@ -144,10 +144,10 @@ function setToken() {
 function getTags() {
 	const text = document.querySelector("#tags").value;
 	let ret = [];
-	let tags = text.trim().split(" ");
+	const tags = text.trim().split(" ");
 	
 	for(let i = 0; i < tags.length; i++) {
-		tmp = tags[i].split(":");
+		let tmp = tags[i].split(":");
 		if (tmp.length < 2) {
 			ret.push({"name":tmp[0]});
 		} else {
@@ -187,7 +187,7 @@ function post() {
 	//execution　api
 	Qiita.Resources.Item.create_item(options).then(function(res){
 		console.log(res);
-		if (res.message != undefined) {
+		if (res.message !== undefined) {
 			document.querySelector('#ng-dialog').showModal();
 		} else {
 			document.querySelector('#ok-dialog').showModal();
