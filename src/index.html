@@ -40,7 +40,7 @@
             </dialog>
           </div>
           <div>
-            <dialog id="ng-dalog">
+            <dialog id="ng-dialog">
               限定公開に失敗しました…<br>
               <button onclick="document.querySelector('#ng-dialog').close()">閉じる</button>
             </dialog>
@@ -52,6 +52,7 @@
   </div data-comment="end controls">
   <div>
     <div id="preview" class="markdown-content"></div>
+    <lable for="tags" id="tags-label">タグ：</lable><input type="text" id="tags" placeholder="タグを入力してください">
     <textarea id="tsumiqiita-editor" oninput="rerendaring()"></textarea>
   </div>
   <script src="./js/functions.js"></script>

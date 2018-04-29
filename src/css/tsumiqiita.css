@@ -13,11 +13,20 @@ html,body {
   margin: 0;
   width: calc(100vw - 2px);
 }
+#tags-label {
+  font-size: 1rem;
+  width: 3rem;
+}
+#tags {
+  border: 1px solid darkgray;
+  margin: 0;
+  width: calc(100vw - 22px - 3rem);  
+}
 #tsumiqiita-editor {
   overflow-x: hidden;
   overflow-y: scroll;
   border: 1px solid darkgray;
-  height: calc(50vh - 2px);
+  height: calc(50vh - 2px - 1.1rem);
   margin: 0;
   resize: none;
   width: calc(100vw - 22px);

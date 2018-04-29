@@ -141,6 +141,23 @@ function setToken() {
 	config.set("TOKEN", document.querySelector('#input').value);
 }
 
+function getTags() {
+	const text = document.querySelector("#tags").value;
+	let ret = [];
+	const tags = text.trim().split(" ");
+	
+	for(let i = 0; i < tags.length; i++) {
+		let tmp = tags[i].split(":");
+		if (tmp.length < 2) {
+			ret.push({"name":tmp[0]});
+		} else {
+			ret.push({"name":tmp[0], "versions": [tmp[1]]});
+		}
+	}
+	console.log(JSON.stringify(ret));
+	return ret;
+}
+
 function post() {
 	const Config = require('electron-config');
 	const config = new Config();
@@ -159,25 +176,18 @@ function post() {
 	let markdown = fs.readFileSync(p, 'utf-8');
 
 	let title = filename.replace(/(\.md)+$/,"");
-	
+
 	var options = {
 		"body": markdown,
 		"private": true,
-		"tags": [
-			{
-				"name": "TsumiQiita",
-				"versions": [
-					"1.2.0"
-				]
-			}
-		],
+		"tags": getTags(),
 		"title": title
 	};
 
 	//execution　api
 	Qiita.Resources.Item.create_item(options).then(function(res){
 		console.log(res);
-		if (parseInt(res.statusCode, 10) >= 400) {
+		if (res.message !== undefined) {
 			document.querySelector('#ng-dialog').showModal();
 		} else {
 			document.querySelector('#ok-dialog').showModal();

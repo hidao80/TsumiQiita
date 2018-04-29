@@ -4,7 +4,7 @@
 1. npmをインストール (<https://nodejs.org/ja/>)
 
 ```sh
-git clone https://github.com/hidao80/TsumiQiita.git`
+git clone https://github.com/hidao80/TsumiQiita.git
 cd TsumiQiita/src
 npm install
 npm run build
