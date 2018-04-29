@@ -1,35 +1,46 @@
 html,body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
-#prevew {
   height: 100vh;
   margin: 0;
-  width: 33vw;
+  padding: 0;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+}
+#preview {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 50vh;
+  margin: 0;
+  width: calc(100vw - 2px);
 }
 #tsumiqiita-editor {
-  outline: none;
-  border: none;
-  height: 99vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  border: 1px solid darkgray;
+  height: calc(50vh - 2px);
   margin: 0;
-  width: 32vw;
+  resize: none;
+  width: calc(100vw - 22px);
 }
-.contents {
-  display: flex;
-  height: 100%-100px;
+::-webkit-scrollbar {
+  width: 20px;
+  height: 20px;
 }
 #controls {
-  align-items: flex-start;
-  height: 10vh;
-  width: 35vw;
+  width: 30vw;
 }
 #header {
   display: flex;
-  width: 35vw;
+  width: 30vw;
+  height: 2rem;
   font-size: 2rem;
-  margin:1rem;
+  margin: 1rem;
+}
+#files {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: calc(calc(100vh - 2rem) * 0.9);
+  width: calc(30vw - 20px);
 }
 .files-item-radio {
   display: none;
@@ -77,7 +88,6 @@ div.target-dir {
   white-space: nowrap;
   width: 100%;
 }
-
 
 /*チェックボックス等は非表示に*/
 .nav-unshown {
