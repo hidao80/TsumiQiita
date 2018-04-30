@@ -29,12 +29,13 @@
     "electron": "^1.8.4",
     "electron-packager": "^12.0.1",
     "font-awesome": "^4.7.0",
-    "highlight.js": "^9.12.0",
     "node-sass": "^4.8.3"
   },
   "dependencies": {
     "electron-config": "^1.0.0",
+    "highlight.js": "^9.12.0",
     "isomorphic-fetch": "^2.2.1",
+    "markdown-it": "^8.4.1",
     "qiita-js": "^0.4.3"
   }
 }

@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <script src="./js/marked.min.js"></script>
   <link rel="stylesheet" type="text/css" href="./css/tsumiqiita.css">
   <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <link rel="stylesheet" type="text/css" href="./node_modules/highlight.js/styles/monokai.css">
 </head>
 <body onload="init()">
   <div id="controls">
@@ -53,7 +53,7 @@
   <div>
     <div id="preview" class="markdown-content"></div>
     <lable for="tags" id="tags-label">タグ：</lable><input type="text" id="tags" placeholder="タグを入力してください">
-    <textarea id="tsumiqiita-editor" oninput="rerendaring()"></textarea>
+    <textarea id="tsumiqiita-editor" oninput="rerendaring();autoSave()"></textarea>
   </div>
   <script src="./js/functions.js"></script>
 </body>
