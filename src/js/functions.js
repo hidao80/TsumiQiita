@@ -2,11 +2,12 @@
 /*jslint devel: true */
 var timer;
 const WRITE_INTERVAL = 3000; 
+const hljs = require('highlight.js');
 
 function writeMarkdownFile () {
 	const fs = require('fs');
 	const Config = require('electron-config');
-  let config = new Config();
+	let config = new Config();
 	
 	let currentFile = config.get('CURRENT_FILE');
 	let md = document.querySelector("#tsumiqiita-editor").value;
@@ -22,16 +23,19 @@ function writeMarkdownFile () {
 }
 
 function rerendaring() {
+	const it = require('markdown-it')({
+		langPrefix: "hljs language-",
+		highlight: (str, lang) => {
+			if (lang && hljs.getLanguage(lang)) {
+				try {
+					return hljs.highlight(lang, str).value;
+				} catch (__) {}
+			}
+			return ''; 
+		}
+	});
 	let md = document.querySelector("#tsumiqiita-editor").value;
-	document.querySelector("#preview").innerHTML = marked(md); // jshint ignore:line
-	try {
-		document.querySelector("#title").style.fontStyle = "italic";
-		clearTimeout(timer);
-		timer = setInterval(writeMarkdownFile, WRITE_INTERVAL);
-	} catch(err) {
-		alert("exception!\n\n"+err);
-		return false;
-	}
+	document.querySelector("#preview").innerHTML = it.render(md);
 }
 
 function rendering(path) {
@@ -42,14 +46,25 @@ function rendering(path) {
 //      alert('error : ' + error);
       return;
     }
-    document.querySelector("#preview").innerHTML = marked(text.toString()); // jshint ignore:line
     document.querySelector("#tsumiqiita-editor").value = text.toString();
+	rerendaring();
 
-		const Config = require('electron-config');
-		let config = new Config();
+	const Config = require('electron-config');
+	let config = new Config();
 		
-		config.set('CURRENT_FILE', path);
+	config.set('CURRENT_FILE', path);
   });
+}
+
+function autoSave() {
+	try {
+		document.querySelector("#title").style.fontStyle = "italic";
+		clearTimeout(timer);
+		timer = setInterval(writeMarkdownFile, WRITE_INTERVAL);
+	} catch(err) {
+		alert("exception!\n\n"+err);
+		return false;
+	}
 }
 
 function setScrollSync() {
@@ -85,6 +100,7 @@ function init() {
 	document.querySelector('#input').value = config.get("TOKEN");
 
 	setScrollSync();
+	hljs.initHighlightingOnLoad();
 }
 
 function selectTargetDir() {
