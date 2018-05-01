@@ -6,7 +6,7 @@ const Config = require('electron-config');
 const config = new Config();
 
 function withoutTags(md) {
-	return md.replace(RegExp(/^.*\n/, "y"), "");
+	return md.replace(/^.*\n/, "");
 }
 
 function writeMarkdownFile () {
@@ -37,7 +37,7 @@ function rendaring() {
 		}
 	});
 	const md = document.querySelector("#tsumiqiita-editor").value;
-	document.querySelector("#preview").innerHTML = withoutTags(it.render(md));
+	document.querySelector("#preview").innerHTML = it.render(withoutTags(md));
 }
 
 function openMarkdownFile(path) {
@@ -99,7 +99,7 @@ function init() {
 function selectTargetDir() {
 	const Dialog = require('electron').remote.dialog;
 	
-	Dialog.showOpenDialog(null, {
+	Dialog.showOpenDialog({
 		properties: ['openDirectory'],
 		title: 'フォルダの選択',
 		defaultPath: '.'
@@ -197,7 +197,7 @@ function post() {
 function createArticle() {
 	const Dialog = require('electron').remote.dialog;
 	
-	Dialog.showSaveDialog(null, {
+	Dialog.showSaveDialog({
 		title: '新規作成',
 		defaultPath: '.',
 		filters: [
@@ -205,12 +205,14 @@ function createArticle() {
 		]
 	}, (savedFiles) => {
 		try {
-			const fs = require('fs');
-			fs.writeFileSync(savedFiles, "");
-			config.set('CURRENT_FILE', savedFiles);
-			updateFileListPain(config.get('TARGET_DIR'));
-			openMarkdownFile(savedFiles);
-			document.querySelector("#nav-input").checked = false;
+			if (savedFiles !== undefined && savedFiles != "") {
+				const fs = require('fs');
+				fs.writeFileSync(savedFiles, "");
+				config.set('CURRENT_FILE', savedFiles);
+				updateFileListPain(config.get('TARGET_DIR'));
+				openMarkdownFile(savedFiles);
+				document.querySelector("#nav-input").checked = false;	
+			}
 		} catch(err) {
 			alert("exception!\n\n"+err);
 			return false;	
