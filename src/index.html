@@ -5,6 +5,8 @@
   <link rel="stylesheet" type="text/css" href="./css/tsumiqiita.css">
   <link rel="stylesheet" type="text/css" href="./css/style.css">
   <link rel="stylesheet" type="text/css" href="./node_modules/highlight.js/styles/monokai.css">
+  <title>TsumiQiita</title>
+  <script src="./js/functions.js"></script>
 </head>
 <body onload="init()">
   <div id="controls">
@@ -52,9 +54,8 @@
   </div data-comment="end controls">
   <div>
     <div id="preview" class="markdown-content"></div>
-    <lable for="tags" id="tags-label">タグ：</lable><input type="text" id="tags" placeholder="タグを入力してください">
-    <textarea id="tsumiqiita-editor" oninput="rerendaring();autoSave()"></textarea>
+    <lable for="tsumiqiita-editor" id="tags-label">1行目にタグを半角スペース区切りで入力してください。6項目目以降は投稿されません。</lable>
+    <textarea id="tsumiqiita-editor" oninput="rendaring();autoSave()"></textarea>
   </div>
-  <script src="./js/functions.js"></script>
 </body>
 </html>
