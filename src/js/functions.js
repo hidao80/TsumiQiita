@@ -149,7 +149,7 @@ function getTags() {
 	const tags = document.querySelector("#tsumiqiita-editor").value.split("\n")[0].trim().split(" ");
 	let ret = [];
 	
-	for(let i = 0; i < tags.length; i++) {
+	for(let i = 0; i < tags.length && i < 5; i++) {
 		let tmp = tags[i].split(":");
 		if (tmp.length < 2) {
 			ret.push({"name":tmp[0]});
