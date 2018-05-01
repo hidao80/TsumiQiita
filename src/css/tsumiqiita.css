@@ -14,13 +14,12 @@ html,body {
   width: calc(100vw - 2px);
 }
 #tags-label {
+  color: gray;
   font-size: 1rem;
   width: 3rem;
 }
-#tags {
-  border: 1px solid darkgray;
-  margin: 0;
-  width: calc(100vw - 22px - 3rem);  
+::selection {
+  background: #bbf;
 }
 #tsumiqiita-editor {
   overflow-x: hidden;
