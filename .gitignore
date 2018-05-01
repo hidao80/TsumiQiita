@@ -1,5 +1,9 @@
 node_modules/
+node_modules\
 npm-debug.log
 build/
+build\
 token.txt
 style.css
+.vscode/
+.vscode\
