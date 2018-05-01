@@ -205,7 +205,7 @@ function createArticle() {
 		]
 	}, (savedFiles) => {
 		try {
-			if (savedFiles !== undefined && savedFiles != "") {
+			if (savedFiles !== undefined && savedFiles !== "") {
 				const fs = require('fs');
 				fs.writeFileSync(savedFiles, "");
 				config.set('CURRENT_FILE', savedFiles);
