@@ -157,7 +157,7 @@ function getTags() {
 			ret.push({"name":tmp[0], "versions": [tmp[1]]});
 		}
 	}
-	console.log(JSON.stringify(ret));
+//	console.log(JSON.stringify(ret));
 	return ret;
 }
 
