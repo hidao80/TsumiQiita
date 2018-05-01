@@ -2,8 +2,12 @@
 var timer;
 const WRITE_INTERVAL = 3000; 
 const hljs = require('highlight.js');
-const fs = require('fs');
-const config  = require('electron-config')();
+const Config = require('electron-config');
+const config = new Config();
+
+function withoutTags(md) {
+	return md.replace(RegExp(/^.*\n/, "y"), "");
+}
 
 function writeMarkdownFile () {
 	const currentFile = config.get('CURRENT_FILE');
@@ -11,6 +15,7 @@ function writeMarkdownFile () {
 
 	if (currentFile !== undefined ) {
 		if (currentFile.length > 0) {
+			const fs = require('fs');
 			const filePath = currentFile.replace(/\\/g, "\\\\");
 			fs.writeFileSync(filePath, md);
 			clearInterval(timer);
@@ -19,7 +24,7 @@ function writeMarkdownFile () {
 	}
 }
 
-function rerendaring() {
+function rendaring() {
 	const it = require('markdown-it')({
 		langPrefix: "hljs language-",
 		highlight: (str, lang) => {
@@ -32,17 +37,18 @@ function rerendaring() {
 		}
 	});
 	const md = document.querySelector("#tsumiqiita-editor").value;
-	document.querySelector("#preview").innerHTML = it.render(md);
+	document.querySelector("#preview").innerHTML = withoutTags(it.render(md));
 }
 
-function rendering(path) {
+function openMarkdownFile(path) {
+	const fs = require('fs');
 	fs.readFile(path, (error, text) => {
     if (error !== null) {
       return;
     }
     document.querySelector("#tsumiqiita-editor").value = text.toString();
 
-	rerendaring();
+	rendaring();
 
 	config.set('CURRENT_FILE', path);
   });
@@ -68,21 +74,19 @@ function setScrollSync() {
 }
 
 function init() {
-	const targetDir = config.get('TARGET_DIR');
-	if (targetDir === undefined) {targetDir = "";}
-	if (targetDir === "undefined") {targetDir = "";}
-	if (targetDir.length === 0) {
-		targetDir = "フォルダを選択してください";
-	} else {
-		updateFileListPain(targetDir);	
-	}
+	let targetDir = config.get('TARGET_DIR');
+	if (targetDir === undefined) { targetDir = ""; }
+	else if (targetDir === "undefined") { targetDir = ""; }
+	else if (targetDir.length === 0) { targetDir = "フォルダを選択してください"; }
+	else { updateFileListPain(targetDir); }
+
 	document.getElementById('target-dir').innerHTML = targetDir;
 
 	const currentFile = config.get('CURRENT_FILE');
 	if (currentFile !== undefined ) {
 		if (currentFile.length > 0) {
 			const filePath = currentFile.replace(/\\/g, "\\\\");
-			rendering(filePath);
+			openMarkdownFile(filePath);
 		}
 	}
 
@@ -109,6 +113,7 @@ function selectTargetDir() {
 
 // ファイルリストを取得。mdファイルのみ。
 function updateFileListPain(dir) {
+	const fs = require('fs');
 	const path = require('path');
 
 	if (dir.length === 0) {return;}
@@ -128,7 +133,7 @@ function updateFileListPain(dir) {
 			let filePath = dir + path.sep + fileName;
 			filePath = filePath.replace(/\\/g, "\\\\");
 			fileListHtml += "<div class='files-item-div'>\n" +
-				"  <input type='radio' class='files-item-radio' name='filename' id='"+fileName+"' onclick='rendering(\""+filePath+"\")'><label for='"+fileName+"' class='files-item-label'>"+fileName+"</label>\n" +
+				"  <input type='radio' class='files-item-radio' name='filename' id='"+fileName+"' onclick='openMarkdownFile(\""+filePath+"\")'><label for='"+fileName+"' class='files-item-label'>"+fileName+"</label>\n" +
 				"</div>\n";
 		}
 
@@ -157,6 +162,7 @@ function getTags() {
 }
 
 function post() {
+	const fs = require('fs');
 	require('isomorphic-fetch');
 	const Qiita = require('qiita-js');
 	Qiita.setToken(config.get("TOKEN"));
@@ -167,7 +173,7 @@ function post() {
 	const p = config.get("CURRENT_FILE");
 	const file = p.split(path.sep);
 	const filename = file[file.length-1];
-	const markdown = fs.readFileSync(p, 'utf-8').replace(/^.*\n/s, "");
+	const markdown = withoutTags(fs.readFileSync(p, 'utf-8'));
 	const title = filename.replace(/(\.md)+$/,"");
 
 	var options = {
@@ -199,10 +205,11 @@ function createArticle() {
 		]
 	}, (savedFiles) => {
 		try {
+			const fs = require('fs');
 			fs.writeFileSync(savedFiles, "");
 			config.set('CURRENT_FILE', savedFiles);
 			updateFileListPain(config.get('TARGET_DIR'));
-			rendering(savedFiles);
+			openMarkdownFile(savedFiles);
 			document.querySelector("#nav-input").checked = false;
 		} catch(err) {
 			alert("exception!\n\n"+err);
