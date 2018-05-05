@@ -1,7 +1,7 @@
 # TsumiQiitaとは
 
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE.md)
-[![npm v5.8.0](https://img.shields.io/npm/v/npm.svg?style=flat)](https://nodejs.org/ja/)
+[npm v6.0.0](https://nodejs.org/ja/)
 
 MarkdownファイルをQiitaに投稿するelectron製デスクトップアプリです。\
 下書きに入りきらない**積みQiita**をするためにご利用ください。
@@ -34,6 +34,7 @@ node.jsでビルドが必要です。 **インストール方法は[INSTALL.md](
 
 - Win10 Version 1709
 - macOS 10.13
+- Ubuntu 18.04
 
 ### TODO
 
