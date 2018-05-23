@@ -6,7 +6,11 @@
 MarkdownファイルをQiitaに投稿するelectron製デスクトップアプリです。\
 下書きに入りきらない**積みQiita**をするためにご利用ください。
 
-node.jsでビルドが必要です。 **インストール方法は[INSTALL.md](INSTALL.md)** を参照してください。
+![Screen Shot](screenshot.png)
+
+node.jsでビルドします。 **インストール方法は[INSTALL.md](INSTALL.md)** を参照してください。
+
+ビルド済みは[こちら](https://github.com/hidao80/TsumiQiita/releases)
 
 ## 主な機能
 
