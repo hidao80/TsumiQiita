@@ -69,8 +69,10 @@ function setScrollSync() {
 	const p = document.querySelector('#preview');
 	const e = document.querySelector('#tsumiqiita-editor');
 	
-	p.onscroll = () => {e.scrollTop = p.scrollTop;};
-	e.onscroll = () => {p.scrollTop = e.scrollTop;};
+	e.onscroll = () => {
+		rate = e.scrollTop / e.scrollHeight;
+		p.scrollTop = p.scrollHeight * rate;
+	};
 }
 
 function init() {

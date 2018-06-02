@@ -129,7 +129,7 @@ div.target-dir {
   cursor: pointer;
 }
 #nav-open span {
-  margin-left: 3rem;
+  margin-left: 1rem;
 }
 #nav-open span:before {
   bottom: -14px;
