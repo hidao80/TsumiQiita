@@ -1,6 +1,6 @@
 {
   "name": "tsumiqiita",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "MarkdownファイルをQiitaに投稿するelectron製デスクトップアプリです。",
   "main": "index.js",
   "directories": {
@@ -26,10 +26,10 @@
   },
   "homepage": "https://github.com/hidao80/TsumiQiita#readme",
   "devDependencies": {
-    "electron": "^2.0.0",
-    "electron-packager": "^12.0.1",
+    "electron": "^2.0.2",
+    "electron-packager": "^12.1.0",
     "font-awesome": "^4.7.0",
-    "node-sass": "^4.8.3"
+    "node-sass": "^4.9.0"
   },
   "dependencies": {
     "electron-config": "^1.0.0",
