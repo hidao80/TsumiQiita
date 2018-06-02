@@ -1,45 +1,54 @@
-html,body {
-  height: 100vh;
+html {
+  height: 100%;
   margin: 0;
   padding: 0;
-  width: 100vw;
+  width: 100%;
+  overflow: hidden;
+}
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
   overflow: hidden;
   display: flex;
 }
+#working-area {
+}
 #preview {
   overflow-x: hidden;
-  overflow-y: scroll;
-  height: 50vh;
+  overflow-y: hidden;
+  height: 50%;
   margin: 0;
-  width: calc(100vw - 2px);
+  width: calc(100% - 2px);
 }
 #tags-label {
   color: gray;
   font-size: 1rem;
-  width: 3rem;
+  height: 1.1rem;
 }
 ::selection {
   background: #bbf;
 }
 #tsumiqiita-editor {
-  overflow-x: hidden;
+  overflow-x: scroll;
   overflow-y: scroll;
   border: 1px solid darkgray;
-  height: calc(50vh - 2px - 1.1rem);
+  height: calc(50% - 20px - 1.1rem);
   margin: 0;
   resize: none;
-  width: calc(100vw - 22px);
+  width: calc(100% - 22px);
 }
 ::-webkit-scrollbar {
   width: 20px;
   height: 20px;
 }
 #controls {
-  width: 30vw;
+  width: 30%;
 }
 #header {
   display: flex;
-  width: 30vw;
+  width: 30%;
   height: 2rem;
   font-size: 2rem;
   margin: 1rem;
@@ -47,8 +56,8 @@ html,body {
 #files {
   overflow-x: hidden;
   overflow-y: scroll;
-  height: calc(calc(100vh - 2rem) * 0.9);
-  width: calc(30vw - 20px);
+  height: calc(calc(100% - 2rem) * 0.9);
+  width: calc(100% - 20px);
 }
 .files-item-radio {
   display: none;
@@ -92,7 +101,7 @@ div.target-dir {
   border-bottom: 1px solid #eee;
   font-size: 1.5rem;
   margin: 0;
-  height: 5vh;
+  height: 5%;
   white-space: nowrap;
   width: 100%;
 }
@@ -120,7 +129,7 @@ div.target-dir {
   cursor: pointer;
 }
 #nav-open span {
-  margin-left: 3rem;
+  margin-left: 1rem;
 }
 #nav-open span:before {
   bottom: -14px;

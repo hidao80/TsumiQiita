@@ -5,13 +5,21 @@ const hljs = require('highlight.js');
 const Config = require('electron-config');
 const config = new Config();
 
+function $(name) {
+	return document.querySelector(name);
+}
+
+function fileNameEncode(name) {
+	return name.replace(".","_");
+}
+
 function withoutTags(md) {
 	return md.replace(/^.*\n/, "");
 }
 
 function writeMarkdownFile () {
 	const currentFile = config.get('CURRENT_FILE');
-	const md = document.querySelector("#tsumiqiita-editor").value;
+	const md = $("#tsumiqiita-editor").value;
 
 	if (currentFile !== undefined ) {
 		if (currentFile.length > 0) {
@@ -19,7 +27,7 @@ function writeMarkdownFile () {
 			const filePath = currentFile.replace(/\\/g, "\\\\");
 			fs.writeFileSync(filePath, md);
 			clearInterval(timer);
-			document.querySelector("#title").style.fontStyle = "normal";
+			$("#title").style.fontStyle = "normal";
 		}
 	}
 }
@@ -36,8 +44,8 @@ function rendaring() {
 			return ''; 
 		}
 	});
-	const md = document.querySelector("#tsumiqiita-editor").value;
-	document.querySelector("#preview").innerHTML = it.render(withoutTags(md));
+	const md = $("#tsumiqiita-editor").value;
+	$("#preview").innerHTML = it.render(withoutTags(md));
 }
 
 function openMarkdownFile(path) {
@@ -46,17 +54,17 @@ function openMarkdownFile(path) {
     if (error !== null) {
       return;
     }
-    document.querySelector("#tsumiqiita-editor").value = text.toString();
+    $("#tsumiqiita-editor").value = text.toString();
 
-	rendaring();
+		rendaring();
 
-	config.set('CURRENT_FILE', path);
+		config.set('CURRENT_FILE', path);
   });
 }
 
 function autoSave() {
 	try {
-		document.querySelector("#title").style.fontStyle = "italic";
+		$("#title").style.fontStyle = "italic";
 		clearTimeout(timer);
 		timer = setInterval(writeMarkdownFile, WRITE_INTERVAL);
 	} catch(err) {
@@ -66,53 +74,18 @@ function autoSave() {
 }
 
 function setScrollSync() {
-	const p = document.querySelector('#preview');
-	const e = document.querySelector('#tsumiqiita-editor');
+	const p = $('#preview');
+	const e = $('#tsumiqiita-editor');
 	
-	p.onscroll = () => {e.scrollTop = p.scrollTop;};
-	e.onscroll = () => {p.scrollTop = e.scrollTop;};
+	e.onscroll = () => {
+		let rate = e.scrollTop / e.scrollHeight;
+		p.scrollTop = p.scrollHeight * rate;
+	};
 }
 
-function init() {
-	let targetDir = config.get('TARGET_DIR');
-	if (targetDir === undefined) { targetDir = ""; }
-	else if (targetDir === "undefined") { targetDir = ""; }
-	else if (targetDir.length === 0) { targetDir = "フォルダを選択してください"; }
-	else { updateFileListPain(targetDir); }
-
-	document.getElementById('target-dir').innerHTML = targetDir;
-
-	const currentFile = config.get('CURRENT_FILE');
-	if (currentFile !== undefined ) {
-		if (currentFile.length > 0) {
-			const filePath = currentFile.replace(/\\/g, "\\\\");
-			openMarkdownFile(filePath);
-		}
-	}
-
-	document.querySelector('#input').value = config.get("TOKEN");
-
-	setScrollSync();
-	hljs.initHighlightingOnLoad();
-}
-
-function selectTargetDir() {
-	const Dialog = require('electron').remote.dialog;
-	
-	Dialog.showOpenDialog({
-		properties: ['openDirectory'],
-		title: 'フォルダの選択',
-		defaultPath: '.'
-	}, (folderNames) => {
-		config.set('TARGET_DIR', folderNames[0]);
-		document.getElementById('target-dir').innerHTML = folderNames[0];
-
-		updateFileListPain(folderNames[0]);
-	});
-}
 
 // ファイルリストを取得。mdファイルのみ。
-function updateFileListPain(dir) {
+function updateFileListPain(dir, givinefileName) {
 	const fs = require('fs');
 	const path = require('path');
 
@@ -131,22 +104,73 @@ function updateFileListPain(dir) {
 		let fileListHtml = "";
 		for(let fileName of fileList) {
 			let filePath = dir + path.sep + fileName;
+			let attrChecked = "";
 			filePath = filePath.replace(/\\/g, "\\\\");
+			if (givinefileName === fileName) {
+				attrChecked = " checked=true";
+			}
 			fileListHtml += "<div class='files-item-div'>\n" +
-				"  <input type='radio' class='files-item-radio' name='filename' id='"+fileName+"' onclick='openMarkdownFile(\""+filePath+"\")'><label for='"+fileName+"' class='files-item-label'>"+fileName+"</label>\n" +
+				"  <input type='radio' class='files-item-radio' name='fileName' id='"+fileNameEncode(fileName)+"' onclick='openMarkdownFile(\""+filePath+"\")'"+attrChecked+"><label for='"+fileNameEncode(fileName)+"' class='files-item-label'>"+fileName+"</label>\n" +
 				"</div>\n";
 		}
 
-		document.getElementById('files').innerHTML = fileListHtml;
+		$('#files').innerHTML = fileListHtml;
   });
 }
 
+function init_FileList(fileName) {
+	let targetDir = config.get('TARGET_DIR');
+	if (targetDir === undefined) { targetDir = ""; }
+	else if (targetDir === "undefined") { targetDir = ""; }
+	else if (targetDir.length === 0) { targetDir = "フォルダを選択してください"; }
+	else { updateFileListPain(targetDir, fileName); }
+
+	$('#target-dir').innerHTML = targetDir;
+}
+
+function init_LastOpenFile() {
+	const currentFile = config.get('CURRENT_FILE');
+	if (currentFile !== undefined ) {
+		if (currentFile.length > 0) {
+			const filePath = currentFile.replace(/\\/g, "\\\\");
+			openMarkdownFile(filePath);			
+
+			return require('path').basename(currentFile);
+		}
+	}
+	return null;
+}
+
+function init() {
+	init_FileList(init_LastOpenFile());
+
+	$('#input').value = config.get("TOKEN");
+
+	setScrollSync();
+	hljs.initHighlightingOnLoad();
+}
+
+function selectTargetDir() {
+	const Dialog = require('electron').remote.dialog;
+	
+	Dialog.showOpenDialog({
+		properties: ['openDirectory'],
+		title: 'フォルダの選択',
+		defaultPath: '.'
+	}, (folderNames) => {
+		config.set('TARGET_DIR', folderNames[0]);
+		$('#target-dir').innerHTML = folderNames[0];
+
+		updateFileListPain(folderNames[0], "");
+	});
+}
+
 function setToken() {
-	config.set("TOKEN", document.querySelector('#input').value);
+	config.set("TOKEN", $('#input').value);
 }
 
 function getTags() {
-	const tags = document.querySelector("#tsumiqiita-editor").value.split("\n")[0].trim().split(" ");
+	const tags = $("#tsumiqiita-editor").value.split("\n")[0].trim().split(" ");
 	let ret = [];
 	
 	for(let i = 0; i < tags.length && i < 5; i++) {
@@ -157,7 +181,6 @@ function getTags() {
 			ret.push({"name":tmp[0], "versions": [tmp[1]]});
 		}
 	}
-//	console.log(JSON.stringify(ret));
 	return ret;
 }
 
@@ -172,9 +195,9 @@ function post() {
 
 	const p = config.get("CURRENT_FILE");
 	const file = p.split(path.sep);
-	const filename = file[file.length-1];
+	const fileName = file[file.length-1];
 	const markdown = withoutTags(fs.readFileSync(p, 'utf-8'));
-	const title = filename.replace(/(\.md)+$/,"");
+	const title = fileName.replace(/(\.md)+$/,"");
 
 	var options = {
 		"body": markdown,
@@ -185,11 +208,10 @@ function post() {
 
 	//execution　api
 	Qiita.Resources.Item.create_item(options).then(function(res){
-//		console.log(res);
 		if (res.message !== undefined) {
-			document.querySelector('#ng-dialog').showModal();
+			$('#ng-dialog').showModal();
 		} else {
-			document.querySelector('#ok-dialog').showModal();
+			$('#ok-dialog').showModal();
 		}
 	});
 }
@@ -203,15 +225,15 @@ function createArticle() {
 		filters: [
 				{name: 'Markdownファイル', extensions: ['md']},
 		]
-	}, (savedFiles) => {
+	}, (savedFile) => {
 		try {
-			if (savedFiles !== undefined && savedFiles !== "") {
+			if (savedFile !== undefined && savedFile !== "") {
 				const fs = require('fs');
-				fs.writeFileSync(savedFiles, "");
-				config.set('CURRENT_FILE', savedFiles);
-				updateFileListPain(config.get('TARGET_DIR'));
-				openMarkdownFile(savedFiles);
-				document.querySelector("#nav-input").checked = false;	
+				fs.writeFileSync(savedFile, "");
+				console.log(savedFile);
+				config.set('CURRENT_FILE', savedFile);
+				updateFileListPain(config.get('TARGET_DIR'), require('path').basename(savedFile));
+				openMarkdownFile(savedFile);
 			}
 		} catch(err) {
 			alert("exception!\n\n"+err);
