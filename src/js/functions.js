@@ -78,9 +78,44 @@ function setScrollSync() {
 	const e = $('#tsumiqiita-editor');
 	
 	e.onscroll = () => {
-		rate = e.scrollTop / e.scrollHeight;
+		let rate = e.scrollTop / e.scrollHeight;
 		p.scrollTop = p.scrollHeight * rate;
 	};
+}
+
+
+// ファイルリストを取得。mdファイルのみ。
+function updateFileListPain(dir, givinefileName) {
+	const fs = require('fs');
+	const path = require('path');
+
+	if (dir.length === 0) {return;}
+	fs.readdir(dir, (err, files) => {
+		if (err) {throw err;}
+		let fileList = [];
+		files.filter( (file) => {
+			const target = dir + path.sep + file;
+			return fs.statSync(target).isFile() && /.*\.md$/.test(target); //絞り込み
+		}).forEach( (file) => {
+				fileList.push(file);
+		});
+
+	    // 画面に反映
+		let fileListHtml = "";
+		for(let fileName of fileList) {
+			let filePath = dir + path.sep + fileName;
+			let attrChecked = "";
+			filePath = filePath.replace(/\\/g, "\\\\");
+			if (givinefileName === fileName) {
+				attrChecked = " checked=true";
+			}
+			fileListHtml += "<div class='files-item-div'>\n" +
+				"  <input type='radio' class='files-item-radio' name='fileName' id='"+fileNameEncode(fileName)+"' onclick='openMarkdownFile(\""+filePath+"\")'"+attrChecked+"><label for='"+fileNameEncode(fileName)+"' class='files-item-label'>"+fileName+"</label>\n" +
+				"</div>\n";
+		}
+
+		$('#files').innerHTML = fileListHtml;
+  });
 }
 
 function init_FileList(fileName) {
@@ -128,40 +163,6 @@ function selectTargetDir() {
 
 		updateFileListPain(folderNames[0], "");
 	});
-}
-
-// ファイルリストを取得。mdファイルのみ。
-function updateFileListPain(dir, givinefileName) {
-	const fs = require('fs');
-	const path = require('path');
-
-	if (dir.length === 0) {return;}
-	fs.readdir(dir, (err, files) => {
-		if (err) {throw err;}
-		let fileList = [];
-		files.filter( (file) => {
-			const target = dir + path.sep + file;
-			return fs.statSync(target).isFile() && /.*\.md$/.test(target); //絞り込み
-		}).forEach( (file) => {
-				fileList.push(file);
-		});
-
-	    // 画面に反映
-		let fileListHtml = "";
-		for(let fileName of fileList) {
-			let filePath = dir + path.sep + fileName;
-			let attrChecked = "";
-			filePath = filePath.replace(/\\/g, "\\\\");
-			if (givinefileName === fileName) {
-				attrChecked = " checked=true";
-			}
-			fileListHtml += "<div class='files-item-div'>\n" +
-				"  <input type='radio' class='files-item-radio' name='fileName' id='"+fileNameEncode(fileName)+"' onclick='openMarkdownFile(\""+filePath+"\")'"+attrChecked+"><label for='"+fileNameEncode(fileName)+"' class='files-item-label'>"+fileName+"</label>\n" +
-				"</div>\n";
-		}
-
-		$('#files').innerHTML = fileListHtml;
-  });
 }
 
 function setToken() {
