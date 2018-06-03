@@ -10,7 +10,7 @@ MarkdownファイルをQiitaに投稿するelectron製デスクトップアプ�
 
 node.jsでビルドします。 **インストール方法は[INSTALL.md](INSTALL.md)** を参照してください。
 
-ビルド済みは[こちら](https://github.com/hidao80/TsumiQiita/releases)
+ビルド済みは**[こちら](https://github.com/hidao80/TsumiQiita/releases)**
 
 ## 主な機能
 
@@ -36,12 +36,13 @@ node.jsでビルドします。 **インストール方法は[INSTALL.md](INSTAL
 
 ### 動作検証済み環境
 
-- Win10 Version 1709
+- Win10 Version 1709, 1803
 - macOS 10.13
 - Ubuntu 18.04
 
 ### TODO
 
+- [ ] 同期スクロールでプレビューが一番下まで表示されない
 - [x] ~~対象フォルダ選択~~
 - [x] ~~Markdownファイル選択~~
 - [x] ~~Markdownファイルプレビュー~~
