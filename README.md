@@ -10,7 +10,7 @@ MarkdownファイルをQiitaに投稿するelectron製デスクトップアプ�
 
 node.jsでビルドします。 **インストール方法は[INSTALL.md](INSTALL.md)** を参照してください。
 
-ビルド済みは**[こちら](https://github.com/hidao80/TsumiQiita/releases)**
+ビルド済みは[**こちら**](https://github.com/hidao80/TsumiQiita/releases)
 
 ## 主な機能
 
