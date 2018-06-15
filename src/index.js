@@ -12,6 +12,29 @@ app.on('ready', () => {
 
   // ChromiumのDevツールを開く
   //mainWindow.webContents.openDevTools();
+
+  const { Menu } = require('electron');
+  const menuTemplate = [];
+  
+  if (process.platform === 'darwin') {
+    menuTemplate.push({
+      label: 'Edit',
+      submenu: [
+        {role: 'undo'},
+        {role: 'redo'},
+        {type: 'separator'},
+        {role: 'cut'},
+        {role: 'copy'},
+        {role: 'paste'},
+        {role: 'pasteandmatchstyle'},
+        {role: 'delete'},
+        {role: 'selectall'}
+      ]
+    })
+  }
+  
+  const applicationMenu = Menu.buildFromTemplate(menuTemplate)
+  Menu.setApplicationMenu(applicationMenu)
 });
 
 app.on("window-all-closed", function () {
