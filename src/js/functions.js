@@ -33,17 +33,42 @@ function writeMarkdownFile () {
 }
 
 function rendaring() {
-	const it = require('markdown-it')({
-		langPrefix: "hljs language-",
+	const it = require('markdown-it')('commonmark', {
+ 		langPrefix: "hljs language-",
 		highlight: (str, lang) => {
-			if (lang && hljs.getLanguage(lang)) {
-				try {
-					return hljs.highlight(lang, str).value;
-				} catch (__) {}
-			}
-			return ''; 
-		}
-	});
+      var filename = '';
+      if (lang && lang.indexOf(':') > 1) {
+        var sp = lang.split(':')
+        lang = sp[0];
+        filename = sp[1];
+      }
+
+      var header;
+      if (filename) {
+        header = "<div class='code-lang'><span class='bold'>" + filename + "</span></div>"
+      } else {
+        header = "";
+      }
+
+      var codeBlockHTML;
+      if (lang) {
+        try {
+          codeBlockHTML = '<pre style="margin:0"><code>' + hljs.highlight(lang, str).value + '</code></pre>';
+        }
+        catch (e) {
+          codeBlockHTML = '<pre style="margin:0"><code>' + str + '</code></pre>';
+        }
+      } else {
+        codeBlockHTML = '<pre style="margin:0"><code>' + str + '</code></pre>';
+      }
+
+      return "<div class='code-frame' data-lang=" + (lang || 'text') + ">" + 
+				header + 
+				"<div class='highlight'>" + codeBlockHTML + "</div>" + 
+				"</div>"
+			;
+		},
+	}).enable(['table', 'strikethrough']).use(require('markdown-it-checkbox')) ;
 	const md = $("#tsumiqiita-editor").value;
 	$("#preview").innerHTML = it.render(withoutTags(md));
 }
