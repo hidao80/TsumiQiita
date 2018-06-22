@@ -2,13 +2,14 @@
 
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE.md)
 [![npm v6.0.0](https://img.shields.io/badge/node-6.0.0-blue.svg)](https://nodejs.org/ja/)
+![hidao quality](https://img.shields.io/badge/hidao-quality-orange.svg)
 
 MarkdownファイルをQiitaに投稿するelectron製デスクトップアプリです。\
 下書きに入りきらない**積みQiita**をするためにご利用ください。
 
 <img src="ss.png" width=80%>
 
-node.jsでビルドします。 **インストール方法は[INSTALL.md](INSTALL.md)** を参照してください。
+node.jsでビルドします。<wbr>**インストール方法は[INSTALL.md](INSTALL.md)**<wbr>を参照してください。
 
 ビルド済みは[**こちら**](https://github.com/hidao80/TsumiQiita/releases)
 
@@ -22,8 +23,10 @@ node.jsでビルドします。 **インストール方法は[INSTALL.md](INSTAL
 - リアルタイムプレビュー
 - 最後に編集してから3秒後に自動保存
 - タグをつけて投稿
+- 同一フォルダ内の Markdown ファイルをリストにして常時表示
+- Windows / macOS / Linux でほぼ同一の UI を提供
 
-以上の機能により、 **限定公開の草案をローカルに際限なく貯めることを可能にします** 。
+以上の機能により、<wbr>**限定公開の草案をローカルに際限なく貯めることを可能にします**<wbr>。
 
 ### ユースケース
 
@@ -32,7 +35,7 @@ node.jsでビルドします。 **インストール方法は[INSTALL.md](INSTAL
 
 ## 注意
 
-プレビューはQiita上での表示と異なります。あくまで参考程度とご理解ください。
+プレビューはQiitaやGitHubでの表示と異なります。あくまで参考程度とご理解ください。
 
 ### 動作検証済み環境
 
@@ -53,3 +56,5 @@ node.jsでビルドします。 **インストール方法は[INSTALL.md](INSTAL
 - [x] ~~最後に編集してから3秒後に自動保存する~~
 - [x] ~~タグを登録できる~~
 - [x] ~~シンタックスハイライトに対応~~
+- [x] ~~CommonMarkdown に作表と打ち消し線、チェックボックス表示機能を追加~~
+- [x] ~~Qiita風のコードブロック（ファイル名表示機能付）~~
