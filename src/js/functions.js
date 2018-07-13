@@ -38,14 +38,14 @@ function rendaring() {
 		highlight: (str, lang) => {
       var filename = '';
       if (lang && lang.indexOf(':') > 1) {
-        var sp = lang.split(':')
+        var sp = lang.split(':');
         lang = sp[0];
         filename = sp[1];
       }
 
       var header;
       if (filename) {
-        header = "<div class='code-lang'><span class='bold'>" + filename + "</span></div>"
+        header = "<div class='code-lang'><span class='bold'>" + filename + "</span></div>";
       } else {
         header = "";
       }
@@ -71,6 +71,10 @@ function rendaring() {
 	}).enable(['table', 'strikethrough']).use(require('markdown-it-checkbox')) ;
 	const md = $("#tsumiqiita-editor").value;
 	$("#preview").innerHTML = it.render(withoutTags(md));
+	
+	var myDivEl = document.getElementById("preview"); 
+	var anchorsInMyDiv = myDivEl.querySelectorAll("a"); 
+	anchorsInMyDiv.forEach( s => s.setAttribute( "target", "_blank" ) );
 }
 
 function openMarkdownFile(path) {

@@ -4,10 +4,10 @@
 1. npmをインストール (<https://nodejs.org/ja/>)
 1. npmを以下の手順で [npm v6.0.0](https://nodejs.org/ja/) 以上にアップデート
     ```sh
-	## for macOS and Linux
+    ## for macOS and Linux
     sudo npm i -g npm
-	
-	## for Windows
+
+    ## for Windows
     npm i -g npm
     ```
 1. リポジトリのインストール
