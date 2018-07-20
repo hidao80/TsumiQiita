@@ -50,17 +50,17 @@ function rendaring() {
         header = "";
       }
 
-      var codeBlockHTML;
-      if (lang) {
-        try {
-          codeBlockHTML = '<pre style="margin:0"><code>' + hljs.highlight(lang, str).value + '</code></pre>';
-        }
-        catch (e) {
-          codeBlockHTML = '<pre style="margin:0"><code>' + str + '</code></pre>';
-        }
-      } else {
-        codeBlockHTML = '<pre style="margin:0"><code>' + str + '</code></pre>';
-      }
+			var codeBlockHTML;
+			if (lang) {
+				try {
+					codeBlockHTML = '<pre style="margin:0"><code>' + hljs.highlight(lang, str).value + '</code></pre>';
+				}
+				catch (e) {
+					codeBlockHTML = '<pre style="margin:0"><code>' + require("escape-html").escapse(str) + '</code></pre>';
+				}
+			} else {
+				codeBlockHTML = '<pre style="margin:0"><code>' + require("escape-html").escapse(str) + '</code></pre>';
+			}
 
       return "<div class='code-frame' data-lang=" + (lang || 'text') + ">" + 
 				header + 
