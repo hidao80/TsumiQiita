@@ -1,13 +1,12 @@
 {
   "name": "tsumiqiita",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "MarkdownファイルをQiitaに投稿するelectron製デスクトップアプリです。",
   "main": "index.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "build-css": "node-sass scss/default-theme.scss css/style.css",
     "build-win": "electron-packager . TsumiQiita --out=../build --pratform=win32 --overwrite --asar",
     "build-win32": "electron-packager . TsumiQiita --out=../build --pratform=win32 --arch=ia32 --overwrite --asar",
     "build-win64": "electron-packager . TsumiQiita --out=../build --pratform=win32 --arch=x64 --overwrite --asar",
@@ -28,11 +27,11 @@
   "devDependencies": {
     "electron": "^2.0.2",
     "electron-packager": "^12.1.0",
-    "font-awesome": "^4.7.0",
-    "node-sass": "^4.9.0"
+    "font-awesome": "^4.7.0"
   },
   "dependencies": {
-    "electron-config": "^1.0.0",
+    "electron-store": "^2.0.0",
+    "escape-html": "^1.0.3",
     "highlight.js": "^9.12.0",
     "markdown-it": "^8.4.1",
     "markdown-it-checkbox": "^1.1.0",
