@@ -105,7 +105,24 @@ div.target-dir {
   white-space: nowrap;
   width: 100%;
 }
-
+pre {
+  background-color: #272822;
+  color: #F8F8F2;
+}
+.code-frame {
+  margin: 1.2em 3px 3px 3px;
+  position: relative;
+}
+.code-lang {
+  background-color: #888;
+  font-size: 1em;
+  left: 0;
+  margin: 0;
+  padding: 0 0.5em 0 0;
+  position: absolute;
+  top: 0;
+  transform: translateY(-1.7em) translateX(-10px); 
+}
 /*チェックボックス等は非表示に*/
 .nav-unshown {
   display:none;
