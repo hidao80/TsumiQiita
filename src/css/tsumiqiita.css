@@ -123,6 +123,33 @@ pre {
   top: 0;
   transform: translateY(-1.7em) translateX(-10px); 
 }
+
+table {
+  margin: 1em 0;
+  border-left: solid 1px  #e6e6e6;;
+  border-top: solid 1px  #e6e6e6;;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  border-bottom: solid 1px  #e6e6e6;
+  border-right: solid 1px  #e6e6e6;;
+  padding: 8px 10px;
+  word-wrap: break-word;
+}
+
+thead td,
+th {
+  font-weight: 700;
+  background-color: #efefef;
+}
+
+tbody:nth-child(odd) tr {
+  background-color: rgba(#000, .03);
+}
+
+
 /*チェックボックス等は非表示に*/
 .nav-unshown {
   display:none;
