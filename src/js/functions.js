@@ -264,7 +264,6 @@ function createArticle() {
 				openMarkdownFile(savedFile);
 			}
 		} catch (err) {
-			alert("exception!\n\n" + err);
 			return false;
 		}
 	});
