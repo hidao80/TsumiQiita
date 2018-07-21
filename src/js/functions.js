@@ -97,7 +97,6 @@ function autoSave() {
 		clearTimeout(timer);
 		timer = setInterval(writeMarkdownFile, WRITE_INTERVAL);
 	} catch (err) {
-		alert("exception!\n\n" + err);
 		return false;
 	}
 }
