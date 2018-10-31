@@ -32,6 +32,7 @@
     "electron-builder": "^20.29.0"
   },
   "dependencies": {
+    "electron-store": "^2.0.0",
     "escape-html": "^1.0.3",
     "github-markdown-css": "^2.10.0",
     "highlight.js": "^9.12.0",
