@@ -57,5 +57,9 @@
     <lable for="tsumiqiita-editor" id="tags-label">1行目にタグを半角スペース区切りで入力してください。6項目目以降は投稿されません。</lable>
     <textarea id="tsumiqiita-editor" oninput="rendaring();autoSave()"></textarea>
   </div>
+  <script>
+    // 対象となるテキストエリアにonkeydownイベントを追加する
+    document.querySelector("#tsumiqiita-editor").onkeydown = function(e){OnTabKey(e, this);}
+  </script>
 </body>
 </html>
