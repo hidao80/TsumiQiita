@@ -37,10 +37,10 @@ app.on('ready', () => {
         {role: 'selectall'}
       ]
     })
-  }
-  
-  const applicationMenu = Menu.buildFromTemplate(menuTemplate)
-  Menu.setApplicationMenu(applicationMenu)
+
+    const applicationMenu = Menu.buildFromTemplate(menuTemplate)
+    Menu.setApplicationMenu(applicationMenu)
+  }  
 });
 
 app.on("window-all-closed", function () {
