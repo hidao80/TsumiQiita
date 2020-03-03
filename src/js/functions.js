@@ -3,7 +3,6 @@ var timer;
 const WRITE_INTERVAL = 3000;
 const hljs = require('highlight.js');
 const Config = require('electron-store');
-const request = require('request');
 const config = new Config();
 
 function $(name) {
@@ -75,7 +74,6 @@ function rendaring() {
     },
   }).enable(['table', 'strikethrough']).use(require('markdown-it-checkbox'));
   const md = $("#tsumiqiita-editor").value;
-  console.log(getBody(md));
   $("#preview").innerHTML = it.render(getBody(md));
 
   var myDivEl = document.getElementById("preview");
@@ -248,6 +246,7 @@ function post() {
   const token = config.get("TOKEN");
   const p = config.get("CURRENT_FILE");
   const text = fs.readFileSync(p, 'utf-8');
+  const request = require('request');
 
   if (token === undefined) {
     $('#message').innerText = "トークンがセットされていません"
