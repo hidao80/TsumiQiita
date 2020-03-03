@@ -15,6 +15,5 @@
     git clone https://github.com/hidao80/TsumiQiita.git
     cd TsumiQiita/src
     npm i
-    npm run build-css
     npm run build
     ```
