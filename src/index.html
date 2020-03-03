@@ -36,15 +36,9 @@
               <input type='radio' class='menu-item-radio' name='menu' id='post' onclick='post()'><label for='post' class='menu-item-label'>Qiitaに限定公開</label>
           </div>
           <div>
-            <dialog id="ok-dialog">
-              限定公開されました！<br>
-              <button onclick="document.querySelector('#ok-dialog').close()">閉じる</button>
-            </dialog>
-          </div>
-          <div>
-            <dialog id="ng-dialog">
-              限定公開に失敗しました…<br>
-              <button onclick="document.querySelector('#ng-dialog').close()">閉じる</button>
+            <dialog id="msg-dialog">
+              <span id="message"></span><br>
+              <button onclick="document.querySelector('#msg-dialog').close()">閉じる</button>
             </dialog>
           </div>
         </div data-comment="end nav-content">
@@ -54,7 +48,7 @@
   </div data-comment="end controls">
   <div id="working-area">
     <div id="preview" class="markdown-content"></div>
-    <lable for="tsumiqiita-editor" id="tags-label">1行目にタグを半角スペース区切りで入力してください。6項目目以降は投稿されません。</lable>
+    <lable for="tsumiqiita-editor" id="tags-label"><a href="https://github.com/hidao80/TsumiQiita/tree/hidao80-patch-1#qiita%E8%A8%98%E4%BA%8B%E3%81%AE%E3%83%98%E3%83%83%E3%83%80%E6%9B%B8%E5%BC%8F" target="_blank">Qiitaの記事ヘッダを参照</a>してください。titleとtagsは必須です。</lable>
     <textarea id="tsumiqiita-editor" oninput="rendaring();autoSave()"></textarea>
   </div>
   <script>
