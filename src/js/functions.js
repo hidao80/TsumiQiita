@@ -242,7 +242,6 @@ function createTagsObject(tags) {
 
 function post() {
   const fs = require('fs');
-  require('isomorphic-fetch');
   const token = config.get("TOKEN");
   const p = config.get("CURRENT_FILE");
   const text = fs.readFileSync(p, 'utf-8');
@@ -302,7 +301,7 @@ function post() {
   }
 
   request(options, (error, response) => {
-    $('#message').innerText = "限定公開されました！"
+    $('#message').innerText = "投稿しました！"
     if (response.statusCode != 201) {
       $('#message').innerText = "投稿に失敗しました…\n・タグが6つ以上あるかもしれません\n・正しいトークンがセットされていないかもしれません"
     }
