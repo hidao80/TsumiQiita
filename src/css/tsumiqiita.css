@@ -109,6 +109,9 @@ pre {
   background-color: #272822;
   color: #F8F8F2;
 }
+dialog > span {
+  font-size: 1rem;
+}
 .code-frame {
   margin: 1.2em 3px 3px 3px;
   position: relative;
