@@ -43,6 +43,28 @@ node.jsでビルドします。<wbr>**インストール方法は[INSTALL.md](IN
 - macOS 10.13
 - Ubuntu 18.04
 
+### Qiita記事のヘッダ書式
+
+    ---
+    title: 記事のタイトル
+    tags: タグA:0.0.1 タグB
+    tweet: false
+    private: false
+    coediting: false
+    group_url_name: dev
+    ---   
+    # 見出し1
+    本文...
+
+フィールド | Type | 説明
+---|---|---
+title | string | 記事のタイトル
+tags | string | タグ。バージョン併記可。5つまで。
+tweet | true/false | Twitterに投稿するかどうか (Twitter連携を有効化している場合のみ有効)
+private | true/false | 限定共有状態かどうかを表すフラグ (Qiita Teamでは無効)  
+coedition | true/false | この記事が共同更新状態かどうか (Qiita Teamでのみ有効)
+group_url_name | null/string | この投稿を公開するグループの url_name (null で全体に公開。Qiita Teamでのみ有効)
+
 ### TODO
 
 - [ ] 同期スクロールでプレビューが一番下まで表示されない
@@ -58,3 +80,4 @@ node.jsでビルドします。<wbr>**インストール方法は[INSTALL.md](IN
 - [x] ~~シンタックスハイライトに対応~~
 - [x] ~~CommonMarkdown に作表と打ち消し線、チェックボックス表示機能を追加~~
 - [x] ~~Qiita風のコードブロック（ファイル名表示機能付）~~
+- [x] ~~投稿できない~~
