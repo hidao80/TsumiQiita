@@ -14,6 +14,7 @@ body {
   display: flex;
 }
 #working-area {
+  width: 100%;
 }
 #preview {
   overflow-x: hidden;
@@ -108,6 +109,9 @@ div.target-dir {
 pre {
   background-color: #272822;
   color: #F8F8F2;
+}
+dialog > span {
+  font-size: 1rem;
 }
 .code-frame {
   margin: 1.2em 3px 3px 3px;

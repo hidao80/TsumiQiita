@@ -15,7 +15,7 @@ node.jsでビルドします。<wbr>**インストール方法は[INSTALL.md](IN
 
 ## 主な機能
 
-- 選択したファイルをQiitaに限定公開として投稿
+- 選択したファイルをQiitaに状態を指定して投稿（限定公開投稿可）
 - 選択したMarkdownファイルをプレビュー
 - PCのストレージから任意のMarkdownファイルを開く
 - 新規Markdownファイルの作成
@@ -25,8 +25,10 @@ node.jsでビルドします。<wbr>**インストール方法は[INSTALL.md](IN
 - タグをつけて投稿
 - 同一フォルダ内の Markdown ファイルをリストにして常時表示
 - Windows / macOS / Linux でほぼ同一の UI を提供
+- twitter連携オプション可
+- Qiita team用オプション可
 
-以上の機能により、<wbr>**限定公開の草案をローカルに際限なく貯めることを可能にします**<wbr>。
+以上の機能により、<wbr>**記事の草案をローカルに際限なく貯めることを可能にします**<wbr>。
 
 ### ユースケース
 
@@ -35,13 +37,30 @@ node.jsでビルドします。<wbr>**インストール方法は[INSTALL.md](IN
 
 ## 注意
 
-プレビューはQiitaやGitHubでの表示と異なります。あくまで参考程度とご理解ください。
+1. プレビューはQiitaやGitHubでの表示と異なります。あくまで参考程度とご理解ください。
+1. 既存の記事とまったく同じ記事が投稿できます。上書きされません。
 
-### 動作検証済み環境
+### Qiita記事のヘッダ書式
 
-- Win10 Version 1709, 1803
-- macOS 10.13
-- Ubuntu 18.04
+    ---
+    title: 記事のタイトル
+    tags: タグA:0.0.1 タグB
+    tweet: false
+    private: false
+    coediting: false
+    group_url_name: dev
+    ---   
+    # 見出し1
+    本文...
+
+フィールド | 必須 | Type | 説明
+---|---|---|---
+title | 〇 | string | 記事のタイトル
+tags | 〇 | string | タグ。バージョン併記可。5つまで。
+tweet | | true/false | Twitterに投稿するかどうか (Twitter連携を有効化している場合のみ有効)
+private | | true/false | 限定共有状態かどうかを表すフラグ (Qiita Teamでは無効)  
+coedition | | true/false | この記事が共同更新状態かどうか (Qiita Teamでのみ有効)
+group_url_name | | null/string | この投稿を公開するグループの url_name (null で全体に公開。Qiita Teamでのみ有効)
 
 ### TODO
 
@@ -58,3 +77,4 @@ node.jsでビルドします。<wbr>**インストール方法は[INSTALL.md](IN
 - [x] ~~シンタックスハイライトに対応~~
 - [x] ~~CommonMarkdown に作表と打ち消し線、チェックボックス表示機能を追加~~
 - [x] ~~Qiita風のコードブロック（ファイル名表示機能付）~~
+- [x] ~~投稿できない~~
