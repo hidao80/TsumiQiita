@@ -2,8 +2,15 @@
 var timer;
 const WRITE_INTERVAL = 3000;
 const hljs = require('highlight.js');
-const Config = require('electron-store');
-const config = new Config();
+const config = {
+  get: (key) => {
+    const val = localStorage.getItem('tsumiqiita_' + key);
+    return val === null ? undefined : val;
+  },
+  set: (key, value) => {
+    localStorage.setItem('tsumiqiita_' + key, value);
+  }
+};
 
 function $(name) {
   return document.querySelector(name);
@@ -57,7 +64,7 @@ function rendaring() {
       var codeBlockHTML;
       if (lang) {
         try {
-          codeBlockHTML = '<pre style="margin:0;"><code>' + hljs.highlight(lang, str).value + '</code></pre>';
+          codeBlockHTML = '<pre style="margin:0;"><code>' + hljs.highlight(str, { language: lang }).value + '</code></pre>';
         }
         catch (e) {
           codeBlockHTML = '<pre style="padding:8px;"><code>' + require("escape-html")(str) + '</code></pre>';
@@ -179,7 +186,7 @@ function init() {
   $('#input').value = config.get("TOKEN");
 
   setScrollSync();
-  hljs.initHighlightingOnLoad();
+  hljs.highlightAll();
 }
 
 function selectTargetDir() {
@@ -242,29 +249,20 @@ function createTagsObject(tags) {
 
 function post() {
   const fs = require('fs');
+  const https = require('https');
   const token = config.get("TOKEN");
   const p = config.get("CURRENT_FILE");
   const text = fs.readFileSync(p, 'utf-8');
-  const request = require('request');
 
   if (token === undefined) {
     $('#message').innerText = "トークンがセットされていません"
     $('#msg-dialog').showModal();
     return;
-  }	
+  }
 
-  const options = {
-    url: "https://qiita.com/api/v2/items",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + token
-    },
-    json: {}
-  };
-
+  const body = {};
   const textHeader = getHeader(text);
-  options.json["body"] = getBody(text);
+  body["body"] = getBody(text);
 
   let item = "";
   let label = ""
@@ -276,37 +274,55 @@ function post() {
         case "coediting":
         case "private":
         case "tweet":
-          options.json[label] = (item[1].trim() === 'true');
+          body[label] = (item[1].trim() === 'true');
           break;
         case "group_url_name":
         case "title":
-          options.json[label] = item[1].trim();
+          body[label] = item[1].trim();
           break;
         case "tags":
-          options.json[label] = createTagsObject(line.slice(line.indexOf(":")+1).trim().split(" "));
+          body[label] = createTagsObject(line.slice(line.indexOf(":")+1).trim().split(" "));
           break;
       }
     }
   }
 
-  if (!options.json["title"]) {
+  if (!body["title"]) {
     $('#message').innerText = "タイトルが入力されていません"
     $('#msg-dialog').showModal();
     return;
   }
-  if (options.json["tags"] === undefined) {
+  if (body["tags"] === undefined) {
     $('#message').innerText = "タグが入力されていません"
     $('#msg-dialog').showModal();
     return;
   }
 
-  request(options, (error, response) => {
-    $('#message').innerText = "投稿しました！"
-    if (response.statusCode != 201) {
-      $('#message').innerText = "投稿に失敗しました…\n・タグが6つ以上あるかもしれません\n・正しいトークンがセットされていないかもしれません"
+  const postData = JSON.stringify(body);
+  const reqOptions = {
+    hostname: 'qiita.com',
+    path: '/api/v2/items',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token,
+      'Content-Length': Buffer.byteLength(postData)
+    }
+  };
+
+  const req = https.request(reqOptions, (res) => {
+    $('#message').innerText = "投稿しました！";
+    if (res.statusCode != 201) {
+      $('#message').innerText = "投稿に失敗しました…\n・タグが6つ以上あるかもしれません\n・正しいトークンがセットされていないかもしれません";
     }
     $('#msg-dialog').showModal();
   });
+  req.on('error', () => {
+    $('#message').innerText = "通信エラーが発生しました";
+    $('#msg-dialog').showModal();
+  });
+  req.write(postData);
+  req.end();
 }
 
 function createArticle() {

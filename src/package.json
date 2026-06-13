@@ -28,16 +28,14 @@
   },
   "homepage": "https://github.com/hidao80/TsumiQiita#readme",
   "devDependencies": {
-    "electron": "^35.7.5",
-    "electron-builder": "^20.29.0"
+    "electron": "^42.4.0",
+    "electron-builder": "^26.0.0"
   },
   "dependencies": {
-    "electron-store": "^2.0.0",
     "escape-html": "^1.0.3",
     "github-markdown-css": "^2.10.0",
-    "highlight.js": "^10.4.1",
+    "highlight.js": "^11.9.0",
     "markdown-it": "^12.3.2",
-    "markdown-it-checkbox": "^1.1.0",
-    "request": "^2.88.2"
+    "markdown-it-checkbox": "^1.1.0"
   }
 }
