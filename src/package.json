@@ -1,11 +1,11 @@
 {
   "name": "tsumiqiita",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "MarkdownファイルをQiitaに投稿するelectron製デスクトップアプリです。",
   "main": "index.js",
   "scripts": {
-    "start": "node_modules/.bin/electron .",
-    "build": "node_modules/.bin/build"
+    "start": "electron .",
+    "build": "build"
   },
   "build": {
     "productName": "TsumiQiita",
@@ -35,7 +35,7 @@
     "escape-html": "^1.0.3",
     "github-markdown-css": "^2.10.0",
     "highlight.js": "^11.9.0",
-    "markdown-it": "^12.3.2",
+    "markdown-it": "^15.0.0",
     "markdown-it-checkbox": "^1.1.0"
   }
 }
