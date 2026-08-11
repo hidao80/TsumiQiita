@@ -21,11 +21,13 @@ function fileNameEncode(name) {
 }
 
 function getBody(md) {
-  return md.match(/(-{3,}[\s\S])([\s\S.]*?)(-{3,}[\s\S])([\s\S.]*)/)[4];
+  const m = md.match(/(-{3,}[\s\S])([\s\S.]*?)(-{3,}[\s\S])([\s\S.]*)/);
+  return m ? m[4] : md;
 }
 
 function getHeader(md) {
-  return md.match(/(-{3,}[\s\S])([\s\S.]*?)(-{3,}[\s\S])([\s\S.]*)/)[2];
+  const m = md.match(/(-{3,}[\s\S])([\s\S.]*?)(-{3,}[\s\S])([\s\S.]*)/);
+  return m ? m[2] : "";
 }
 
 function writeMarkdownFile() {
@@ -189,19 +191,16 @@ function init() {
   hljs.highlightAll();
 }
 
-function selectTargetDir() {
-  const Dialog = require('electron').remote.dialog;
+async function selectTargetDir() {
+  const { ipcRenderer } = require('electron');
+  const folderName = await ipcRenderer.invoke('select-target-dir');
 
-  Dialog.showOpenDialog({
-    properties: ['openDirectory'],
-    title: 'フォルダの選択',
-    defaultPath: '.'
-  }, (folderNames) => {
-    config.set('TARGET_DIR', folderNames[0]);
-    $('#target-dir').innerHTML = folderNames[0];
+  if (folderName === undefined) { return; }
 
-    updateFileListPain(folderNames[0], "");
-  });
+  config.set('TARGET_DIR', folderName);
+  $('#target-dir').innerHTML = folderName;
+
+  updateFileListPain(folderName, "");
 }
 
 function setToken() {
@@ -325,29 +324,22 @@ function post() {
   req.end();
 }
 
-function createArticle() {
-  const Dialog = require('electron').remote.dialog;
+async function createArticle() {
+  const { ipcRenderer } = require('electron');
+  const savedFile = await ipcRenderer.invoke('create-article');
 
-  Dialog.showSaveDialog({
-    title: '新規作成',
-    defaultPath: '.',
-    filters: [
-      { name: 'Markdownファイル', extensions: ['md'] },
-    ]
-  }, (savedFile) => {
-    try {
-      if (savedFile !== undefined && savedFile !== "") {
-        const fs = require('fs');
-        fs.writeFileSync(savedFile, "");
-        console.log(savedFile);
-        config.set('CURRENT_FILE', savedFile);
-        updateFileListPain(config.get('TARGET_DIR'), require('path').basename(savedFile));
-        openMarkdownFile(savedFile);
-      }
-    } catch (err) {
-      return false;
+  try {
+    if (savedFile !== undefined && savedFile !== "") {
+      const fs = require('fs');
+      fs.writeFileSync(savedFile, "");
+      console.log(savedFile);
+      config.set('CURRENT_FILE', savedFile);
+      updateFileListPain(config.get('TARGET_DIR'), require('path').basename(savedFile));
+      openMarkdownFile(savedFile);
     }
-  });
+  } catch (err) {
+    return false;
+  }
 }
 
 function OnTabKey( e, obj ){
