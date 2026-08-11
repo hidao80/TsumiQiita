@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TsumiQiita - 積みQiitaを解消するMarkdown下書きデスクトップアプリ</title>
+<meta name="description" content="MarkdownファイルをQiitaに投稿できるElectron製デスクトップアプリ。リアルタイムプレビュー、自動保存、タグ登録、限定共有投稿に対応。Windows / macOS / Linuxで動作。">
+<link rel="canonical" href="https://github.com/hidao80/TsumiQiita">
+
+<!-- Favicon (emoji) -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
+
+<!-- OGP -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="TsumiQiita - 積みQiitaを解消するMarkdown下書きデスクトップアプリ">
+<meta property="og:description" content="MarkdownファイルをQiitaに投稿できるElectron製デスクトップアプリ。リアルタイムプレビュー、自動保存、タグ登録、限定共有投稿に対応。">
+<meta property="og:url" content="https://github.com/hidao80/TsumiQiita">
+<meta property="og:image" content="https://raw.githubusercontent.com/hidao80/TsumiQiita/master/ss.png">
+<meta property="og:site_name" content="TsumiQiita">
+<meta property="og:locale" content="ja_JP">
+
+<!-- X.com (Twitter) Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TsumiQiita - 積みQiitaを解消するMarkdown下書きデスクトップアプリ">
+<meta name="twitter:description" content="MarkdownファイルをQiitaに投稿できるElectron製デスクトップアプリ。リアルタイムプレビュー、自動保存、タグ登録、限定共有投稿に対応。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/hidao80/TsumiQiita/master/ss.png">
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "TsumiQiita",
+  "operatingSystem": "Windows, macOS, Linux",
+  "applicationCategory": "DeveloperApplication",
+  "description": "MarkdownファイルをQiitaに投稿するElectron製デスクトップアプリ。下書きに入りきらない積みQiitaを解消する。",
+  "url": "https://github.com/hidao80/TsumiQiita",
+  "downloadUrl": "https://github.com/hidao80/TsumiQiita/releases",
+  "image": "https://raw.githubusercontent.com/hidao80/TsumiQiita/master/ss.png",
+  "author": {
+    "@type": "Person",
+    "name": "hidao80",
+    "url": "https://github.com/hidao80"
+  },
+  "license": "https://github.com/hidao80/TsumiQiita/blob/master/LICENSE.md",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  }
+}
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+<style>
+  :root {
+    --pico-font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", sans-serif;
+  }
+  .hero {
+    text-align: center;
+    padding: 3rem 1rem 2rem;
+  }
+  .hero .emoji {
+    font-size: 3.5rem;
+    line-height: 1;
+  }
+  .hero p.tagline {
+    font-size: 1.25rem;
+    color: var(--pico-muted-color);
+  }
+  .cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+  .screenshot {
+    max-width: 80%;
+    display: block;
+    margin: 0 auto;
+    border-radius: var(--pico-border-radius);
+    box-shadow: 0 4px 24px rgba(0,0,0,.15);
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .feature-card {
+    padding: 1.25rem;
+  }
+  .feature-card .emoji {
+    font-size: 1.75rem;
+  }
+  footer {
+    text-align: center;
+    color: var(--pico-muted-color);
+    padding: 2rem 1rem;
+  }
+  table.header-fields {
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+<main class="container">
+
+  <section class="hero">
+    <div class="emoji">📝</div>
+    <h1>TsumiQiita</h1>
+    <p class="tagline">下書きに入りきらない<strong>積みQiita</strong>を、ローカルに際限なく貯める。</p>
+    <p>MarkdownファイルをQiitaに投稿するElectron製デスクトップアプリ</p>
+    <div class="cta">
+      <a href="https://github.com/hidao80/TsumiQiita/releases" role="button">ダウンロード</a>
+      <a href="https://github.com/hidao80/TsumiQiita" role="button" class="secondary">GitHubで見る</a>
+      <a href="https://github.com/hidao80/TsumiQiita/blob/master/INSTALL.md" role="button" class="outline">インストール方法</a>
+    </div>
+  </section>
+
+  <section>
+    <img class="screenshot" src="ss.png" alt="TsumiQiitaのスクリーンショット。左に対象フォルダのMarkdown一覧、右上にリアルタイムプレビュー、右下にエディタを表示。">
+  </section>
+
+  <section>
+    <h2>主な機能</h2>
+    <div class="features-grid">
+      <article class="feature-card">
+        <div class="emoji">🚀</div>
+        <h3>Qiitaへ直接投稿</h3>
+        <p>選択したファイルを状態指定で投稿。限定公開投稿にも対応。</p>
+      </article>
+      <article class="feature-card">
+        <div class="emoji">👀</div>
+        <h3>リアルタイムプレビュー</h3>
+        <p>編集内容を即座にプレビュー表示。同一フォルダ内のMarkdownを常時リスト表示。</p>
+      </article>
+      <article class="feature-card">
+        <div class="emoji">💾</div>
+        <h3>自動保存</h3>
+        <p>最後の編集から3秒後に自動保存。保存忘れを防止。</p>
+      </article>
+      <article class="feature-card">
+        <div class="emoji">🏷️</div>
+        <h3>タグ登録</h3>
+        <p>記事にタグを付けて投稿。バージョン併記にも対応。</p>
+      </article>
+      <article class="feature-card">
+        <div class="emoji">🖥️</div>
+        <h3>マルチプラットフォーム</h3>
+        <p>Windows / macOS / Linuxでほぼ同一のUIを提供。</p>
+      </article>
+      <article class="feature-card">
+        <div class="emoji">🐦</div>
+        <h3>連携オプション</h3>
+        <p>X(Twitter)連携、Qiita Team用オプションに対応。</p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>ユースケース</h2>
+    <ul>
+      <li>クラウドストレージにMarkdownファイルを保存し、任意の端末から編集して本アプリで投稿する。</li>
+      <li>リアルタイムプレビューを見ながら下書きをする。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Qiita記事のヘッダ書式</h2>
+    <pre><code>---
+title: 記事のタイトル
+tags: タグA:0.0.1 タグB
+tweet: false
+private: false
+coediting: false
+group_url_name: dev
+---
+# 見出し1
+本文...</code></pre>
+
+    <table class="header-fields">
+      <thead>
+        <tr><th>フィールド</th><th>必須</th><th>Type</th><th>説明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>title</td><td>〇</td><td>string</td><td>記事のタイトル</td></tr>
+        <tr><td>tags</td><td>〇</td><td>string</td><td>タグ。バージョン併記可。5つまで。</td></tr>
+        <tr><td>tweet</td><td></td><td>true/false</td><td>Twitterに投稿するかどうか（Twitter連携を有効化している場合のみ有効）</td></tr>
+        <tr><td>private</td><td></td><td>true/false</td><td>限定共有状態かどうかを表すフラグ（Qiita Teamでは無効）</td></tr>
+        <tr><td>coediting</td><td></td><td>true/false</td><td>この記事が共同更新状態かどうか（Qiita Teamでのみ有効）</td></tr>
+        <tr><td>group_url_name</td><td></td><td>null/string</td><td>この投稿を公開するグループのurl_name（nullで全体に公開。Qiita Teamでのみ有効）</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>注意事項</h2>
+    <ul>
+      <li>プレビューはQiitaやGitHubでの表示と異なります。あくまで参考程度とご理解ください。</li>
+      <li>既存の記事とまったく同じ記事が投稿できます。上書きされません。</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>
+      <a href="https://github.com/hidao80/TsumiQiita/blob/master/LICENSE.md">MIT License</a> ©
+      <a href="https://github.com/hidao80">hidao80</a>
+    </p>
+  </footer>
+
+</main>
+</body>
+</html>

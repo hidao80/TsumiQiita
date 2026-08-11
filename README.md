@@ -1,7 +1,8 @@
 # TsumiQiitaとは
 
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE.md)
-[![npm v6.0.0](https://img.shields.io/badge/node-6.0.0-blue.svg)](https://nodejs.org/ja/)
+[![node v22](https://img.shields.io/badge/node-22-blue.svg)](https://nodejs.org/ja/)
+[![electron v42](https://img.shields.io/badge/electron-42-47848F.svg)](https://www.electronjs.org/)
 ![hidao quality](https://img.shields.io/badge/hidao-quality-orange.svg)
 
 MarkdownファイルをQiitaに投稿するelectron製デスクトップアプリです。\
@@ -78,3 +79,6 @@ group_url_name | | null/string | この投稿を公開するグループの url_
 - [x] ~~CommonMarkdown に作表と打ち消し線、チェックボックス表示機能を追加~~
 - [x] ~~Qiita風のコードブロック（ファイル名表示機能付）~~
 - [x] ~~投稿できない~~
+- [x] ~~Electron最新版でapp.makeSingleInstanceが動かない（requestSingleInstanceLockに移行）~~
+- [x] ~~Electron最新版でnodeIntegrationがデフォルトfalseになりrequireが使えない（webPreferencesで有効化）~~
+- [x] ~~Electron 14以降electron.remoteが廃止され動かない（ipcMain/ipcRendererに移行）~~
