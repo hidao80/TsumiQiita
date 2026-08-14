@@ -1,19 +1,18 @@
 # インストール方法
 
 1. gitをインストール (<https://git-scm.com/downloads>)
-1. npmをインストール (<https://nodejs.org/ja/>)
-1. npmを以下の手順で [npm v6.0.0](https://nodejs.org/ja/) 以上にアップデート
+1. bunをインストール (<https://bun.com/>)
     ```sh
     ## for macOS and Linux
-    sudo npm i -g npm
+    curl -fsSL https://bun.com/install | bash
 
     ## for Windows
-    npm i -g npm
+    powershell -c "irm bun.com/install.ps1 | iex"
     ```
 1. リポジトリのインストール
     ```sh
     git clone https://github.com/hidao80/TsumiQiita.git
     cd TsumiQiita/src
-    npm i
-    npm run build
+    bun i
+    bun run build
     ```
