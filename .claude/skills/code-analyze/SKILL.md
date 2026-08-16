@@ -21,7 +21,7 @@ description: Record and update project documentation in a readable state for bot
 
 - **Pruning**: Completely delete any entries, notes, or TODOs related to files, components, or features that no longer exist in the codebase.
 - **Structure**: Maintain a clean directory structure under `.claude/analyzed/{CATEGORY_NAME}.md`. Organize your knowledge using Markdown files and a directory structure, and create a mind map. You may include linkable files.
-- **Front matter**: Every generated `.md` file must include the standard front matter:  
+- **Front matter**: Every generated `.md` file must include the standard front matter:
 
     ```md
     ---
