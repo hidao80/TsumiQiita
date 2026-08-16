@@ -7,15 +7,15 @@
 <meta name="description" content="MarkdownファイルをQiitaに投稿できるElectron製デスクトップアプリ。リアルタイムプレビュー、自動保存、タグ登録、限定共有投稿に対応。Windows / macOS / Linuxで動作。">
 <link rel="canonical" href="https://github.com/hidao80/TsumiQiita">
 
-<!-- Favicon (emoji) -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
+<!-- Favicon (Twemoji) -->
+<link rel="icon" type="image/svg+xml" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f4dd.svg">
 
 <!-- OGP -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="TsumiQiita - 積みQiitaを解消するMarkdown下書きデスクトップアプリ">
 <meta property="og:description" content="MarkdownファイルをQiitaに投稿できるElectron製デスクトップアプリ。リアルタイムプレビュー、自動保存、タグ登録、限定共有投稿に対応。">
 <meta property="og:url" content="https://github.com/hidao80/TsumiQiita">
-<meta property="og:image" content="https://hidao80.github.io/social-preview.png">
+<meta property="og:image" content="https://hidao80.github.io/TsumiQiita/social-preview.png">
 <meta property="og:site_name" content="TsumiQiita">
 <meta property="og:locale" content="ja_JP">
 
@@ -23,7 +23,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="TsumiQiita - 積みQiitaを解消するMarkdown下書きデスクトップアプリ">
 <meta name="twitter:description" content="MarkdownファイルをQiitaに投稿できるElectron製デスクトップアプリ。リアルタイムプレビュー、自動保存、タグ登録、限定共有投稿に対応。">
-<meta name="twitter:image" content="https://hidao80.github.io/social-preview.png">
+<meta name="twitter:image" content="https://hidao80.github.io/TsumiQiita/social-preview.png">
 
 <!-- JSON-LD -->
 <script type="application/ld+json">
@@ -36,7 +36,7 @@
   "description": "MarkdownファイルをQiitaに投稿するElectron製デスクトップアプリ。下書きに入りきらない積みQiitaを解消する。",
   "url": "https://github.com/hidao80/TsumiQiita",
   "downloadUrl": "https://github.com/hidao80/TsumiQiita/releases",
-  "image": "https://hidao80.github.io/social-preview.png",
+  "image": "https://hidao80.github.io/TsumiQiita/social-preview.png",
   "author": {
     "@type": "Person",
     "name": "hidao80",
@@ -52,124 +52,309 @@
 </script>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-<style>
-  :root {
-    --pico-font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", sans-serif;
-  }
-  .hero {
-    text-align: center;
-    padding: 3rem 1rem 2rem;
-  }
-  .hero .emoji {
-    font-size: 3.5rem;
-    line-height: 1;
-  }
-  .hero p.tagline {
-    font-size: 1.25rem;
-    color: var(--pico-muted-color);
-  }
-  .cta {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 1.5rem;
-  }
-  .screenshot {
-    max-width: 80%;
-    display: block;
-    margin: 0 auto;
-    border-radius: var(--pico-border-radius);
-    box-shadow: 0 4px 24px rgba(0,0,0,.15);
-  }
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-  }
-  .feature-card {
-    padding: 1.25rem;
-  }
-  .feature-card .emoji {
-    font-size: 1.75rem;
-  }
-  footer {
-    text-align: center;
-    color: var(--pico-muted-color);
-    padding: 2rem 1rem;
-  }
-  table.header-fields {
-    font-size: 0.9rem;
-  }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<nav class="navbar container-fluid">
+  <ul>
+    <li><a href="#" class="navbar-brand"><span class="emoji">📝</span> TsumiQiita</a></li>
+  </ul>
+  <ul>
+    <li>
+      <select id="lang-switcher" aria-label="Language">
+        <option value="en">English</option>
+        <option value="ja">日本語</option>
+        <option value="zh">中文</option>
+        <option value="es">Español</option>
+        <option value="ru">Русский</option>
+      </select>
+    </li>
+  </ul>
+</nav>
+
 <main class="container">
 
   <section class="hero">
     <div class="emoji">📝</div>
     <h1>TsumiQiita</h1>
-    <p class="tagline">下書きに入りきらない<strong>積みQiita</strong>を、ローカルに際限なく貯める。</p>
-    <p>MarkdownファイルをQiitaに投稿するElectron製デスクトップアプリ</p>
+    <p class="tagline">
+      <template type="language-group">
+        <span language="en">Stockpile your Qiita drafts locally, without limit.</span>
+        <span language="ja">下書きに入りきらない<strong>積みQiita</strong>を、ローカルに際限なく貯める。</span>
+        <span language="zh">将放不下的 Qiita 草稿，无限地存放在本地。</span>
+        <span language="es">Acumula tus borradores de Qiita localmente, sin límites.</span>
+        <span language="ru">Храните черновики Qiita локально и без ограничений.</span>
+      </template>
+    </p>
+    <p>
+      <template type="language-group">
+        <span language="en">An Electron desktop app for posting Markdown files to Qiita</span>
+        <span language="ja">MarkdownファイルをQiitaに投稿するElectron製デスクトップアプリ</span>
+        <span language="zh">用于将 Markdown 文件发布到 Qiita 的 Electron 桌面应用</span>
+        <span language="es">Una aplicación de escritorio Electron para publicar archivos Markdown en Qiita</span>
+        <span language="ru">Настольное приложение на Electron для публикации файлов Markdown в Qiita</span>
+      </template>
+    </p>
     <div class="cta">
-      <a href="https://github.com/hidao80/TsumiQiita/releases" role="button">ダウンロード</a>
-      <a href="https://github.com/hidao80/TsumiQiita" role="button" class="secondary">GitHubで見る</a>
-      <a href="https://github.com/hidao80/TsumiQiita/blob/master/INSTALL.md" role="button" class="outline">インストール方法</a>
+      <a href="https://github.com/hidao80/TsumiQiita/releases" role="button">
+        <template type="language-group">
+          <span language="en">Download</span>
+          <span language="ja">ダウンロード</span>
+          <span language="zh">下载</span>
+          <span language="es">Descargar</span>
+          <span language="ru">Скачать</span>
+        </template>
+      </a>
+      <a href="https://github.com/hidao80/TsumiQiita" role="button" class="secondary">
+        <template type="language-group">
+          <span language="en">View on GitHub</span>
+          <span language="ja">GitHubで見る</span>
+          <span language="zh">在 GitHub 上查看</span>
+          <span language="es">Ver en GitHub</span>
+          <span language="ru">Смотреть на GitHub</span>
+        </template>
+      </a>
+      <a href="#install" role="button" class="outline">
+        <template type="language-group">
+          <span language="en">Installation</span>
+          <span language="ja">インストール方法</span>
+          <span language="zh">安装方法</span>
+          <span language="es">Instalación</span>
+          <span language="ru">Установка</span>
+        </template>
+      </a>
     </div>
   </section>
 
   <section>
-    <img class="screenshot" src="ss.png" alt="TsumiQiitaのスクリーンショット。左に対象フォルダのMarkdown一覧、右上にリアルタイムプレビュー、右下にエディタを表示。">
+    <img class="screenshot" src="ss.png" alt="TsumiQiita screenshot">
   </section>
 
   <section>
-    <h2>主な機能</h2>
+    <h2>
+      <template type="language-group">
+        <span language="en">Features</span>
+        <span language="ja">主な機能</span>
+        <span language="zh">主要功能</span>
+        <span language="es">Características</span>
+        <span language="ru">Возможности</span>
+      </template>
+    </h2>
     <div class="features-grid">
       <article class="feature-card">
         <div class="emoji">🚀</div>
-        <h3>Qiitaへ直接投稿</h3>
-        <p>選択したファイルを状態指定で投稿。限定公開投稿にも対応。</p>
+        <h3>
+          <template type="language-group">
+            <span language="en">Post directly to Qiita</span>
+            <span language="ja">Qiitaへ直接投稿</span>
+            <span language="zh">直接发布到 Qiita</span>
+            <span language="es">Publicación directa en Qiita</span>
+            <span language="ru">Публикация прямо в Qiita</span>
+          </template>
+        </h3>
+        <p>
+          <template type="language-group">
+            <span language="en">Post the selected file with a chosen status, including limited-share posts.</span>
+            <span language="ja">選択したファイルを状態指定で投稿。限定公開投稿にも対応。</span>
+            <span language="zh">按指定状态发布所选文件，支持限定公开发布。</span>
+            <span language="es">Publica el archivo seleccionado con el estado elegido, incluidas publicaciones de acceso limitado.</span>
+            <span language="ru">Публикуйте выбранный файл с нужным статусом, включая записи с ограниченным доступом.</span>
+          </template>
+        </p>
       </article>
       <article class="feature-card">
         <div class="emoji">👀</div>
-        <h3>リアルタイムプレビュー</h3>
-        <p>編集内容を即座にプレビュー表示。同一フォルダ内のMarkdownを常時リスト表示。</p>
+        <h3>
+          <template type="language-group">
+            <span language="en">Real-time preview</span>
+            <span language="ja">リアルタイムプレビュー</span>
+            <span language="zh">实时预览</span>
+            <span language="es">Vista previa en tiempo real</span>
+            <span language="ru">Предпросмотр в реальном времени</span>
+          </template>
+        </h3>
+        <p>
+          <template type="language-group">
+            <span language="en">See your edits instantly. All Markdown files in the same folder stay listed.</span>
+            <span language="ja">編集内容を即座にプレビュー表示。同一フォルダ内のMarkdownを常時リスト表示。</span>
+            <span language="zh">即时预览编辑内容。同一文件夹内的 Markdown 文件始终列出。</span>
+            <span language="es">Visualiza tus ediciones al instante. Los archivos Markdown de la misma carpeta se listan siempre.</span>
+            <span language="ru">Мгновенный просмотр изменений. Все файлы Markdown из папки остаются в списке.</span>
+          </template>
+        </p>
       </article>
       <article class="feature-card">
         <div class="emoji">💾</div>
-        <h3>自動保存</h3>
-        <p>最後の編集から3秒後に自動保存。保存忘れを防止。</p>
+        <h3>
+          <template type="language-group">
+            <span language="en">Auto-save</span>
+            <span language="ja">自動保存</span>
+            <span language="zh">自动保存</span>
+            <span language="es">Guardado automático</span>
+            <span language="ru">Автосохранение</span>
+          </template>
+        </h3>
+        <p>
+          <template type="language-group">
+            <span language="en">Saves automatically 3 seconds after your last edit. Never lose work.</span>
+            <span language="ja">最後の編集から3秒後に自動保存。保存忘れを防止。</span>
+            <span language="zh">最后编辑 3 秒后自动保存，防止忘记保存。</span>
+            <span language="es">Se guarda automáticamente 3 segundos después de tu última edición. Nunca pierdas tu trabajo.</span>
+            <span language="ru">Автосохранение через 3 секунды после последнего изменения. Работа не потеряется.</span>
+          </template>
+        </p>
       </article>
       <article class="feature-card">
         <div class="emoji">🏷️</div>
-        <h3>タグ登録</h3>
-        <p>記事にタグを付けて投稿。バージョン併記にも対応。</p>
+        <h3>
+          <template type="language-group">
+            <span language="en">Tagging</span>
+            <span language="ja">タグ登録</span>
+            <span language="zh">标签管理</span>
+            <span language="es">Etiquetado</span>
+            <span language="ru">Теги</span>
+          </template>
+        </h3>
+        <p>
+          <template type="language-group">
+            <span language="en">Attach tags to your posts, with optional version numbers.</span>
+            <span language="ja">記事にタグを付けて投稿。バージョン併記にも対応。</span>
+            <span language="zh">为文章添加标签，支持附加版本号。</span>
+            <span language="es">Añade etiquetas a tus publicaciones, con números de versión opcionales.</span>
+            <span language="ru">Добавляйте теги к записям, включая указание версии.</span>
+          </template>
+        </p>
       </article>
       <article class="feature-card">
         <div class="emoji">🖥️</div>
-        <h3>マルチプラットフォーム</h3>
-        <p>Windows / macOS / Linuxでほぼ同一のUIを提供。</p>
+        <h3>
+          <template type="language-group">
+            <span language="en">Cross-platform</span>
+            <span language="ja">マルチプラットフォーム</span>
+            <span language="zh">跨平台</span>
+            <span language="es">Multiplataforma</span>
+            <span language="ru">Кроссплатформенность</span>
+          </template>
+        </h3>
+        <p>
+          <template type="language-group">
+            <span language="en">A nearly identical UI on Windows, macOS, and Linux.</span>
+            <span language="ja">Windows / macOS / Linuxでほぼ同一のUIを提供。</span>
+            <span language="zh">在 Windows / macOS / Linux 上提供几乎一致的界面。</span>
+            <span language="es">Una interfaz casi idéntica en Windows, macOS y Linux.</span>
+            <span language="ru">Почти одинаковый интерфейс в Windows, macOS и Linux.</span>
+          </template>
+        </p>
       </article>
       <article class="feature-card">
         <div class="emoji">🐦</div>
-        <h3>連携オプション</h3>
-        <p>X(Twitter)連携、Qiita Team用オプションに対応。</p>
+        <h3>
+          <template type="language-group">
+            <span language="en">Optional integrations</span>
+            <span language="ja">連携オプション</span>
+            <span language="zh">可选集成</span>
+            <span language="es">Integraciones opcionales</span>
+            <span language="ru">Дополнительные интеграции</span>
+          </template>
+        </h3>
+        <p>
+          <template type="language-group">
+            <span language="en">Supports X (Twitter) integration and Qiita Team options.</span>
+            <span language="ja">X(Twitter)連携、Qiita Team用オプションに対応。</span>
+            <span language="zh">支持 X(Twitter) 集成和 Qiita Team 选项。</span>
+            <span language="es">Compatible con integración X (Twitter) y opciones de Qiita Team.</span>
+            <span language="ru">Поддержка интеграции с X (Twitter) и опций Qiita Team.</span>
+          </template>
+        </p>
       </article>
     </div>
   </section>
 
+  <section id="install">
+    <h2>
+      <template type="language-group">
+        <span language="en">Installation</span>
+        <span language="ja">インストール方法</span>
+        <span language="zh">安装方法</span>
+        <span language="es">Instalación</span>
+        <span language="ru">Установка</span>
+      </template>
+    </h2>
+    <p>
+      <template type="language-group">
+        <span language="en">Requires <a href="https://git-scm.com/downloads">git</a> and <a href="https://bun.com/">bun</a>.</span>
+        <span language="ja"><a href="https://git-scm.com/downloads">git</a>と<a href="https://bun.com/">bun</a>が必要です。</span>
+        <span language="zh">需要 <a href="https://git-scm.com/downloads">git</a> 和 <a href="https://bun.com/">bun</a>。</span>
+        <span language="es">Requiere <a href="https://git-scm.com/downloads">git</a> y <a href="https://bun.com/">bun</a>.</span>
+        <span language="ru">Требуется <a href="https://git-scm.com/downloads">git</a> и <a href="https://bun.com/">bun</a>.</span>
+      </template>
+    </p>
+    <div class="code-row">
+      <pre><code id="install-cmd">git clone https://github.com/hidao80/TsumiQiita.git
+cd TsumiQiita/src
+bun i
+bun run build</code></pre>
+      <button class="copy-btn" data-copy-target="install-cmd" aria-label="Copy">
+        <svg class="icon-copy" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        <svg class="icon-check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" hidden><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </button>
+    </div>
+    <p>
+      <template type="language-group">
+        <span language="en">Pre-built releases are available <a href="https://github.com/hidao80/TsumiQiita/releases">here</a>.</span>
+        <span language="ja">ビルド済みは<a href="https://github.com/hidao80/TsumiQiita/releases">こちら</a>から入手できます。</span>
+        <span language="zh">预构建版本请见<a href="https://github.com/hidao80/TsumiQiita/releases">此处</a>。</span>
+        <span language="es">Las versiones precompiladas están disponibles <a href="https://github.com/hidao80/TsumiQiita/releases">aquí</a>.</span>
+        <span language="ru">Готовые сборки доступны <a href="https://github.com/hidao80/TsumiQiita/releases">здесь</a>.</span>
+      </template>
+    </p>
+  </section>
+
   <section>
-    <h2>ユースケース</h2>
+    <h2>
+      <template type="language-group">
+        <span language="en">Use Cases</span>
+        <span language="ja">ユースケース</span>
+        <span language="zh">使用场景</span>
+        <span language="es">Casos de uso</span>
+        <span language="ru">Сценарии использования</span>
+      </template>
+    </h2>
     <ul>
-      <li>クラウドストレージにMarkdownファイルを保存し、任意の端末から編集して本アプリで投稿する。</li>
-      <li>リアルタイムプレビューを見ながら下書きをする。</li>
+      <li>
+        <template type="language-group">
+          <span language="en">Save Markdown files to cloud storage, edit from any device, then post from this app.</span>
+          <span language="ja">クラウドストレージにMarkdownファイルを保存し、任意の端末から編集して本アプリで投稿する。</span>
+          <span language="zh">将 Markdown 文件保存到云存储，从任意设备编辑后通过本应用发布。</span>
+          <span language="es">Guarda archivos Markdown en almacenamiento en la nube, edítalos desde cualquier dispositivo y publica desde esta app.</span>
+          <span language="ru">Храните файлы Markdown в облаке, редактируйте с любого устройства и публикуйте через это приложение.</span>
+        </template>
+      </li>
+      <li>
+        <template type="language-group">
+          <span language="en">Draft while watching the real-time preview.</span>
+          <span language="ja">リアルタイムプレビューを見ながら下書きをする。</span>
+          <span language="zh">一边查看实时预览一边撰写草稿。</span>
+          <span language="es">Redacta mientras observas la vista previa en tiempo real.</span>
+          <span language="ru">Пишите черновик, наблюдая за предпросмотром в реальном времени.</span>
+        </template>
+      </li>
     </ul>
   </section>
 
   <section>
-    <h2>Qiita記事のヘッダ書式</h2>
-    <pre><code>---
+    <h2>
+      <template type="language-group">
+        <span language="en">Qiita Article Header Format</span>
+        <span language="ja">Qiita記事のヘッダ書式</span>
+        <span language="zh">Qiita 文章头部格式</span>
+        <span language="es">Formato de cabecera del artículo de Qiita</span>
+        <span language="ru">Формат заголовка статьи Qiita</span>
+      </template>
+    </h2>
+    <div class="code-row">
+      <pre><code id="header-format">---
 title: 記事のタイトル
 tags: タグA:0.0.1 タグB
 tweet: false
@@ -179,27 +364,181 @@ group_url_name: dev
 ---
 # 見出し1
 本文...</code></pre>
+      <button class="copy-btn" data-copy-target="header-format" aria-label="Copy">
+        <svg class="icon-copy" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        <svg class="icon-check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" hidden><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </button>
+    </div>
 
-    <table class="header-fields">
-      <thead>
-        <tr><th>フィールド</th><th>必須</th><th>Type</th><th>説明</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>title</td><td>〇</td><td>string</td><td>記事のタイトル</td></tr>
-        <tr><td>tags</td><td>〇</td><td>string</td><td>タグ。バージョン併記可。5つまで。</td></tr>
-        <tr><td>tweet</td><td></td><td>true/false</td><td>Twitterに投稿するかどうか（Twitter連携を有効化している場合のみ有効）</td></tr>
-        <tr><td>private</td><td></td><td>true/false</td><td>限定共有状態かどうかを表すフラグ（Qiita Teamでは無効）</td></tr>
-        <tr><td>coediting</td><td></td><td>true/false</td><td>この記事が共同更新状態かどうか（Qiita Teamでのみ有効）</td></tr>
-        <tr><td>group_url_name</td><td></td><td>null/string</td><td>この投稿を公開するグループのurl_name（nullで全体に公開。Qiita Teamでのみ有効）</td></tr>
-      </tbody>
-    </table>
+    <div class="table-scroll">
+      <table class="header-fields">
+        <thead>
+          <tr>
+            <th>
+              <template type="language-group">
+                <span language="en">Field</span>
+                <span language="ja">フィールド</span>
+                <span language="zh">字段</span>
+                <span language="es">Campo</span>
+                <span language="ru">Поле</span>
+              </template>
+            </th>
+            <th>
+              <template type="language-group">
+                <span language="en">Required</span>
+                <span language="ja">必須</span>
+                <span language="zh">必填</span>
+                <span language="es">Obligatorio</span>
+                <span language="ru">Обязательно</span>
+              </template>
+            </th>
+            <th>Type</th>
+            <th>
+              <template type="language-group">
+                <span language="en">Description</span>
+                <span language="ja">説明</span>
+                <span language="zh">说明</span>
+                <span language="es">Descripción</span>
+                <span language="ru">Описание</span>
+              </template>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>title</td>
+            <td>
+              <template type="language-group">
+                <span language="en">Yes</span>
+                <span language="ja">〇</span>
+                <span language="zh">是</span>
+                <span language="es">Sí</span>
+                <span language="ru">Да</span>
+              </template>
+            </td>
+            <td>string</td>
+            <td>
+              <template type="language-group">
+                <span language="en">Article title</span>
+                <span language="ja">記事のタイトル</span>
+                <span language="zh">文章标题</span>
+                <span language="es">Título del artículo</span>
+                <span language="ru">Заголовок статьи</span>
+              </template>
+            </td>
+          </tr>
+          <tr>
+            <td>tags</td>
+            <td>
+              <template type="language-group">
+                <span language="en">Yes</span>
+                <span language="ja">〇</span>
+                <span language="zh">是</span>
+                <span language="es">Sí</span>
+                <span language="ru">Да</span>
+              </template>
+            </td>
+            <td>string</td>
+            <td>
+              <template type="language-group">
+                <span language="en">Tags. Version numbers allowed. Up to 5.</span>
+                <span language="ja">タグ。バージョン併記可。5つまで。</span>
+                <span language="zh">标签，可附加版本号，最多 5 个。</span>
+                <span language="es">Etiquetas. Se permiten números de versión. Hasta 5.</span>
+                <span language="ru">Теги. Допускается указание версии. До 5 штук.</span>
+              </template>
+            </td>
+          </tr>
+          <tr>
+            <td>tweet</td>
+            <td></td>
+            <td>true/false</td>
+            <td>
+              <template type="language-group">
+                <span language="en">Whether to post to X/Twitter (only when integration is enabled)</span>
+                <span language="ja">Twitterに投稿するかどうか（Twitter連携を有効化している場合のみ有効）</span>
+                <span language="zh">是否发布到 X/Twitter（仅在启用集成时有效）</span>
+                <span language="es">Si se publica en X/Twitter (solo si la integración está activada)</span>
+                <span language="ru">Публиковать ли в X/Twitter (только при включенной интеграции)</span>
+              </template>
+            </td>
+          </tr>
+          <tr>
+            <td>private</td>
+            <td></td>
+            <td>true/false</td>
+            <td>
+              <template type="language-group">
+                <span language="en">Flag for limited-share status (disabled on Qiita Team)</span>
+                <span language="ja">限定共有状態かどうかを表すフラグ（Qiita Teamでは無効）</span>
+                <span language="zh">是否为限定公开状态的标志（在 Qiita Team 中无效）</span>
+                <span language="es">Indicador de estado de acceso limitado (deshabilitado en Qiita Team)</span>
+                <span language="ru">Флаг ограниченного доступа (недоступен в Qiita Team)</span>
+              </template>
+            </td>
+          </tr>
+          <tr>
+            <td>coediting</td>
+            <td></td>
+            <td>true/false</td>
+            <td>
+              <template type="language-group">
+                <span language="en">Whether this article is co-editable (Qiita Team only)</span>
+                <span language="ja">この記事が共同更新状態かどうか（Qiita Teamでのみ有効）</span>
+                <span language="zh">该文章是否为共同编辑状态（仅 Qiita Team 有效）</span>
+                <span language="es">Si el artículo es coeditable (solo Qiita Team)</span>
+                <span language="ru">Совместное редактирование статьи (только Qiita Team)</span>
+              </template>
+            </td>
+          </tr>
+          <tr>
+            <td>group_url_name</td>
+            <td></td>
+            <td>null/string</td>
+            <td>
+              <template type="language-group">
+                <span language="en">url_name of the group to publish to (null = public. Qiita Team only)</span>
+                <span language="ja">この投稿を公開するグループのurl_name（nullで全体に公開。Qiita Teamでのみ有効）</span>
+                <span language="zh">要发布到的组的 url_name（null 表示公开发布，仅 Qiita Team 有效）</span>
+                <span language="es">url_name del grupo donde publicar (null = público. Solo Qiita Team)</span>
+                <span language="ru">url_name группы для публикации (null = публично. Только Qiita Team)</span>
+              </template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section>
-    <h2>注意事項</h2>
+    <h2>
+      <template type="language-group">
+        <span language="en">Notes</span>
+        <span language="ja">注意事項</span>
+        <span language="zh">注意事项</span>
+        <span language="es">Notas</span>
+        <span language="ru">Примечания</span>
+      </template>
+    </h2>
     <ul>
-      <li>プレビューはQiitaやGitHubでの表示と異なります。あくまで参考程度とご理解ください。</li>
-      <li>既存の記事とまったく同じ記事が投稿できます。上書きされません。</li>
+      <li>
+        <template type="language-group">
+          <span language="en">The preview differs from how Qiita or GitHub renders Markdown; treat it as a rough reference.</span>
+          <span language="ja">プレビューはQiitaやGitHubでの表示と異なります。あくまで参考程度とご理解ください。</span>
+          <span language="zh">预览与 Qiita 或 GitHub 的实际显示效果不同，仅供参考。</span>
+          <span language="es">La vista previa difiere de cómo se muestra en Qiita o GitHub; tómala solo como referencia.</span>
+          <span language="ru">Предпросмотр отличается от отображения в Qiita или GitHub, используйте его только как ориентир.</span>
+        </template>
+      </li>
+      <li>
+        <template type="language-group">
+          <span language="en">You can post an article identical to an existing one; it will not overwrite it.</span>
+          <span language="ja">既存の記事とまったく同じ記事が投稿できます。上書きされません。</span>
+          <span language="zh">可以发布与现有文章完全相同的文章，不会覆盖原文章。</span>
+          <span language="es">Puedes publicar un artículo idéntico a uno existente; no lo sobrescribirá.</span>
+          <span language="ru">Можно опубликовать статью, идентичную существующей — она не перезапишет её.</span>
+        </template>
+      </li>
     </ul>
   </section>
 
@@ -211,5 +550,8 @@ group_url_name: dev
   </footer>
 
 </main>
+
+<script src="https://unpkg.com/multilanguagejs@2.0.1/dist/multilanguagejs.umd.cjs"></script>
+<script src="main.min.js"></script>
 </body>
 </html>
