@@ -1,0 +1,174 @@
+/* Tailwind: preflight（リセットCSS）はプレビューの見た目を崩すため読み込まない */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* font-sans をNoto Sans JPにする（#rootに適用。コードブロックとエディタは等幅のまま） */
+@theme {
+  --font-sans: "Noto Sans JP", ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+ * テーマ（ライト/ダーク）。:root[data-theme] で切り替える。
+ * color-scheme により、背景・文字・入力欄・ダイアログ・スクロールバー等のブラウザ既定色も追従する。
+ */
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+  --tq-bg: Canvas;
+  --tq-fg: CanvasText;
+  --tq-accent: deepskyblue;
+  --tq-accent-text: deepskyblue;
+  --tq-code-bg: #364549;
+  --tq-muted: gray;
+  --tq-border: #eee;
+  --tq-editor-border: darkgray;
+  --tq-menu-bg: #fff;
+  --tq-hamburger: #555;
+  --tq-selection: #bbf;
+  --tq-switch-off: #ccc;
+  --tq-preview-fg: rgba(0, 0, 0, 0.87);
+  --tq-preview-muted: rgba(0, 0, 0, 0.55);
+  --tq-preview-border: #ddd;
+  --tq-preview-link: #1a73e8;
+  --tq-inline-code-bg: rgba(0, 0, 0, 0.06);
+  --tq-th-bg: #f5f6f6;
+}
+/* ダークは純黒・純白を避けた青みのあるグレー基調（コントラストを抑える） */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --tq-bg: #22272e;
+  --tq-fg: #adbac7;
+  --tq-field-bg: #2d333b;
+  --tq-field-fg: #adbac7;
+  --tq-accent: #316dca;
+  --tq-accent-text: #539bf5;
+  --tq-code-bg: #1c2128;
+  --tq-muted: #768390;
+  --tq-border: #373e47;
+  --tq-editor-border: #444c56;
+  --tq-menu-bg: #2d333b;
+  --tq-hamburger: #909dab;
+  --tq-selection: #2f4a6e;
+  --tq-switch-off: #545d68;
+  --tq-preview-fg: #adbac7;
+  --tq-preview-muted: #768390;
+  --tq-preview-border: #444c56;
+  --tq-preview-link: #539bf5;
+  --tq-inline-code-bg: rgba(99, 110, 123, 0.4);
+  --tq-th-bg: #2d333b;
+}
+
+/* 以下はレイヤー外のため、同じ要素に同じプロパティのユーティリティを併用しないこと */
+html {
+  /* テーマの背景色・文字色（ライトはブラウザ既定のCanvas/CanvasText） */
+  background-color: var(--tq-bg);
+  color: var(--tq-fg);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+}
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+}
+/* preflight無しのため、ボタン・入力欄にもアプリのフォントを継承させる（エディタは等幅のまま） */
+button,
+input {
+  font-family: inherit;
+}
+::selection {
+  background: var(--tq-selection);
+}
+::-webkit-scrollbar {
+  width: 20px;
+  height: 20px;
+}
+/* 縦横スクロールバーの交点もテーマの背景色にする */
+::-webkit-scrollbar-corner {
+  background: var(--tq-bg);
+}
+/* ダーク時はエディタ・入力欄・ボタン・ダイアログもテーマの色にする（ライトはブラウザ既定のまま） */
+:root[data-theme="dark"] :is(textarea, input:not([type]), input[type="text"]) {
+  background-color: var(--tq-field-bg);
+  color: var(--tq-field-fg);
+}
+:root[data-theme="dark"] button {
+  background-color: var(--tq-border);
+  color: var(--tq-fg);
+  border: 1px solid var(--tq-editor-border);
+  border-radius: 4px;
+}
+:root[data-theme="dark"] dialog {
+  background-color: var(--tq-menu-bg);
+  color: var(--tq-fg);
+  border: 1px solid var(--tq-editor-border);
+}
+div.target-dir {
+  border-bottom: 1px solid #eee;
+  font-size: 1.5rem;
+  margin: 0;
+  height: 5%;
+  white-space: nowrap;
+  width: 100%;
+}
+/*チェックボックス等は非表示に*/
+.nav-unshown {
+  display: none;
+}
+/*メニューを開くボタン（Material Symbols の menu アイコン。製品名の左側）*/
+#nav-open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.5rem;
+  color: var(--tq-hamburger);
+  cursor: pointer;
+}
+#nav-open .material-symbols-outlined {
+  font-size: 2.5rem;
+}
+/*中身*/
+#nav-content {
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999; /*最前面に*/
+  width: 90%; /*右側に隙間を作る（閉じるカバーを表示）*/
+  max-width: 330px; /*最大幅（調整してください）*/
+  height: 100%;
+  background: var(--tq-menu-bg); /*背景色*/
+  transition: 0.3s ease-in-out; /*滑らかに表示*/
+  -webkit-transform: translateX(-105%);
+  transform: translateX(-105%); /*左に隠しておく*/
+}
+/*閉じる用の薄黒カバー*/
+#nav-close {
+  display: none; /*はじめは隠しておく*/
+  position: fixed;
+  z-index: 99;
+  top: 0; /*全体に広がるように*/
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0;
+  transition: 0.3s ease-in-out;
+}
+/*チェックが入ったらもろもろ表示*/
+#nav-input:checked ~ #nav-close {
+  display: block; /*カバーを表示*/
+  opacity: 0.5;
+}
+#nav-input:checked ~ #nav-content {
+  -webkit-transform: translateX(0%);
+  transform: translateX(0%); /*中身を表示（右へスライド）*/
+  box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
+}

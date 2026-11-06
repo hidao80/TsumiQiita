@@ -1,0 +1,196 @@
+/*
+ * プレビュー用のQiita記事風スタイル（独自実装）。
+ * Qiita本体のCSSは使わず、記事ページの見た目に寄せて書いたもの。
+ * #preview の幅・高さ・overflowはTailwindのユーティリティで指定しているため、ここでは扱わない。
+ */
+.markdown-content {
+  box-sizing: border-box;
+  padding: 0 16px;
+  color: var(--tq-preview-fg);
+  font-size: 16px;
+  line-height: 1.8;
+  overflow-wrap: break-word;
+}
+
+.markdown-content > :first-child {
+  margin-top: 16px;
+}
+
+/* 見出し */
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 2.4em 0 0.8em;
+}
+.markdown-content h1 {
+  font-size: 1.6em;
+  border-bottom: 1px solid var(--tq-preview-border);
+  padding-bottom: 0.2em;
+}
+.markdown-content h2 {
+  font-size: 1.4em;
+  border-bottom: 1px solid var(--tq-preview-border);
+  padding-bottom: 0.2em;
+}
+.markdown-content h3 {
+  font-size: 1.2em;
+}
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  font-size: 1em;
+}
+
+/* 段落・リンク・強調 */
+.markdown-content p {
+  margin: 1.5em 0;
+}
+.markdown-content a {
+  color: var(--tq-preview-link);
+  text-decoration: none;
+}
+.markdown-content a:hover {
+  text-decoration: underline;
+}
+.markdown-content strong {
+  font-weight: 700;
+}
+.markdown-content del,
+.markdown-content s {
+  color: var(--tq-preview-muted);
+}
+
+/* リスト */
+.markdown-content ul,
+.markdown-content ol {
+  margin: 1.5em 0;
+  padding-left: 1.8em;
+}
+.markdown-content li + li,
+.markdown-content li > ul,
+.markdown-content li > ol {
+  margin-top: 0.4em;
+}
+.markdown-content li > ul,
+.markdown-content li > ol {
+  margin-bottom: 0;
+}
+.markdown-content input[type="checkbox"] {
+  margin: 0 0.4em 0 0;
+  vertical-align: middle;
+}
+
+/* 引用・区切り線・画像 */
+.markdown-content blockquote {
+  margin: 1.5em 0;
+  padding: 0 1em;
+  border-left: 4px solid var(--tq-preview-border);
+  color: var(--tq-preview-muted);
+}
+
+/* ノート（:::note info / warn / alert）。半透明の背景でライト・ダーク両方に馴染ませる */
+.markdown-content .note {
+  --tq-note-color: #3a9a50;
+  display: flex;
+  gap: 0.6em;
+  margin: 1.5em 0;
+  padding: 1em 1.25em;
+  border-radius: 6px;
+  background-color: color-mix(in srgb, var(--tq-note-color) 14%, transparent);
+}
+.markdown-content .note.warn {
+  --tq-note-color: #d4a72c;
+}
+.markdown-content .note.alert {
+  --tq-note-color: #e5534b;
+}
+.markdown-content .note-icon {
+  flex-shrink: 0;
+  color: var(--tq-note-color);
+  font-size: 1.4em;
+  line-height: 1.3;
+}
+.markdown-content .note-body {
+  flex: 1;
+  min-width: 0;
+}
+.markdown-content .note-body > :first-child {
+  margin-top: 0;
+}
+.markdown-content .note-body > :last-child {
+  margin-bottom: 0;
+}
+.markdown-content hr {
+  margin: 2.4em 0;
+  border: 0;
+  border-top: 1px solid var(--tq-preview-border);
+}
+.markdown-content img {
+  max-width: 100%;
+}
+
+/* インラインコード */
+.markdown-content code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, Menlo, monospace;
+  font-size: 0.9em;
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  background-color: var(--tq-inline-code-bg);
+}
+
+/* コードブロック（ファイル名はタブ風に左上へ表示） */
+.markdown-content pre {
+  margin: 0;
+  padding: 16px;
+  overflow: auto;
+  line-height: 1.5;
+  border-radius: 8px;
+  background-color: var(--tq-code-bg);
+  color: #e3e3e3;
+}
+.markdown-content pre code {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font-size: 14px;
+}
+.markdown-content .code-frame {
+  margin: 1.5em 0;
+  border-radius: 8px;
+  background-color: var(--tq-code-bg);
+}
+.markdown-content .code-lang {
+  display: inline-block;
+  padding: 0 0.8em;
+  border-radius: 8px 0 4px 0;
+  background-color: #777;
+  color: #fff;
+  font-family: ui-monospace, SFMono-Regular, Consolas, Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* 表 */
+.markdown-content table {
+  margin: 1.5em 0;
+  border-collapse: collapse;
+  display: block;
+  overflow: auto;
+  width: max-content;
+  max-width: 100%;
+}
+.markdown-content th,
+.markdown-content td {
+  padding: 0.5em 1em;
+  border: 1px solid var(--tq-preview-border);
+}
+.markdown-content th {
+  font-weight: 700;
+  background-color: var(--tq-th-bg);
+}
