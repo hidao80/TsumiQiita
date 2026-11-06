@@ -1,0 +1,2 @@
+# 旧Electron版のLevelDBを再現したテスト用データ。改行変換されると読めなくなるためバイナリとして扱う
+src/src-tauri/tests/fixtures/** binary
