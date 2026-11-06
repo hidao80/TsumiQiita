@@ -1,0 +1,36 @@
+[package]
+name = "tsumiqiita"
+version = "1.8.3"
+description = "MarkdownファイルをQiitaに投稿するデスクトップアプリ"
+authors = ["hidao80"]
+license = "MIT"
+repository = "https://github.com/hidao80/TsumiQiita"
+edition = "2024"
+rust-version = "1.90"
+
+[lib]
+name = "tsumiqiita_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.7.4", features = [] }
+
+[dependencies]
+tauri = { version = "2.12.5", features = [] }
+tauri-plugin-dialog = "2"
+tauri-plugin-opener = "2"
+tauri-plugin-single-instance = "2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+reqwest = { version = "0.13", features = ["json"] }
+# 旧Electron版の localStorage（Chromium の LevelDB）を読むため
+rusty-leveldb = "4"
+# APIトークンをOSの資格情報ストア（資格情報マネージャー・キーチェーン・Secret Service）に保存するため
+keyring = "4"
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true
