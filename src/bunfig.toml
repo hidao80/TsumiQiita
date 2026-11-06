@@ -1,3 +1,7 @@
 [install]
 ignoreScripts = true
 minimumReleaseAge = 604800
+
+[test]
+# e2e/*.spec.ts はPlaywrightで実行するため、bun testの対象から外す
+root = "shared"

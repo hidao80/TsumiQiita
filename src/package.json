@@ -1,21 +1,20 @@
 {
   "name": "tsumiqiita",
   "version": "1.8.3",
-  "description": "MarkdownファイルをQiitaに投稿するelectron製デスクトップアプリです。",
-  "main": "index.js",
+  "description": "MarkdownファイルをQiitaに投稿するTauri製デスクトップアプリです。",
   "scripts": {
-    "start": "electron .",
-    "build": "electron-builder"
-  },
-  "build": {
-    "productName": "TsumiQiita",
-    "appId": "tsumiqiita",
-    "mac": {
-      "target": "dmg"
-    },
-    "directories": {
-      "output": "../build"
-    }
+    "dev": "tauri dev",
+    "dev:renderer": "vite",
+    "build": "tauri build",
+    "build:renderer": "vite build",
+    "tauri": "tauri",
+    "typecheck": "tsc",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "test": "bun test",
+    "test:coverage": "bun test --coverage --coverage-reporter=text --coverage-reporter=lcov",
+    "test:rust": "cargo test --manifest-path src-tauri/Cargo.toml",
+    "test:e2e": "wdio run wdio.conf.ts"
   },
   "repository": {
     "type": "git",
@@ -28,14 +27,34 @@
   },
   "homepage": "https://github.com/hidao80/TsumiQiita#readme",
   "devDependencies": {
-    "electron": "^42.4.0",
-    "electron-builder": "^26.0.0"
-  },
-  "dependencies": {
+    "@biomejs/biome": "^2.6.4",
+    "@fontsource/noto-sans-jp": "^5.3.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "@tauri-apps/api": "^2.12.4",
+    "@tauri-apps/cli": "^2.12.4",
+    "@types/bun": "^1.4.4",
+    "@types/escape-html": "^1.0.4",
+    "@types/markdown-it": "^14.2.0",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "@wdio/cli": "^10.1.0",
+    "@wdio/globals": "^10.1.0",
+    "@wdio/local-runner": "^10.1.0",
+    "@wdio/mocha-framework": "^10.1.0",
+    "@wdio/spec-reporter": "^10.1.0",
+    "dexie": "^4.4.7",
     "escape-html": "^1.0.3",
-    "github-markdown-css": "^2.10.0",
-    "highlight.js": "^11.9.0",
-    "markdown-it": "^15.0.0",
-    "markdown-it-checkbox": "^1.1.0"
+    "highlight.js": "^11.12.0",
+    "markdown-it": "^15.0.3",
+    "markdown-it-checkbox": "^1.1.0",
+    "material-symbols": "^0.48.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "zod": "^4.6.7"
   }
 }
