@@ -93,7 +93,7 @@ bun run test:e2e   # デバッグビルドを作り、WebdriverIO + tauri-driver
 - CSP（`tauri.conf.json`）で記事中のスクリプトを遮断する。`img-src`は`https:`を許可しているため、記事中の外部画像はプレビュー時に読み込まれる。
 - capabilitiesは`core:default`のみ。ファイル・通信はコマンド経由で、引数はRust側で検証する（`.md`のみ・記事idは英数字・未知の項目を拒否・設定キーは`KEYS`のみ）。
 - リンクは`open_external`（http/httpsのみ）で既定ブラウザに渡し、アプリ外への遷移・新しいウィンドウを止める。
-- 依存関係は`bunfig.toml`の`ignoreScripts`・`minimumReleaseAge`（7日）、`bun.lock`の固定、CIのTakumi Guard・`bun audit`、GitHub ActionsのコミットSHA固定で守る。Dependabotも`cooldown`（7日）で`minimumReleaseAge`と揃える（揃えないとbunが新しすぎる版を拒否し、更新が失敗する）。
+- 依存関係は`bunfig.toml`の`ignoreScripts`・`minimumReleaseAge`（7日）、`bun.lock`の固定、CIのTakumi Guard・`bun audit`、GitHub ActionsのコミットSHA固定で守る。Dependabotのバージョン更新も`cooldown`で公開から日の浅い版を提案しない（bunは`minimumReleaseAge`より短いと版を拒否して更新が失敗するため、日単位の境界を考えて8日。`github-actions`・`cargo`は7日）。`cooldown`はセキュリティ更新には効かないため、公開7日未満の修正版へのセキュリティ更新はbunに拒否されうる（7日たってから再実行する）。
 - 配布物はコード署名・公証をしていない（macOSは`signingIdentity: "-"`のアドホック署名）。
 
 ## 変更時の確認
@@ -112,5 +112,5 @@ bun run test:e2e   # デバッグビルドを作り、WebdriverIO + tauri-driver
 
 1. `src/package.json` の `version` を上げる（`tauri.conf.json` はこれを参照する）。
 2. 同じバージョンのタグ（`v` は付けない。例: `1.9.0`）をpushする。
-3. `.github/workflows/release.yml`がWindows / macOS（Apple Silicon・Intel）/ Linux向けにビルドし、インストーラーを添付したGitHub Releasesの**下書き**を作る。タグと `version` が違うと失敗する。
+3. `.github/workflows/release.yml`がWindows / macOS（Apple Silicon・Intel）/ Linux向けにビルドし、インストーラーを添付したGitHub Releasesの**下書き**を作る。タグと `version` が違うと失敗する。取り消し（時間切れを含む）で終わると、作りかけの下書きを`cleanup`ジョブが消す（公開済みのリリース・タグ・Rustのキャッシュは消さない）。
 4. 下書きの内容を確認し、GitHub上で公開する。コード署名はしていない（macOSはアドホック署名のみ）。
