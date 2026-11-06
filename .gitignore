@@ -3,3 +3,7 @@ npm-debug.log
 build/
 token.txt
 src/css/style.css
+src/dist/
+src/coverage/
+src/src-tauri/target/
+src/src-tauri/gen/
