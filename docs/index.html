@@ -704,11 +704,11 @@ slide: false
       </li>
       <li>
         <template type="language-group">
-          <span language="en"><strong>Supply chain:</strong> package install scripts are not run, versions published less than 7 days ago are not installed, CI scans dependencies with Takumi Guard and <code>bun audit</code>, and GitHub Actions are pinned to commit hashes.</span>
-          <span language="ja"><strong>依存パッケージの安全性:</strong> インストール時にパッケージのスクリプトを実行せず、公開から7日未満の版は入れません。CIではTakumi Guardと<code>bun audit</code>で検査し、GitHub Actionsはコミットハッシュで固定しています。</span>
-          <span language="zh"><strong>供应链安全：</strong>安装时不执行包脚本，不安装发布不足 7 天的版本；CI 使用 Takumi Guard 和 <code>bun audit</code> 检查依赖，GitHub Actions 固定到提交哈希。</span>
-          <span language="es"><strong>Cadena de suministro:</strong> no se ejecutan los scripts de instalación de paquetes, no se instalan versiones publicadas hace menos de 7 días, el CI analiza las dependencias con Takumi Guard y <code>bun audit</code>, y las GitHub Actions están fijadas por hash de commit.</span>
-          <span language="ru"><strong>Цепочка поставок:</strong> скрипты установки пакетов не запускаются, версии младше 7 дней не устанавливаются, CI проверяет зависимости через Takumi Guard и <code>bun audit</code>, а GitHub Actions закреплены по хешу коммита.</span>
+          <span language="en"><strong>Supply chain:</strong> package install scripts are not run, versions published less than 7 days ago are not installed, CI scans dependencies with Takumi Guard and <code>bun audit</code>, and GitHub Actions are pinned to commit hashes. Dependabot version updates also skip versions published less than 7 days ago.</span>
+          <span language="ja"><strong>依存パッケージの安全性:</strong> インストール時にパッケージのスクリプトを実行せず、公開から7日未満の版は入れません。CIではTakumi Guardと<code>bun audit</code>で検査し、GitHub Actionsはコミットハッシュで固定しています。Dependabotのバージョン更新も、公開から7日未満の版は提案しません。</span>
+          <span language="zh"><strong>供应链安全：</strong>安装时不执行包脚本，不安装发布不足 7 天的版本；CI 使用 Takumi Guard 和 <code>bun audit</code> 检查依赖，GitHub Actions 固定到提交哈希。Dependabot 的版本更新同样不会提议发布不足 7 天的版本。</span>
+          <span language="es"><strong>Cadena de suministro:</strong> no se ejecutan los scripts de instalación de paquetes, no se instalan versiones publicadas hace menos de 7 días, el CI analiza las dependencias con Takumi Guard y <code>bun audit</code>, y las GitHub Actions están fijadas por hash de commit. Las actualizaciones de versión de Dependabot tampoco proponen versiones publicadas hace menos de 7 días.</span>
+          <span language="ru"><strong>Цепочка поставок:</strong> скрипты установки пакетов не запускаются, версии младше 7 дней не устанавливаются, CI проверяет зависимости через Takumi Guard и <code>bun audit</code>, а GitHub Actions закреплены по хешу коммита. Обновления версий от Dependabot также не предлагают версии младше 7 дней.</span>
         </template>
       </li>
     </ul>

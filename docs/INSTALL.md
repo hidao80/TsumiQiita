@@ -26,5 +26,5 @@
 ## インストール時のセキュリティ対策
 
 - `bun i` は `src/bunfig.toml` の設定により、依存パッケージのインストールスクリプトを実行しません（`ignoreScripts`）。また、公開から7日未満の版はインストールしません（`minimumReleaseAge`）。
-- 依存パッケージの版は `src/bun.lock` で固定しています。CIでは `bun install --frozen-lockfile` を使い、Takumi Guardによるマルウェア検査と `bun audit` による脆弱性検査を行います。
+- 依存パッケージの版は `src/bun.lock` で固定しています。CIでは `bun install --frozen-lockfile` を使い、Takumi Guardによるマルウェア検査と `bun audit` による脆弱性検査を行います。Dependabotのバージョン更新も、`.github/dependabot.yml` の `cooldown` により公開から7日未満の版は提案しません。
 - 作られるインストーラーにはコード署名・公証を行いません（macOSはアドホック署名）。アプリのセキュリティ対策は [README.md](README.md#セキュリティ) を参照してください。

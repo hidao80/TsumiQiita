@@ -48,7 +48,7 @@ bunとRustでビルドします。<wbr>**インストール方法は[INSTALL.md]
 - **プレビューのスクリプト遮断**: 記事中のHTMLもプレビューしますが、CSP（Content Security Policy）で記事中のスクリプト（`<script>`やイベント属性）の実行を遮断します。
 - **画面の権限の最小化**: 画面からファイルや通信を直接扱わず、アプリ本体のコマンド経由で操作します。コマンドの引数はアプリ本体で検証します（読み書きは`.md`ファイルのみ、記事IDは英数字のみ、未知の項目は拒否）。
 - **外部リンク**: リンクはアプリ内で開かず、http/httpsのURLだけを既定のブラウザで開きます。アプリ外への画面遷移や新しいウィンドウは止めます。
-- **依存パッケージの安全性**: インストール時にパッケージのスクリプトを実行せず（`ignoreScripts`）、公開から7日未満の版は入れません（`minimumReleaseAge`）。CIでは[Takumi Guard](https://github.com/flatt-security/setup-takumi-guard-npm)によるマルウェア検査と`bun audit`による脆弱性検査を行い、GitHub Actionsはコミットハッシュで固定しています。
+- **依存パッケージの安全性**: インストール時にパッケージのスクリプトを実行せず（`ignoreScripts`）、公開から7日未満の版は入れません（`minimumReleaseAge`）。CIでは[Takumi Guard](https://github.com/flatt-security/setup-takumi-guard-npm)によるマルウェア検査と`bun audit`による脆弱性検査を行い、GitHub Actionsはコミットハッシュで固定しています。Dependabotのバージョン更新も、公開から7日未満の版は提案しません（`cooldown`）。
 
 次の点は対象外です。
 

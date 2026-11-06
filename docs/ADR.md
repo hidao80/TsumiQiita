@@ -273,7 +273,7 @@
 
 **Context**: 2018年に導入したSideCI（`sideci.yml`, `lint_yml/.jshintrc`）は稼働が確認できず（観察事項）、依存の更新が5年近く止まった経緯がある（[ADR-0009](#adr-0009-2026年のdependabot脆弱性一斉是正)）。
 
-**Decision**: SideCIとJSHintの設定を削除し、GitHub Actionsに`lint` / `test`（`bun test`・`cargo fmt --check`・`cargo clippy`・`cargo test`）/ `build` / `audit`（`bun audit`）を置く。各ワークフローでTakumi Guardによる依存パッケージのマルウェア検査を行い、`bun install --frozen-lockfile`を使う。Actionsはコミットハッシュで固定する。Dependabotで`github-actions`・`bun`・`cargo`の依存を毎週更新する。
+**Decision**: SideCIとJSHintの設定を削除し、GitHub Actionsに`lint` / `test`（`bun test`・`cargo fmt --check`・`cargo clippy`・`cargo test`）/ `build` / `audit`（`bun audit`）を置く。各ワークフローでTakumi Guardによる依存パッケージのマルウェア検査を行い、`bun install --frozen-lockfile`を使う。Actionsはコミットハッシュで固定する。Dependabotで`github-actions`・`bun`・`cargo`の依存を毎週更新する。Dependabotのバージョン更新は`cooldown`で公開から日の浅い版を提案しない（`3b2ba4d`）。`bun`は`bunfig.toml`の`minimumReleaseAge`（7日）より短いと更新が失敗するため、日単位の境界を考えて8日、`github-actions`・`cargo`は7日とする。
 
 **Consequences**: 依存の脆弱性とマルウェアをCIで検知できるようになり、ADR-0009のような更新の停滞を防ぎやすくなった。ワークフローは`master`ブランチと`src/`構成を前提にしている。
 
