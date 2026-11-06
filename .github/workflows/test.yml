@@ -9,15 +9,15 @@ on:
 permissions:
   contents: read
 
-# 同じブランチ・PRへの新しいpushが来たら、古い実行は取り消す
+# 同じPRへの新しいpushが来たら、古い実行は取り消す。master へのpushはコミットごとに別グループにし、取り消さずに結果を残す
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
   cancel-in-progress: true
 
 jobs:
   test:
     runs-on: ubuntu-slim
-    timeout-minutes: 10
+    # ubuntu-slim はジョブが15分で打ち切られるため、timeout-minutes は付けない
     defaults:
       run:
         # package.json のルートは src/

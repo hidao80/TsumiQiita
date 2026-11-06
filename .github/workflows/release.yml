@@ -9,7 +9,9 @@ on:
 permissions:
   contents: read
 
-# 同じタグのリリースは並行させない（途中で取り消すと下書きが中途半端になるため、取り消しはしない）
+# 同じタグのリリースは並行させず、実行中のものは取り消さない。
+# ただし待機中の実行は、さらに新しい実行が来るとGitHubが取り消す（待機できるのは1件まで）。
+# 時間切れ（timeout-minutes）などで取り消されたときは、下の cleanup ジョブが作りかけの下書きを消す
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
@@ -80,3 +82,25 @@ jobs:
             コード署名をしていないため、初回起動時にOSの警告が出ます。
             - Windows: 「詳細情報」→「実行」
             - macOS: アプリを右クリック →「開く」（またはシステム設定の「プライバシーとセキュリティ」で許可）
+
+  # 取り消し（時間切れを含む）で終わったら、作りかけの下書きリリースを添付ファイルごと消す。
+  # 公開済みのリリース・タグ・Rustのキャッシュは消さない
+  cleanup:
+    needs: release
+    if: ${{ always() && needs.release.result == 'cancelled' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      # 下書きリリースの一覧と削除に必要
+      contents: write
+    steps:
+      - name: Delete the draft release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ids="$(gh api "repos/${GITHUB_REPOSITORY}/releases" --paginate \
+            --jq ".[] | select(.draft and .tag_name == \"${GITHUB_REF_NAME}\") | .id")"
+          for id in ${ids}; do
+            gh api -X DELETE "repos/${GITHUB_REPOSITORY}/releases/${id}"
+            echo "下書きリリース ${id}（${GITHUB_REF_NAME}）を削除しました"
+          done

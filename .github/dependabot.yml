@@ -1,19 +1,22 @@
 version: 2
 updates:
-  # 公開から7日未満の版は提案しない（src/bunfig.toml の minimumReleaseAge と揃える。
-  # 揃えないと bun が新しすぎる版を拒否し、Dependabot の更新が失敗する）
+  # cooldown で公開から日の浅い版を提案しない（新しすぎる版の取り込みを避ける）。
+  # cooldown はバージョン更新にだけ効き、セキュリティ更新には効かない
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
     cooldown:
       default-days: 7
+  # src/bunfig.toml の minimumReleaseAge（604800秒＝7日）より短いと bun が版を拒否し、更新が失敗する。
+  # cooldown は日単位のため、境界でずれないよう1日多くする。
+  # セキュリティ更新は cooldown を無視するため、7日未満の修正版では失敗しうる（7日たってから再実行する）
   - package-ecosystem: "bun"
     directory: "/src"
     schedule:
       interval: "weekly"
     cooldown:
-      default-days: 7
+      default-days: 8
   - package-ecosystem: "cargo"
     directory: "/src/src-tauri"
     schedule:

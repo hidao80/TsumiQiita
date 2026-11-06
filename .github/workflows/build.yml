@@ -9,9 +9,9 @@ on:
 permissions:
   contents: read
 
-# 同じブランチ・PRへの新しいpushが来たら、古い実行は取り消す
+# 同じPRへの新しいpushが来たら、古い実行は取り消す。master へのpushはコミットごとに別グループにし、取り消さずに結果を残す
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
   cancel-in-progress: true
 
 jobs:
