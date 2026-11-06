@@ -57,6 +57,7 @@ bun run test:e2e   # デバッグビルドを作り、WebdriverIO + tauri-driver
 - `src/bunfig.toml` が `.npmrc` の代わり（`ignoreScripts` / `minimumReleaseAge` を設定済み）。
 - ロックファイルは `src/bun.lock` と `src/src-tauri/Cargo.lock`。
 - 画面はViteでバンドルされるため、JSの依存パッケージは`devDependencies`に置く。
+- `package.json`の`overrides`で`glob`（^14.0.2）と`minimatch`（^11.0.1）を上書きしている。E2E用の`@wdio/config` 10.1.0と`mocha` 12.0.3が脆弱な版（GHSA-3g3m-2fjr-6pw4、GHSA-g3hv-75wg-m249）を範囲指定しているため。両パッケージが修正版を範囲に含めたら`overrides`を外す。
 - Rustは `cargo fmt` と `cargo clippy --all-targets -- -D warnings` が通ること（CIで確認）。
 
 ## コーディングスタイル
@@ -75,7 +76,7 @@ bun run test:e2e   # デバッグビルドを作り、WebdriverIO + tauri-driver
 
 - 画面はNode/RustのAPIを直接使わず、`renderer/lib/api.ts`（`invoke`）経由でRustのコマンドを呼ぶ。コマンドは`src-tauri/src/lib.rs`に集約し、引数は必ずRust側でも検証する（.mdのみ・記事idは英数字・トークン必須・未知の項目を拒否など）。画面側のZodスキーマ（`shared/schema.ts`）と`qiita.rs`の`ItemBody`は項目を揃える。
 - 設定は`~/.config/TsumiQiita/config.json`（全OS共通。Windowsは`%USERPROFILE%\.config\TsumiQiita`）にRust側で保存する。キーは`config.rs`の`KEYS`と`SettingKeySchema`で揃え、未知のキーは書き込みを拒否する。APIトークン（`TOKEN`）だけは設定ファイルに書かず、OSの資格情報ストア（サービス名 `io.github.hidao80.tsumiqiita`）に保存する。画面からは`config.get`/`config.set`でどちらも同じように扱う。
-- 以前の保存先だったIndexedDB（Dexie）の設定は、設定ファイルが無いときだけ設定ファイル・資格情報ストアへ移し、移し終えたらIndexedDB側を消す（`renderer/lib/legacy.ts`の`migrateIndexedDbSettings`）。
+- 以前の保存先だったIndexedDB（Dexie）の設定は、設定ファイルがないときだけ設定ファイル・資格情報ストアへ移し、移し終えたらIndexedDB側を消す（`renderer/lib/legacy.ts`の`migrateIndexedDbSettings`）。
 - **`identifier`（`io.github.hidao80.tsumiqiita`）とアプリのURL（オリジン）を変えないこと。** WebViewの保存先・IndexedDBのオリジン・資格情報ストアのサービス名が変わり、移行前の設定やトークンを読めなくなる。
 - 旧Electron版の設定（TOKEN / TARGET_DIR / CURRENT_FILE）は、初回起動時に`%APPDATA%\tsumiqiita`等（Tauriの`config_dir()`配下）のLevelDBを一時ディレクトリに複製して読み、設定ファイル・資格情報ストアへ移行する（`renderer/lib/legacy.ts`）。移行済みの印は設定 `LEGACY_MIGRATED`。読み出しに失敗したら印を付けず次回に再試行し、設定済みの値は上書きしない。旧版のプロファイルは書き換えない。
 - CSPは`tauri.conf.json`の`app.security.csp`で付与する（記事中の生HTMLのスクリプトを遮断するため）。IPCのため`connect-src ipc: http://ipc.localhost`が必要。`style-src`の`'unsafe-inline'`を活かすため、`dangerousDisableAssetCspModification`で`style-src`へのnonce付与を止めている。
