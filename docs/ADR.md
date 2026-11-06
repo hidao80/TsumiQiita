@@ -2,7 +2,7 @@
 
 > このドキュメントは Git コミット履歴（`ea2ef4a` 1st commit 〜 `3993994`、2018-03-29〜2026-08-14、全217コミット、タグ `0.1.0`〜`1.8.2` を含む全履歴ベース）を分析し、コードやコミットメッセージから読み取れるアーキテクチャ上の決定を再構成したものです。当時の議論（Issue/PR本文など）までは追えていないため、根拠はコミットメッセージと差分から推測しています。
 >
-> ADR-0018 以降は `307e7d5`〜`062a408`（〜2026-11-06）のコミットに加え、作業中に記録したユーザー判断（`z-ai/decision.jsonl`）を根拠にしています。根拠がコミットにも判断記録にも書かれておらず推測したものは「**Speculative**」と明記します。
+> ADR-0018 以降は `307e7d5`〜`48ccd48`（〜2026-11-06）のコミットに加え、作業中に記録したユーザー判断（`z-ai/decision.jsonl`）を根拠にしています。根拠がコミットにも判断記録にも書かれておらず推測したものは「**Speculative**」と明記します。
 
 ## ADR-0001: Electron によるクロスプラットフォームデスクトップアプリとして実装
 
@@ -273,7 +273,7 @@
 
 **Context**: 2018年に導入したSideCI（`sideci.yml`, `lint_yml/.jshintrc`）は稼働が確認できず（観察事項）、依存の更新が5年近く止まった経緯がある（[ADR-0009](#adr-0009-2026年のdependabot脆弱性一斉是正)）。
 
-**Decision**: SideCIとJSHintの設定を削除し、GitHub Actionsに`lint` / `test`（`bun test`・`cargo fmt --check`・`cargo clippy`・`cargo test`）/ `build` / `audit`（`bun audit`）を置く。各ワークフローでTakumi Guardによる依存パッケージのマルウェア検査を行い、`bun install --frozen-lockfile`を使う。Actionsはコミットハッシュで固定する。Dependabotで`github-actions`・`bun`・`cargo`の依存を毎週更新する。Dependabotのバージョン更新は`cooldown`で公開から日の浅い版を提案しない（`3b2ba4d`）。`bun`は`bunfig.toml`の`minimumReleaseAge`（7日）より短いと更新が失敗するため、日単位の境界を考えて8日、`github-actions`・`cargo`は7日とする。
+**Decision**: SideCIとJSHintの設定を削除し、GitHub Actionsに`lint` / `test`（`bun test`・`cargo fmt --check`・`cargo clippy`・`cargo test`）/ `build` / `audit`（`bun audit`）を置く。各ワークフローでTakumi Guardによる依存パッケージのマルウェア検査を行い、`bun install --frozen-lockfile`を使う。Actionsはコミットハッシュで固定する。Dependabotで`github-actions`・`bun`・`cargo`の依存を毎週更新する。（後に`cooldown`・`concurrency`を追加。[ADR-0028](#adr-0028-ciの同時実行と時間切れを制御しdependabotにcooldownを設ける)参照）
 
 **Consequences**: 依存の脆弱性とマルウェアをCIで検知できるようになり、ADR-0009のような更新の停滞を防ぎやすくなった。ワークフローは`master`ブランチと`src/`構成を前提にしている。
 
@@ -286,7 +286,44 @@
 
 **Decision**: `release.yml`で、`v`なしのバージョンタグ（例: `1.9.0`）のpushを契機に各OSでビルドし、`tauri-apps/tauri-action`でGitHub Releaseの下書きを作ってインストーラーを添付する。タグは`src/package.json`の`version`と一致しなければ失敗させる。
 
-**Consequences**: リリース作業は「バージョンを上げてタグをpushし、下書きを公開する」に単純化された。証明書がないためコード署名・公証はしておらず（macOSはアドホック署名）、初回起動時にOSの警告が出る（リリース本文に手順を記載）。
+**Consequences**: リリース作業は「バージョンを上げてタグをpushし、下書きを公開する」に単純化された。証明書がないためコード署名・公証はしておらず（macOSはアドホック署名）、初回起動時にOSの警告が出る（リリース本文に手順を記載）。取り消し時の後始末は[ADR-0028](#adr-0028-ciの同時実行と時間切れを制御しdependabotにcooldownを設ける)で追加した。
+
+## ADR-0026: 脆弱な推移的依存（glob・minimatch）をoverridesで上書きする
+
+- **Status**: Accepted
+- **Date**: 2026-11-06（`fdd9c9a`, `997bf66`）
+
+**Context**: E2E用の`@wdio/config` 10.1.0と`mocha` 12.0.3が、脆弱な版の`glob`・`minimatch`（GHSA-3g3m-2fjr-6pw4、GHSA-g3hv-75wg-m249）を範囲指定しており、両パッケージの更新だけでは解消できなかった（`AGENTS.md`）。
+
+**Decision**: `src/package.json`の`overrides`で`glob`を`^14.0.2`、`minimatch`を`^11.0.1`に上書きする。両パッケージが修正版を範囲に含めたら`overrides`を外す。
+
+**Consequences**: `bun audit`の指摘は解消するが、上書きした版は依存元が想定する範囲の外になる。依存元の更新を追い、外せる時点で外す保守作業が残る。
+
+## ADR-0027: 修正版に上げられないglibの脆弱性アラートは開いたまま記録する
+
+- **Status**: Accepted
+- **Date**: 2026-11-06（`f43f103`、21:00の判断記録）
+
+**Context**: Dependabot alert #23（Rustの`glib` 0.18.5、GHSA-wrw7-89jp-8q8g、`VariantStrIter`の不健全性）が出た。`glib`はLinux用のGTK3部分（`wry` → `webkit2gtk` 2.0 → `gtk` 0.18）から入り、最新のTauri 2.12.5・wry 0.57.1でも0.18のため、修正版の0.20に上げられない。このアプリのコードと依存クレートは`VariantStrIter`を使っていない（`~/.cargo/registry`を検索して確認）。
+
+**Decision**: アラートを却下せず開いたままにし、理由と解消条件を`AGENTS.md`に記録する。Tauri（wry）がgtk-rs 0.20以降に移ったら`cargo update`で解消する。
+
+**Consequences**: 未解消のアラートが残り続けるが、却下と違い、上流の更新で解消できる状態になったことに気づきやすい。
+
+## ADR-0028: CIの同時実行と時間切れを制御し、Dependabotにcooldownを設ける
+
+- **Status**: Accepted
+- **Date**: 2026-11-06（`3b2ba4d`, `ef3edc7`, `2ff87fa`, `48ccd48`、21:30・22:00・22:05の判断記録）
+
+**Context**: [ADR-0024](#adr-0024-github-actionsでlinttestbuildauditを実行しdependabotで依存を更新する)・[ADR-0025](#adr-0025-タグのpushでtauri-actionが各osのインストーラーをリリースの下書きに添付する)のワークフローには同時実行と実行時間の制御がなく、Dependabotは公開直後の版も提案していた。`bunfig.toml`の`minimumReleaseAge`（7日）より新しい版はbunが拒否するため、Dependabotの更新が失敗しうる。`3b2ba4d`の最初の設定は、同日のコードレビューで次の問題を指摘された。masterへのpushでも先の実行が取り消される。リリースの時間切れで作りかけの下書きが残る。cooldownはセキュリティ更新に効かない。cooldownの日単位の判定と`minimumReleaseAge`の秒単位の判定が境界でずれうる。
+
+**Decision**:
+- audit / build / lint / testは、同じPRへの新しいpushで古い実行を取り消す。masterへのpushは`github.sha`ごとに別のconcurrencyグループにし、取り消さずにコミットごとの結果を残す。
+- `timeout-minutes`を付ける。ただし`ubuntu-slim`のジョブは15分で打ち切られるため付けない。
+- releaseは同じタグで並行させず、実行中のものを取り消さない。取り消し（時間切れを含む）で終わったら、`cleanup`ジョブがそのタグの下書きリリースを添付ファイルごと消す。公開済みのリリース・タグ・Rustのキャッシュは消さない。
+- Dependabotのバージョン更新に`cooldown`を設ける。`bun`は`minimumReleaseAge`より短くならないよう8日、`github-actions`・`cargo`は7日にする。
+
+**Consequences**: 古いPRの実行がCIの枠を使い続けなくなり、masterでは壊れたコミットをCI結果から特定できる。`cleanup`ジョブは、時間切れのジョブの結果が`cancelled`になることを前提にしている（**Speculative**、未検証）。`cooldown`はセキュリティ更新に効かないため、公開から7日未満の修正版へのセキュリティ更新はbunに拒否されうる（7日たってから再実行する）。`timeout-minutes`を付けた理由（暴走したジョブによる実行時間の消費を防ぐ）はコミットにも判断記録にも書かれておらず推測である（**Speculative**）。concurrencyの設定は4つのワークフローに重複しているが、統合は見送った。
 
 ---
 
