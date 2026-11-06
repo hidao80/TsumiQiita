@@ -7,23 +7,23 @@
   var META = {
     en: {
       title: "TsumiQiita - Stockpile your Qiita drafts locally",
-      description: "An Electron desktop app for posting Markdown files to Qiita. Real-time preview, auto-save, tagging, and limited-share posts. Runs on Windows / macOS / Linux."
+      description: "A Tauri desktop app for posting Markdown files to Qiita. Real-time preview, auto-save, tagging, and limited-share posts. Runs on Windows / macOS / Linux."
     },
     ja: {
       title: "TsumiQiita - 積みQiitaを解消するMarkdown下書きデスクトップアプリ",
-      description: "MarkdownファイルをQiitaに投稿できるElectron製デスクトップアプリ。リアルタイムプレビュー、自動保存、タグ登録、限定共有投稿に対応。Windows / macOS / Linuxで動作。"
+      description: "MarkdownファイルをQiitaに投稿できるTauri製デスクトップアプリ。リアルタイムプレビュー、自動保存、タグ登録、限定共有投稿に対応。Windows / macOS / Linuxで動作。"
     },
     zh: {
       title: "TsumiQiita - 消解积压 Qiita 草稿的 Markdown 桌面应用",
-      description: "可将 Markdown 文件发布到 Qiita 的 Electron 桌面应用。支持实时预览、自动保存、标签管理和限定公开发布。可在 Windows / macOS / Linux 上运行。"
+      description: "可将 Markdown 文件发布到 Qiita 的 Tauri 桌面应用。支持实时预览、自动保存、标签管理和限定公开发布。可在 Windows / macOS / Linux 上运行。"
     },
     es: {
       title: "TsumiQiita - Acumula tus borradores de Qiita localmente",
-      description: "Una aplicación de escritorio Electron para publicar archivos Markdown en Qiita. Vista previa en tiempo real, guardado automático, etiquetado y publicaciones de acceso limitado. Funciona en Windows / macOS / Linux."
+      description: "Una aplicación de escritorio Tauri para publicar archivos Markdown en Qiita. Vista previa en tiempo real, guardado automático, etiquetado y publicaciones de acceso limitado. Funciona en Windows / macOS / Linux."
     },
     ru: {
       title: "TsumiQiita - Храните черновики Qiita локально",
-      description: "Настольное приложение на Electron для публикации файлов Markdown в Qiita. Предпросмотр в реальном времени, автосохранение, теги и записи с ограниченным доступом. Работает на Windows / macOS / Linux."
+      description: "Настольное приложение на Tauri для публикации файлов Markdown в Qiita. Предпросмотр в реальном времени, автосохранение, теги и записи с ограниченным доступом. Работает на Windows / macOS / Linux."
     }
   };
 

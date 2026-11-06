@@ -1,0 +1,32 @@
+# TsumiQiita
+
+> TsumiQiita is a free, MIT-licensed desktop app (Tauri v2 + React + TypeScript) for writing Markdown files locally and posting them to Qiita, the Japanese developer blogging platform. It lets you keep an unlimited stockpile of drafts ("積みQiita", tsumi-Qiita) as local Markdown files instead of Qiita's limited draft slots. Runs on Windows, macOS and Linux.
+
+Key facts:
+
+- Article metadata lives in a YAML front matter block at the top of each Markdown file (`title`, `tags`, `private`, `tweet`, `coediting`, `group_url_name`, `organization_url_name`, `slide`, `id`, `ignorePublish`, etc.). `title` and `tags` are required; up to 5 tags, each optionally with a version (`タグ:1.0`).
+- After a successful first post, the article `id` is written back into the front matter, and later posts update that article. Delete `id` to post as a new article.
+- The editor has a real-time preview (markdown-it + highlight.js with Qiita-like CSS), auto-saves 3 seconds after the last edit, and always lists the Markdown files in the target folder.
+- The preview supports Qiita's note syntax ("Note - 補足説明" in the Qiita Markdown cheat sheet): `:::note info`, `:::note warn` and `:::note alert` blocks closed by `:::`. The type defaults to `info`; other `:::` custom blocks render as plain blocks, following increments/qiita-markdown.
+- The preview is only an approximation of how Qiita or GitHub renders Markdown.
+- Settings (Qiita access token, target folder, current file) are stored locally in IndexedDB via Dexie. Qiita API calls are made from the Rust side.
+- Security measures: the Qiita access token is stored in the OS credential store (never in the settings file); the Rust core calls only `https://qiita.com/api/v2`; a Content Security Policy blocks scripts in previewed article HTML; the WebView has no direct file/network access and every command argument is validated in Rust (`.md` files only, alphanumeric article IDs, unknown fields rejected); links open only in the default browser and only for http/https; dependency install scripts are disabled, versions younger than 7 days are not installed, CI runs Takumi Guard and `bun audit`, and GitHub Actions are pinned to commit hashes. Not covered: external https images in the preview are loaded, and release builds are not code-signed or notarized (ad-hoc signing on macOS).
+- Build from source with git, bun and Rust: `git clone https://github.com/hidao80/TsumiQiita.git && cd TsumiQiita/src && bun i && bun run build`. Installers are written to `src/src-tauri/target/release/bundle/`. Pre-built binaries are on the GitHub Releases page.
+- Project documentation is written in Japanese.
+
+## Docs
+
+- [README](https://raw.githubusercontent.com/hidao80/TsumiQiita/HEAD/docs/README.md): Overview, feature list, use cases, notes, and the full Qiita article front matter reference (Japanese)
+- [INSTALL](https://raw.githubusercontent.com/hidao80/TsumiQiita/HEAD/docs/INSTALL.md): Prerequisites (git, bun, Rust and per-OS Tauri dependencies) and build steps (Japanese)
+- [Landing page](https://hidao80.github.io/TsumiQiita/): Project landing page available in English, Japanese, Chinese, Spanish and Russian
+
+## Source
+
+- [GitHub repository](https://github.com/hidao80/TsumiQiita): Source code, issues and CI workflows
+- [Releases](https://github.com/hidao80/TsumiQiita/releases): Pre-built installers
+- [AGENTS.md](https://raw.githubusercontent.com/hidao80/TsumiQiita/HEAD/AGENTS.md): Guide for AI coding agents: directory layout, bun scripts, coding style and Tauri architecture notes (Japanese)
+
+## Optional
+
+- [ADR](https://raw.githubusercontent.com/hidao80/TsumiQiita/HEAD/docs/ADR.md): Architecture decision records reconstructed from the git history (Japanese). It covers the earlier Electron-based versions and does not yet record the migration to Tauri.
+- [LICENSE](https://raw.githubusercontent.com/hidao80/TsumiQiita/HEAD/LICENSE): MIT License

@@ -21,8 +21,15 @@
   list-style: none;
 }
 .navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-weight: bold;
   text-decoration: none;
+}
+.navbar-brand .brand-icon {
+  width: 32px;
+  height: 32px;
 }
 .navbar select#lang-switcher {
   margin: 0;
@@ -33,9 +40,13 @@
   text-align: center;
   padding: 3rem 1rem 2rem;
 }
-.hero .emoji {
-  font-size: 3.5rem;
-  line-height: 1;
+.hero .app-icon {
+  display: block;
+  width: 128px;
+  height: 128px;
+  margin: 0 auto 1rem;
+  /* アイコン自体が角丸のため影だけ付ける */
+  filter: drop-shadow(0 4px 12px rgb(0 0 0 / 0.2));
 }
 .hero p.tagline {
   font-size: 1.25rem;
@@ -47,6 +58,47 @@
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 1.5rem;
+}
+/* リンクをボタン風に表示する（role="button" はリンクの意味を損なうため使わず、Pico のボタン変数で再現） */
+.btn {
+  display: inline-block;
+  padding: var(--pico-form-element-spacing-vertical) var(--pico-form-element-spacing-horizontal);
+  border: var(--pico-border-width) solid var(--pico-primary-border);
+  border-radius: var(--pico-border-radius);
+  background: var(--pico-primary-background);
+  color: var(--pico-primary-inverse);
+  font-weight: var(--pico-font-weight);
+  line-height: var(--pico-line-height);
+  text-align: center;
+  text-decoration: none;
+  transition: background-color var(--pico-transition), border-color var(--pico-transition), color var(--pico-transition);
+}
+.btn:hover,
+.btn:focus-visible {
+  background: var(--pico-primary-hover-background);
+  border-color: var(--pico-primary-hover-border);
+  color: var(--pico-primary-inverse);
+  text-decoration: none;
+}
+.btn.btn-secondary {
+  background: var(--pico-secondary-background);
+  border-color: var(--pico-secondary-border);
+  color: var(--pico-secondary-inverse);
+}
+.btn.btn-secondary:hover,
+.btn.btn-secondary:focus-visible {
+  background: var(--pico-secondary-hover-background);
+  border-color: var(--pico-secondary-hover-border);
+  color: var(--pico-secondary-inverse);
+}
+.btn.btn-outline {
+  background: transparent;
+  color: var(--pico-primary);
+}
+.btn.btn-outline:hover,
+.btn.btn-outline:focus-visible {
+  background: transparent;
+  color: var(--pico-primary-hover);
 }
 .screenshot {
   max-width: 80%;
@@ -67,6 +119,58 @@
 .feature-card .emoji {
   font-size: 1.75rem;
 }
+/* 日本語は文節で改行する（auto-phrase は html の lang="ja" のときだけ効く。lang は main.js が言語切替に合わせて設定） */
+.hero p,
+.feature-card h3,
+.feature-card p {
+  word-break: auto-phrase;
+}
+.lead {
+  color: var(--pico-muted-color);
+}
+/* 行頭をテーマカラーの丸にチェックマークで表示する箇条書き */
+.check-list {
+  padding: 0;
+  list-style: none;
+}
+.check-list li {
+  position: relative;
+  padding-left: 2rem;
+  list-style: none;
+}
+.check-list li::before {
+  content: "✓";
+  position: absolute;
+  top: 0.2em;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background: var(--pico-primary-background);
+  color: var(--pico-primary-inverse);
+  font-size: 0.8rem;
+  font-weight: bold;
+  line-height: 1;
+}
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 0;
+  list-style: none;
+}
+.tech-list li {
+  margin: 0;
+  padding: 0.4rem 1.1rem;
+  list-style: none;
+  font-size: 0.9rem;
+  background: var(--pico-card-background-color);
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: 999px;
+}
 footer {
   text-align: center;
   color: var(--pico-muted-color);
@@ -74,6 +178,10 @@ footer {
 }
 table.header-fields {
   font-size: 0.9rem;
+}
+table.header-fields th,
+table.header-fields td:nth-child(-n + 3) {
+  white-space: nowrap;
 }
 .table-scroll {
   overflow-x: auto;
