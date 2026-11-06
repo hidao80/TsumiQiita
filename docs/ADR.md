@@ -1,10 +1,12 @@
 # TsumiQiita アーキテクチャ決定記録（ADR）
 
 > このドキュメントは Git コミット履歴（`ea2ef4a` 1st commit 〜 `3993994`、2018-03-29〜2026-08-14、全217コミット、タグ `0.1.0`〜`1.8.2` を含む全履歴ベース）を分析し、コードやコミットメッセージから読み取れるアーキテクチャ上の決定を再構成したものです。当時の議論（Issue/PR本文など）までは追えていないため、根拠はコミットメッセージと差分から推測しています。
+>
+> ADR-0018 以降は `307e7d5`〜`062a408`（〜2026-11-06）のコミットに加え、作業中に記録したユーザー判断（`z-ai/decision.jsonl`）を根拠にしています。根拠がコミットにも判断記録にも書かれておらず推測したものは「**Speculative**」と明記します。
 
 ## ADR-0001: Electron によるクロスプラットフォームデスクトップアプリとして実装
 
-- **Status**: Accepted
+- **Status**: Superseded by [ADR-0018](#adr-0018-electronをtauri-v2rustに置き換える)
 - **Date**: 2018-03-29（`ea2ef4a` 1st commit）
 
 **Context**: Markdownで書いた記事をQiitaに投稿するツールが欲しい。Windows/macOS/Linuxでほぼ同一のUIを提供したい。
@@ -48,7 +50,7 @@
 
 ## ADR-0005: プレビュー描画スタックに markdown-it + highlight.js + GFM/Qiita互換CSSを採用
 
-- **Status**: Accepted
+- **Status**: Accepted（記事全体のCSSは [ADR-0020](#adr-0020-プレビューのcssをqiita記事風の独自cssにしフォントアイコンを同梱する) で置き換え。markdown-it + highlight.jsは継続）
 - **Date**: 2018-04-21〜2018-07-21（`0a882ad`, `dc7e057`, `39c2bea`）
 
 **Context**: ローカルプレビューの見た目をQiita/GitHub上の表示に近づけたいが、完全一致は目標にしない（README「注意」節に明記）。
@@ -70,7 +72,7 @@
 
 ## ADR-0007: ビルド／配布ツールを electron-packager から electron-builder に移行
 
-- **Status**: Accepted
+- **Status**: Superseded by [ADR-0018](#adr-0018-electronをtauri-v2rustに置き換える), [ADR-0025](#adr-0025-タグのpushでtauri-actionが各osのインストーラーをリリースの下書きに添付する)
 - **Date**: 2018-10-31（`14dd59b`）
 
 **Context**: 当初は `electron-packager` でOS別に生の実行ファイル一式（asar化のみ）を生成していた（`build-win`, `build-mac`, `build-linux` などスクリプトが乱立）。Windows版でメニュー非表示にする等、配布形態の見直しが必要になった。
@@ -81,7 +83,7 @@
 
 ## ADR-0008: Qiita API 呼び出し方式の変遷（qiita-js → isomorphic-fetch → request → Node標準 https）
 
-- **Status**: Accepted（最新: Node標準 `https` モジュール）
+- **Status**: Superseded by [ADR-0021](#adr-0021-qiita-apiをrust側で呼びidの有無で新規投稿と更新を切り替える)（直前の状態: Node標準 `https` モジュール）
 - **Date**: 2018-04-06 初出 → 2020-03-03 (`970d7aa`) → 2020-03-04 (`889d976`, `6f2b2f8`) → 2026-06-13 (`65d48a1`)
 
 **Context**: Qiita投稿APIへのHTTPリクエスト手段は4段階で変遷している。
@@ -112,7 +114,7 @@
 
 ## ADR-0010: Electron の remote モジュール廃止に伴い、ファイル/ディレクトリ選択を IPC ハンドラ経由に統一
 
-- **Status**: Accepted
+- **Status**: Superseded by [ADR-0018](#adr-0018-electronをtauri-v2rustに置き換える)
 - **Date**: 2026-08-11（`a47f9c5`）
 
 **Context**: `nodeIntegration: true` / `contextIsolation: false` の構成（[ADR-0001](#adr-0001-electron-によるクロスプラットフォームデスクトップアプリとして実装)）のもと、ディレクトリ選択・新規ファイル作成のダイアログ呼び出し方法を見直す必要があった。旧来の `app.makeSingleInstance` も新しい Electron では廃止されている。
@@ -187,11 +189,113 @@
 
 **Consequences**: 過去の意思決定の経緯が1ファイルに集約された。以後、アーキテクチャレベルの変更（依存関係の大幅な入れ替え、ディレクトリ構成の変更、通信方式の変更など）を行う際はこのファイルに追記する運用が期待される。
 
+## ADR-0017: Qiitaのノート記法（Note - 補足説明）を独自のmarkdown-itプラグインでプレビューする
+
+- **Status**: Accepted
+- **Date**: 2026-11-06（`4a071b4`）
+
+**Context**: Qiitaでは`:::note info` / `:::note warn` / `:::note alert` ～ `:::`で補足説明を囲むノート記法（[Markdown記法 チートシート](https://qiita.com/Qiita/items/c686397e4a0f4f11683d)の「Note - 補足説明」）が使えるが、プレビューでは段落として表示されていた。
+
+**Decision**: 依存パッケージ（markdown-it-container等）を追加せず、`src/renderer/lib/markdownItNote.ts`に独自のmarkdown-itプラグインを実装する。構文はQiita公式の[qiita_marker](https://github.com/increments/qiita_marker)（`qfm_custom_block`）、描画は[qiita-markdown](https://github.com/increments/qiita-markdown)の`CustomBlock`フィルターに合わせる。アイコンは同梱済みのMaterial Symbols、見た目は`qiita-preview.css`の独自CSSとする。
+
+**Consequences**: 種類の省略・不明時は`info`、`note`以外のカスタムブロックは装飾なし、入れ子不可など、Qiitaと同じ解釈でプレビューされる。Qiita側の仕様変更には追従が必要。
+
+## ADR-0018: ElectronをTauri v2（Rust）に置き換える
+
+- **Status**: Accepted（Supersedes: [ADR-0001](#adr-0001-electron-によるクロスプラットフォームデスクトップアプリとして実装), [ADR-0007](#adr-0007-ビルド配布ツールを-electron-packager-から-electron-builder-に移行), [ADR-0010](#adr-0010-electron-の-remote-モジュール廃止に伴いファイルディレクトリ選択を-ipc-ハンドラ経由に統一)）
+- **Date**: 2026-11-06（`333fde0`, `c8a54bc`、19:10の判断記録）
+
+**Context**: 同日の判断記録（17:00）では、Electronを継続したまま`contextIsolation` + preload構成へ移す方針だった。その後（19:10）、Tauri v2への置き換えに方針を変えている（この中間構成はコミットされていない）。**Speculative**: Electronのメジャーバージョン追従の保守コスト（ADR-0001・ADR-0009）と、配布物の大きさを減らしたいことが動機と考えられる。
+
+**Decision**: アプリ本体をTauri v2（Rust、`src/src-tauri/`）にし、画面はWebViewで表示する。ファイル入出力・ダイアログ・Qiita API・設定の保存はRustのコマンド（`src-tauri/src/lib.rs`）に集約し、画面は`invoke`で呼ぶ。capabilitiesは`core:default`のみとし、CSPを`tauri.conf.json`で付与する。多重起動防止は`tauri-plugin-single-instance`、外部リンクは`tauri-plugin-opener`で既定ブラウザに渡す。アプリの`identifier`（`io.github.hidao80.tsumiqiita`）とURL（オリジン）は、保存先を変えないため固定する。
+
+**Consequences**: 画面からNode/OSのAPIを直接使えなくなり、権限が最小化された。ビルドにRustとOS別の依存（WebView2、webkit2gtk等）が必要になった（`docs/INSTALL.md`）。旧Electron版の設定は[ADR-0022](#adr-0022-設定はconfigjsonとosの資格情報ストアに保存し旧版の設定を自動移行する)の方法で移行する。
+
+## ADR-0019: 画面をReact + TypeScript + Viteで作り直し、Tailwind CSS v4とBiomeを導入する
+
+- **Status**: Accepted
+- **Date**: 2026-11-06（`865de4f`, `4a071b4`、17:00・17:40・19:10の判断記録）
+
+**Context**: 旧版の画面は`src/index.html` + `src/js/functions.js`（JSHint前提のプレーンなJavaScript）で、型や部品の分割がなかった。
+
+**Decision**: 画面（`src/renderer/`）をReact + TypeScript（strict）で書き直し、Viteでバンドルする。ViteはTauri移行後もバンドラーとして使い続け、devサーバーは`tauri dev`のHMRに使う。スタイルはTailwind CSS v4をpreflightなしで読み込む（プレビューの見た目を保つため）。Lint/FormatはBiome（シングルクォート・セミコロンあり・幅120）にする。
+
+**Consequences**: `bun run typecheck` / `bun run lint`が品質の基準になった。JSHint・SideCIの設定は不要になり削除された（[ADR-0024](#adr-0024-github-actionsでlinttestbuildauditを実行しdependabotで依存を更新する)）。Tailwindのユーティリティとレイヤー外のCSSを同じ要素・同じプロパティに併用しない、という注意点が生じた（`AGENTS.md`）。
+
+## ADR-0020: プレビューのCSSをQiita記事風の独自CSSにし、フォント・アイコンを同梱する
+
+- **Status**: Accepted（[ADR-0005](#adr-0005-プレビュー描画スタックに-markdown-it--highlightjs--gfmqiita互換cssを採用)のCSS部分を置き換え）
+- **Date**: 2026-11-06（`4a071b4`、17:40・18:10・19:00の判断記録）
+
+**Context**: プレビューは`github-markdown-css`（GitHub風）で、Qiitaでの見た目と差があった。Qiita本体のCSSはライセンス上コピーできない。フォントやアイコンをCDNから読むと、CSPとオフライン利用の妨げになる。
+
+**Decision**: プレビューのスタイルを`src/renderer/css/qiita-preview.css`の独自CSS（`.markdown-content`配下に限定）にし、未使用になった`github-markdown-css`を削除する。フォントはNoto Sans JP（400/700）を`@fontsource/noto-sans-jp`で同梱する。表示モード切替（全画面エディター・半々・全画面プレビュー）などのアイコンは`material-symbols`のアイコンフォントを同梱する。
+
+**Consequences**: CDNへの依存がなくなり、CSPを`'self'`中心に保てる。一方で`material-symbols`（Outlined）は約4MBあり、配布物が大きくなる。Qiitaの見た目の変化には独自CSSで追従する必要がある。
+
+## ADR-0021: Qiita APIをRust側で呼び、idの有無で新規投稿と更新を切り替える
+
+- **Status**: Accepted（Supersedes: [ADR-0008](#adr-0008-qiita-api-呼び出し方式の変遷qiita-js--isomorphic-fetch--request--node標準-https)。[ADR-0004](#adr-0004-記事メタデータを-markdown-ファイル先頭の-yaml-フロントマターとして保持)のヘッダー項目を拡張）
+- **Date**: 2026-11-06（`c8a54bc`, `4a071b4`、17:40・19:00の判断記録）
+
+**Context**: 旧版は投稿のたびに新しい記事を作り、既存記事を更新できなかった（READMEの注意事項「上書きされません」）。Qiita CLIのフロントマター（`id`・`ignorePublish`・`organization_url_name`・`slide`など）やQiita APIの新しいパラメーターにも対応していなかった。
+
+**Decision**: Qiita APIはRust側（`reqwest`、`src-tauri/src/qiita.rs`）から`https://qiita.com/api/v2`だけを呼ぶ。記事ヘッダーに`id`がなければ`POST /api/v2/items`、あれば`PATCH /api/v2/items/:id`とし、新規投稿で得たidを記事ヘッダーに書き戻す（`shared/frontMatter.ts`の`setItemId`）。トークン保存時は`GET /api/v2/authenticated_user`で確認する。送信する項目は画面側のZodスキーマ（`shared/schema.ts`）とRust側の`ItemBody`（`deny_unknown_fields`）で揃え、両方で検証する。
+
+**Consequences**: 同じファイルからの再投稿が既存記事の更新になった（`id`を消すと新規投稿）。`tweet`はPATCHの引数にないため更新時は送らない。`null`の項目は送らないので、PATCHで投稿キャンペーンの登録を解除する操作には対応しない。HTTPクライアントはNode標準`https`からRustの`reqwest`に変わった。
+
+## ADR-0022: 設定はconfig.jsonとOSの資格情報ストアに保存し、旧版の設定を自動移行する
+
+- **Status**: Accepted（17:40の判断「設定をDexie/IndexedDBに保存」を置き換え）
+- **Date**: 2026-11-06（`c8a54bc`, `4a071b4`, `f6346d8`, `bc78007`、17:40・18:15・19:10・19:30の判断記録）
+
+**Context**: 旧版は設定（TOKEN / TARGET_DIR / CURRENT_FILE）を`localStorage`に平文で保存していた（[ADR-0009](#adr-0009-2026年のdependabot脆弱性一斉是正)）。同日の判断では一度Dexie（IndexedDB）への保存に移したが、Tauri移行（[ADR-0018](#adr-0018-electronをtauri-v2rustに置き換える)）でWebViewの保存先が旧版と変わる。記事そのものをIndexedDBに保存する案も出たが、取り消してローカルの`.md`ファイルのまま維持する（18:15の判断）。
+
+**Decision**: 設定はRust側で`~/.config/TsumiQiita/config.json`（全OS共通）に保存し、APIトークンだけはOSの資格情報ストア（`keyring`、サービス名`io.github.hidao80.tsumiqiita`）に保存する。設定キーは`config.rs`の`KEYS`に限定し、未知のキーは拒否する。旧Electron版の`localStorage`（ChromiumのLevelDB）は初回起動時に一時ディレクトリへ複製して`rusty-leveldb`で読み、移行する（旧版のプロファイルは書き換えない）。Dexie（IndexedDB）は移行元としてのみ残す。テスト用のLevelDBは`src/src-tauri/tests/fixtures/`に置き、改行変換で壊れないよう`.gitattributes`でバイナリ扱いにする。
+
+**Consequences**: トークンが平文のファイルに残らなくなった。旧版から設定を引き継げるが、`identifier`とアプリのURLを変えると移行元・保存先を読めなくなるため固定が必要（`AGENTS.md`）。記事は引き続きクラウドストレージ等で同期できる`.md`ファイルのまま扱える。
+
+## ADR-0023: E2EテストをWebdriverIO + tauri-driverで実行する
+
+- **Status**: Accepted（17:40の判断「PlaywrightでElectronのE2E」を置き換え）
+- **Date**: 2026-11-06（`1b2d0dc`, `c8a54bc`、17:40・19:10・19:50の判断記録）
+
+**Context**: Electron構成ではPlaywrightでE2Eを行う予定だったが、Tauri移行（[ADR-0018](#adr-0018-electronをtauri-v2rustに置き換える)）でPlaywrightから操作できなくなった。
+
+**Decision**: E2EはWebdriverIO + tauri-driverでデバッグビルドの実アプリを操作する（`src/wdio.conf.ts`、Windows / Linuxのみ）。環境変数による差し替え（`src-tauri/src/e2e.rs`）で、実際のプロファイル・設定ファイル・資格情報ストア・Qiita・ダイアログ・既定ブラウザに触れない。Qiita APIはテスト内のモックサーバーが応答する。Windowsでは、WebView2と同じ版の`msedgedriver.exe`を環境変数`TSUMIQIITA_MSEDGEDRIVER`で指定して実行する。
+
+**Consequences**: macOSではE2Eを実行できない（WebDriver非対応）。WebView2は自動更新されるため、版がずれたら`msedgedriver.exe`を取り直す必要がある。ユニットテストは`bun test`（`shared/`）と`cargo test`に分かれた。
+
+## ADR-0024: GitHub Actionsでlint・test・build・auditを実行し、Dependabotで依存を更新する
+
+- **Status**: Accepted
+- **Date**: 2026-11-06（`67a34be`, `9f663cf`, `967d0eb`、20:10の判断記録）
+
+**Context**: 2018年に導入したSideCI（`sideci.yml`, `lint_yml/.jshintrc`）は稼働が確認できず（観察事項）、依存の更新が5年近く止まった経緯がある（[ADR-0009](#adr-0009-2026年のdependabot脆弱性一斉是正)）。
+
+**Decision**: SideCIとJSHintの設定を削除し、GitHub Actionsに`lint` / `test`（`bun test`・`cargo fmt --check`・`cargo clippy`・`cargo test`）/ `build` / `audit`（`bun audit`）を置く。各ワークフローでTakumi Guardによる依存パッケージのマルウェア検査を行い、`bun install --frozen-lockfile`を使う。Actionsはコミットハッシュで固定する。Dependabotで`github-actions`・`bun`・`cargo`の依存を毎週更新する。
+
+**Consequences**: 依存の脆弱性とマルウェアをCIで検知できるようになり、ADR-0009のような更新の停滞を防ぎやすくなった。ワークフローは`master`ブランチと`src/`構成を前提にしている。
+
+## ADR-0025: タグのpushでtauri-actionが各OSのインストーラーをリリースの下書きに添付する
+
+- **Status**: Accepted（Supersedes: [ADR-0007](#adr-0007-ビルド配布ツールを-electron-packager-から-electron-builder-に移行)の配布方法）
+- **Date**: 2026-11-06（`67a34be`、19:40の判断記録）
+
+**Context**: Electron版は`electron-builder`で手元からビルドしていた。Tauri移行後は、Windows / macOS / Linuxのインストーラーをそれぞれのランナーで作る必要がある。
+
+**Decision**: `release.yml`で、`v`なしのバージョンタグ（例: `1.9.0`）のpushを契機に各OSでビルドし、`tauri-apps/tauri-action`でGitHub Releaseの下書きを作ってインストーラーを添付する。タグは`src/package.json`の`version`と一致しなければ失敗させる。
+
+**Consequences**: リリース作業は「バージョンを上げてタグをpushし、下書きを公開する」に単純化された。証明書がないためコード署名・公証はしておらず（macOSはアドホック署名）、初回起動時にOSの警告が出る（リリース本文に手順を記載）。
+
 ---
 
 ## 観察事項（決定ではないが留意すべきパターン）
 
+- **ライセンスファイル名の変更**（`1710900`、2026-08-16）: `LICENSE.md`を`LICENSE`に改名した。ADR-0003の「`LICENSE.md`」はこの時点より前の名称。
+- **ADRの対象外とした判断記録**: 表示テーマ切替（19:40）、ソーシャルプレビュー画像（20:00）、ドキュメントへのセキュリティ対策の記載（19:50）は、アプリの構成に関わらないためADRにしていない。
+
 - **開発が断続的**: 2018-11-23〜2020-03-03、2020-03-04〜2025-07-01 の2回、長期間コミットが止まっている。個人開発（コミット者は一貫して `hidao80`）による低頻度メンテナンスが実態であり、今後も依存更新の定期チェック（例: Dependabot設定、`npm audit` のCI組み込み）が望ましい。
-- **CI設定**（`sideci.yml`, `lint_yml/.jshintrc`）は2018年に導入されたまま現存しているが、直近のコミット履歴からは実際に稼働しているか確認できていない。稼働確認は本ADRのスコープ外。
-- **`.claude/commands/` の追加**（`5fd05d6`、2026-08-14）: `code-analyze` / `make-lp` / `make-social-preview` / `update-adr` のコマンド定義が追加された。これはAIエージェントの作業手順を定義したものであり、アプリケーション自体のアーキテクチャ決定ではないため、本ADRの対象外として観察事項に留める。
-- **タグ運用**: `0.1.0`〜`1.8.2` までのバージョンタグはコミット履歴上に残っているが、`package.json` の現行バージョン（1.8.3）に対応するタグは本分析時点で未作成。
+- **CI設定**（`sideci.yml`, `lint_yml/.jshintrc`）は2018年に導入されたまま現存しているが、直近のコミット履歴からは実際に稼働しているか確認できていない。稼働確認は本ADRのスコープ外。→ 2026-11-06に削除し、GitHub Actionsへ置き換えた（`9f663cf`, `967d0eb`、[ADR-0024](#adr-0024-github-actionsでlinttestbuildauditを実行しdependabotで依存を更新する)）。
+- **`.claude/commands/` の追加**（`5fd05d6`、2026-08-14）: `code-analyze` / `make-lp` / `make-social-preview` / `update-adr` のコマンド定義が追加された。これはAIエージェントの作業手順を定義したものであり、アプリケーション自体のアーキテクチャ決定ではないため、本ADRの対象外として観察事項に留める。→ 2026-08-16に`.claude/skills/`形式へ移行し（`6df238d`）、2026-11-06にリポジトリから削除した（`bd135d9`、`CLAUDE.md`も`4f1f11c`で削除）。
+- **タグ運用**: `0.1.0`〜`1.8.2` までのバージョンタグはコミット履歴上に残っているが、`package.json` の現行バージョン（1.8.3）に対応するタグは本分析時点で未作成。→ 2026-11-06時点でも`1.8.3`のタグは未作成。以後のタグは`release.yml`の規則（`v`なし・`package.json`の`version`と一致）に従う（[ADR-0025](#adr-0025-タグのpushでtauri-actionが各osのインストーラーをリリースの下書きに添付する)）。
