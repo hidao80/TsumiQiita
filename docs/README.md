@@ -1,9 +1,6 @@
 # TsumiQiitaとは
 
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/hidao80/TsumiQiita/blob/HEAD/LICENSE)
-[![bun](https://img.shields.io/badge/bun-1-blue.svg)](https://bun.com/)
-[![tauri v2](https://img.shields.io/badge/tauri-2-24C8DB.svg)](https://tauri.app/)
-
 ![Lint](https://github.com/hidao80/TsumiQiita/actions/workflows/lint.yml/badge.svg)
 ![Audit](https://github.com/hidao80/TsumiQiita/actions/workflows/audit.yml/badge.svg)
 ![Build](https://github.com/hidao80/TsumiQiita/actions/workflows/build.yml/badge.svg)
