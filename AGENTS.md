@@ -58,6 +58,7 @@ bun run test:e2e   # デバッグビルドを作り、WebdriverIO + tauri-driver
 - ロックファイルは `src/bun.lock` と `src/src-tauri/Cargo.lock`。
 - 画面はViteでバンドルされるため、JSの依存パッケージは`devDependencies`に置く。
 - `package.json`の`overrides`で`glob`（^14.0.2）と`minimatch`（^11.0.1）を上書きしている。E2E用の`@wdio/config` 10.1.0と`mocha` 12.0.3が脆弱な版（GHSA-3g3m-2fjr-6pw4、GHSA-g3hv-75wg-m249）を範囲指定しているため。両パッケージが修正版を範囲に含めたら`overrides`を外す。
+- Dependabot alert #23（Rustの`glib` 0.18.5、GHSA-wrw7-89jp-8q8g、`VariantStrIter`の不健全性）は未解消のまま開いておく。`glib`はLinux用のGTK3部分（`wry` → `webkit2gtk` 2.0 → `gtk` 0.18）から入り、Tauri 2.12.5・wry 0.57.1（2026-11-06時点の最新）でも0.18のため、修正版の0.20に上げられない。このアプリのコードと依存クレートは`VariantStrIter`を使っていない（2026-11-06に`~/.cargo/registry`を検索して確認）。Tauri（wry）がgtk-rs 0.20以降に移ったら`cargo update`で解消する。
 - Rustは `cargo fmt` と `cargo clippy --all-targets -- -D warnings` が通ること（CIで確認）。
 
 ## コーディングスタイル
