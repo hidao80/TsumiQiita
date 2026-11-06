@@ -1,6 +1,6 @@
 [package]
 name = "tsumiqiita"
-version = "1.8.3"
+version = "2.0.0"
 description = "MarkdownファイルをQiitaに投稿するデスクトップアプリ"
 authors = ["hidao80"]
 license = "MIT"

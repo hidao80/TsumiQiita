@@ -1,6 +1,6 @@
 {
   "name": "tsumiqiita",
-  "version": "1.8.3",
+  "version": "2.0.0",
   "description": "MarkdownファイルをQiitaに投稿するTauri製デスクトップアプリです。",
   "scripts": {
     "dev": "tauri dev",
