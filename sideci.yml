@@ -1,5 +1,0 @@
-linter:
-  jshint:
-    options:
-      config: lint_yml/.jshintrc
-      
