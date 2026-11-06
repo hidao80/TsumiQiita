@@ -1,0 +1,76 @@
+name: Release
+
+# バージョンタグ（例: 1.8.3。既存のタグと同じく v は付けない）をpushすると、各OS向けにビルドしてGitHub Releasesの下書きを作る。
+# 下書きの内容を確認してから、GitHub上で「Publish release」を押して公開する。
+on:
+  push:
+    tags: ['[0-9]+.[0-9]+.[0-9]+']
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            args: ''
+          - os: ubuntu-latest
+            args: ''
+          # macOSはApple Silicon・Intel向けを別々にビルドする
+          - os: macos-latest
+            args: '--target aarch64-apple-darwin'
+          - os: macos-latest
+            args: '--target x86_64-apple-darwin'
+    runs-on: ${{ matrix.os }}
+    permissions:
+      # リリースの作成とファイルのアップロードに必要
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check that the tag matches the app version
+        shell: bash
+        run: |
+          version="$(node -p "require('./src/package.json').version")"
+          if [ "${GITHUB_REF_NAME}" != "${version}" ]; then
+            echo "::error::タグ ${GITHUB_REF_NAME} と src/package.json の version（${version}）が一致しません"
+            exit 1
+          fi
+      - uses: flatt-security/setup-takumi-guard-npm@14f07d0cbc739b42a1b7c70a04c2b84cd1318ddd # v1.4.0
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+      - uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable
+        with:
+          targets: ${{ matrix.os == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
+        with:
+          workspaces: src/src-tauri
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libayatana-appindicator3-dev librsvg2-dev patchelf
+      - run: bun install --frozen-lockfile
+        working-directory: src
+      # ビルドしてリリース（下書き）を作り、インストーラーを添付する。証明書が無いためコード署名はしない
+      - uses: tauri-apps/tauri-action@1deb371b0cd8bd54025b384f1cd735e725c4060f # action-v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectPath: src
+          tauriScript: bun run tauri
+          args: ${{ matrix.args }}
+          tagName: ${{ github.ref_name }}
+          releaseName: TsumiQiita ${{ github.ref_name }}
+          releaseDraft: true
+          generateReleaseNotes: true
+          releaseBody: |
+            ## インストール
+            - Windows: `TsumiQiita_*_x64-setup.exe`（または `.msi`）
+            - macOS: Apple Silicon は `*_aarch64.dmg`、Intel は `*_x64.dmg`
+            - Linux: `.AppImage` / `.deb` / `.rpm`
+
+            コード署名をしていないため、初回起動時にOSの警告が出ます。
+            - Windows: 「詳細情報」→「実行」
+            - macOS: アプリを右クリック →「開く」（またはシステム設定の「プライバシーとセキュリティ」で許可）
