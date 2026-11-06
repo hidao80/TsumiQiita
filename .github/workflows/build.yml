@@ -9,6 +9,11 @@ on:
 permissions:
   contents: read
 
+# 同じブランチ・PRへの新しいpushが来たら、古い実行は取り消す
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     # Tauriは実行OS向けのインストーラーを作るため、OSごとにビルドする
@@ -17,6 +22,7 @@ jobs:
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
     defaults:
       run:
         # package.json のルートは src/

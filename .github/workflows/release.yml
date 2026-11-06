@@ -9,6 +9,11 @@ on:
 permissions:
   contents: read
 
+# 同じタグのリリースは並行させない（途中で取り消すと下書きが中途半端になるため、取り消しはしない）
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   release:
     strategy:
@@ -25,6 +30,7 @@ jobs:
           - os: macos-latest
             args: '--target x86_64-apple-darwin'
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
     permissions:
       # リリースの作成とファイルのアップロードに必要
       contents: write

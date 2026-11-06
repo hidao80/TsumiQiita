@@ -93,7 +93,7 @@ bun run test:e2e   # デバッグビルドを作り、WebdriverIO + tauri-driver
 - CSP（`tauri.conf.json`）で記事中のスクリプトを遮断する。`img-src`は`https:`を許可しているため、記事中の外部画像はプレビュー時に読み込まれる。
 - capabilitiesは`core:default`のみ。ファイル・通信はコマンド経由で、引数はRust側で検証する（`.md`のみ・記事idは英数字・未知の項目を拒否・設定キーは`KEYS`のみ）。
 - リンクは`open_external`（http/httpsのみ）で既定ブラウザに渡し、アプリ外への遷移・新しいウィンドウを止める。
-- 依存関係は`bunfig.toml`の`ignoreScripts`・`minimumReleaseAge`（7日）、`bun.lock`の固定、CIのTakumi Guard・`bun audit`、GitHub ActionsのコミットSHA固定で守る。
+- 依存関係は`bunfig.toml`の`ignoreScripts`・`minimumReleaseAge`（7日）、`bun.lock`の固定、CIのTakumi Guard・`bun audit`、GitHub ActionsのコミットSHA固定で守る。Dependabotも`cooldown`（7日）で`minimumReleaseAge`と揃える（揃えないとbunが新しすぎる版を拒否し、更新が失敗する）。
 - 配布物はコード署名・公証をしていない（macOSは`signingIdentity: "-"`のアドホック署名）。
 
 ## 変更時の確認
