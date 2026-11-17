@@ -18,7 +18,7 @@
         "@types/react-dom": "^19.3.0",
         "@vitejs/plugin-react": "^6.1.2",
         "@wdio/cli": "^10.1.0",
-        "@wdio/globals": "^10.1.0",
+        "@wdio/globals": "^10.2.0",
         "@wdio/local-runner": "^10.2.0",
         "@wdio/mocha-framework": "^10.1.0",
         "@wdio/spec-reporter": "^10.2.0",
@@ -376,7 +376,7 @@
 
     "@wdio/dot-reporter": ["@wdio/dot-reporter@10.2.0", "", { "dependencies": { "@wdio/reporter": "10.2.0", "@wdio/types": "10.2.0", "chalk": "^6.0.1" } }, "sha512-/cfaIAXBOdTIuQJNxAspjCso7WH+5ULh2dMByreF7L1lrfrN18ce7d5jvONmCttJuR+PBt1TkkFBP2nDP9cDgg=="],
 
-    "@wdio/globals": ["@wdio/globals@10.1.0", "", { "peerDependencies": { "expect-webdriverio": "^8.0.0", "webdriverio": "^10.0.0-0 || ^10.0.0" } }, "sha512-Y6FkkZz6jzMqIwI8R7BPj8bHuyRosxLZLGWRCHQFrU5mesjkW2NzYuPR7xwOPVmlaFJYUdzS1/EUYLr1BjpbSw=="],
+    "@wdio/globals": ["@wdio/globals@10.2.0", "", { "peerDependencies": { "expect-webdriverio": "^8.0.0", "webdriverio": "^10.0.0" } }, "sha512-HYjfWeR4ANwDMIzYzW5nYvhq/TP9mIqH/D+vvddN9Ax2fzfBG1LJ686CFXbH9Kh/Crz9zTXL+JGkA+tJOYC0/Q=="],
 
     "@wdio/local-runner": ["@wdio/local-runner@10.2.0", "", { "dependencies": { "@types/node": "^22.20.4", "@types/split2": "^4.2.3", "@wdio/display-server": "10.2.0", "@wdio/logger": "10.2.0", "@wdio/repl": "10.2.0", "@wdio/runner": "10.2.0", "@wdio/types": "10.2.0", "exit-hook": "^5.1.0", "expect-webdriverio": "^8.0.0", "split2": "^4.1.0", "stream-buffers": "^3.0.2" } }, "sha512-Ce8k+B0TulUzi/EkTmr2TXlTce2InLw6oRifdD63Q9bJevJaXf3TM/9r6yM/mE453TokiGfZ4uOGdRi1WrM3IQ=="],
 
