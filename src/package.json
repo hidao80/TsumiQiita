@@ -52,7 +52,7 @@
     "material-symbols": "^0.48.2",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "tailwindcss": "^4.3.3",
+    "tailwindcss": "^4.3.5",
     "typescript": "^7.0.2",
     "vite": "^8.3.8",
     "zod": "^4.6.7"
